@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RecordingDialog</class>
+ <widget class="QDialog" name="RecordingDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>116</width>
+    <height>68</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="mLBTime">
+     <property name="text">
+      <string>Recording</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="mPBEnd">
+     <property name="text">
+      <string>end</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mPBEnd</sender>
+   <signal>clicked()</signal>
+   <receiver>RecordingDialog</receiver>
+   <slot>onEnd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onEnd()</slot>
+ </slots>
+</ui>

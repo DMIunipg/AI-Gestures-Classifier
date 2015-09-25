@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GestureForm</class>
+ <widget class="QWidget" name="GestureForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>41</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QLabel" name="mLBName">
+     <property name="text">
+      <string>Name:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="mLEName"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="mPBDelete">
+     <property name="text">
+      <string>delete</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="mPBRecording">
+     <property name="text">
+      <string>recording</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mPBDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>GestureForm</receiver>
+   <slot>onDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>282</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>317</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mPBRecording</sender>
+   <signal>clicked()</signal>
+   <receiver>GestureForm</receiver>
+   <slot>onRecording()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onDelete()</slot>
+  <slot>onRecording()</slot>
+ </slots>
+</ui>

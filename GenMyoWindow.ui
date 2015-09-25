@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GenMyoWindow</class>
+ <widget class="QMainWindow" name="GenMyoWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>360</width>
+    <height>346</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>GenMyoWindow</string>
+  </property>
+  <widget class="QWidget" name="mCentralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QListWidget" name="mLWGestures"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="mPBAddGesture">
+      <property name="text">
+       <string>add a gesture</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="mMenuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>360</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="mMenuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="mAOpen"/>
+    <addaction name="separator"/>
+    <addaction name="mASaveAs"/>
+    <addaction name="mASave"/>
+    <addaction name="separator"/>
+    <addaction name="mAExportAs"/>
+    <addaction name="mAExport"/>
+    <addaction name="separator"/>
+    <addaction name="mAExit"/>
+   </widget>
+   <addaction name="mMenuFile"/>
+  </widget>
+  <action name="mASave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="mAExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="mASaveAs">
+   <property name="text">
+    <string>Save As..</string>
+   </property>
+  </action>
+  <action name="mAOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="mAExport">
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </action>
+  <action name="mAExportAs">
+   <property name="text">
+    <string>Esport As..</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mPBAddGesture</sender>
+   <signal>clicked()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onAddGesture()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>353</x>
+     <y>307</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mAExit</sender>
+   <signal>triggered()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mASaveAs</sender>
+   <signal>triggered()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onSaveAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mASave</sender>
+   <signal>triggered()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onSave()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mAExport</sender>
+   <signal>triggered()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onExport()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mAExportAs</sender>
+   <signal>triggered()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onExportAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mAOpen</sender>
+   <signal>triggered()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onOpen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAddGesture()</slot>
+  <slot>onSave()</slot>
+  <slot>onSaveAs()</slot>
+  <slot>onBuildModel()</slot>
+  <slot>onExport()</slot>
+  <slot>onExportAs()</slot>
+  <slot>onOpen()</slot>
+ </slots>
+</ui>
