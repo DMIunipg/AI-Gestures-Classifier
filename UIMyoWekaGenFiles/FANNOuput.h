@@ -66,6 +66,9 @@ public:
             for(size_t j=0;j!=mFlags.mReps;++j)
             {
                 auto& row = rows[i*mFlags.mReps+j];
+                //append time
+                if(mFlags.mTime)
+                        stream << row.getTime() << " ";
                 //append gyroscope
                 if(mFlags.mGyroscope)
                 {

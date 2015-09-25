@@ -5,6 +5,7 @@
 struct DataFlags
 {
     int  mReps          { 1    };
+    bool mTime          { true };
     bool mGyroscope     { true };
     bool mAccelerometer { true };
     bool mQuaternion    { true };
@@ -32,6 +33,7 @@ struct DataFlags
     {
         size_t size=0;
         //add all
+        size += mTime ? 1 : 0;
         size += mGyroscope ? 3 : 0;
         size += mAccelerometer ? 3 : 0;
         size += mQuaternion ? 4 : 0;

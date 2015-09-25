@@ -1,5 +1,5 @@
 #include "myomanager.h"
-
+#include "MyoTime.h"
 MyoManager::MyoManager()
 {
 }
@@ -14,6 +14,7 @@ void MyoManager::startRecording()
     mMutex.lock();
     mDatas.clear();
     mRecording = LIST_REC;
+    mTime      = myo::GetTime();
     mMutex.unlock();
 }
 void MyoManager::startRecording(size_t n,
@@ -25,6 +26,7 @@ void MyoManager::startRecording(size_t n,
     mCallback  = fun;
     mSizeData  = n;
     mSizeNext  = n;
+    mTime      = myo::GetTime();
     mMutex.unlock();
 }
 
@@ -61,8 +63,12 @@ void MyoManager::run()
             {
                 //lock
                 mMutex.lock();
+                //compute diff
+                double recTime = (myo::GetTime()-mTime) / 1000.0;
                 //append
                 mDatas.append(mListener.mRaw);
+                //set time
+                mDatas[mDatas.size()-1].setTime(recTime);
                 //callback
                 if(mDatas.size()==mSizeNext)
                 {

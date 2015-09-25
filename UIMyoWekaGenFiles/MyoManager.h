@@ -2,6 +2,8 @@
 #define MYOMANAGER_H
 #pragma once
 
+
+#include <ctime>
 #include <QMutex>
 #include <QThread>
 #include "MyoListener.h"
@@ -71,6 +73,8 @@ protected:
      };
      State                 mRecording { NO_REC };
      MyoListener::TypeRows mDatas;
+     //rec info
+     double                                               mTime{ 0 };
      //callback info
      size_t                                               mSizeData{ 0 };
      size_t                                               mSizeNext{ 0 };

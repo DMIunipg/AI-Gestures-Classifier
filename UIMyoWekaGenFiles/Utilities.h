@@ -87,6 +87,7 @@ namespace myo
     {
     protected:
         
+        double mTime;
         std::array< T , N > mEmg;
         Vector3< J > mGyro;
         Vector3< H > mAccel;
@@ -96,17 +97,29 @@ namespace myo
         
         RawDatas()
         {
+            mTime = 0.0;
             mEmg.fill(0);
         }
         
         void clear()
         {
+            mTime = 0.0;
             mEmg.fill(0);
             mGyro = Vector3< J >();
             mAccel = Vector3< H >();
             mQuad  = Quaternion< X >();
         }
         
+        void setTime(double time)
+        {
+            mTime = time;
+        }
+
+        double getTime() const
+        {
+            return mTime;
+        }
+
         void setEmg(const std::array< T , N >& value)
         {
             mEmg = value;
@@ -165,11 +178,15 @@ namespace myo
 
         std::string toString()
         {
-            std::string str("Emg data: ");
+            std::string str("Time: ");
+            str+=std::to_string(mTime);
+
+            str+="\nEmg data: ";
             for(auto emg : mEmg )
             {
                 str += std::to_string( emg ) + " " ;
             }
+
             str+="\nGyroscope: "+
             std::to_string(mGyro.x())+ " "+
             std::to_string(mGyro.y())+ " "+
@@ -189,6 +206,8 @@ namespace myo
         
         void serialize(FILE* file) const
         {
+            //write time
+            std::fwrite(&mTime,sizeof(double),1,file);
             //write emg
             std::fwrite((void*)mEmg.data(),sizeof(mEmg[0]),mEmg.size(),file);
             //write gyroscope
@@ -224,8 +243,10 @@ namespace myo
 
         void deserialize(FILE* file)
         {
+            //write time
+            std::fread(&mTime,sizeof(double),1,file);
             //write emg
-            fwrite(mEmg.data(),sizeof(mEmg[0]),mEmg.size(),file);
+            fread(mEmg.data(),sizeof(mEmg[0]),mEmg.size(),file);
             //write gyroscope
             {
                 J x = 0 , y = 0, z = 0;

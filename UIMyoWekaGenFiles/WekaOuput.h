@@ -66,6 +66,9 @@ public:
             for(size_t j=0;j!=mFlags.mReps;++j)
             {
                 auto& row = rows[i*mFlags.mReps+j];
+                //append time
+                if(mFlags.mTime)
+                    strRow += std::to_string(row.getTime())+",";
                 //append gyroscope
                 if(mFlags.mGyroscope)
                 {
@@ -133,6 +136,9 @@ private:
         //header attributes
         for(int i=0; i!=mFlags.mReps; ++i)
         {
+            if(mFlags.mTime)
+                header += "@ATTRIBUTE time"+std::to_string(i+1)+" NUMERIC\n";
+
             if (mFlags.mGyroscope)
             {
                 header += "@ATTRIBUTE gyroscope"+std::to_string(i+1)+"_x NUMERIC\n";

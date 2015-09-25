@@ -18,6 +18,7 @@ FlagsDialog::~FlagsDialog()
 void FlagsDialog::setFalgs(const  DataFlags& flags)
 {
     ui->mSBReps->setValue(flags.mReps);
+    ui->mCBTime->setChecked(flags.mTime);
     ui->mCBGyroscope->setChecked(flags.mGyroscope);
     ui->mCBAccelerometer->setChecked(flags.mAccelerometer);
     ui->mCBQuaternion->setChecked(flags.mQuaternion);
@@ -29,6 +30,7 @@ DataFlags FlagsDialog::getFlags()
 {
      DataFlags out;
      out.mReps          = ui->mSBReps->value();
+     out.mTime          = ui->mCBTime->isChecked();
      out.mGyroscope     = ui->mCBGyroscope->isChecked();
      out.mAccelerometer = ui->mCBAccelerometer->isChecked();
      out.mQuaternion    = ui->mCBQuaternion->isChecked();
