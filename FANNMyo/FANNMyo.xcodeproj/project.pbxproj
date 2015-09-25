@@ -1,0 +1,445 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E0A892531B451C0C0065BF83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0A892521B451C0C0065BF83 /* main.cpp */; };
+		E0A898FE1B451D2D0065BF83 /* libdoublefann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D41B451D2D0065BF83 /* libdoublefann.2.2.0.dylib */; };
+		E0A898FF1B451D2D0065BF83 /* libfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D51B451D2D0065BF83 /* libfann.2.2.0.dylib */; };
+		E0A899001B451D2D0065BF83 /* libfixedfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D61B451D2D0065BF83 /* libfixedfann.2.2.0.dylib */; };
+		E0A899011B451D2D0065BF83 /* libfloatfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D71B451D2D0065BF83 /* libfloatfann.2.2.0.dylib */; };
+		E0A899021B451D2D0065BF83 /* myo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D91B451D2D0065BF83 /* myo.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E0A8924D1B451C0C0065BF83 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E059F2611B45A0E100919E56 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		E0A8924F1B451C0C0065BF83 /* FANNMyo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FANNMyo; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0A892521B451C0C0065BF83 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E0A898D41B451D2D0065BF83 /* libdoublefann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdoublefann.2.2.0.dylib; sourceTree = "<group>"; };
+		E0A898D51B451D2D0065BF83 /* libfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfann.2.2.0.dylib; sourceTree = "<group>"; };
+		E0A898D61B451D2D0065BF83 /* libfixedfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfixedfann.2.2.0.dylib; sourceTree = "<group>"; };
+		E0A898D71B451D2D0065BF83 /* libfloatfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfloatfann.2.2.0.dylib; sourceTree = "<group>"; };
+		E0A898D91B451D2D0065BF83 /* myo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = myo.framework; sourceTree = "<group>"; };
+		E0A898DC1B451D2D0065BF83 /* compat_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compat_time.h; sourceTree = "<group>"; };
+		E0A898DD1B451D2D0065BF83 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		E0A898DE1B451D2D0065BF83 /* doublefann.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = doublefann.h; sourceTree = "<group>"; };
+		E0A898DF1B451D2D0065BF83 /* fann.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann.h; sourceTree = "<group>"; };
+		E0A898E01B451D2D0065BF83 /* fann_activation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_activation.h; sourceTree = "<group>"; };
+		E0A898E11B451D2D0065BF83 /* fann_cascade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_cascade.h; sourceTree = "<group>"; };
+		E0A898E21B451D2D0065BF83 /* fann_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_cpp.h; sourceTree = "<group>"; };
+		E0A898E31B451D2D0065BF83 /* fann_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_data.h; sourceTree = "<group>"; };
+		E0A898E41B451D2D0065BF83 /* fann_error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_error.h; sourceTree = "<group>"; };
+		E0A898E51B451D2D0065BF83 /* fann_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_internal.h; sourceTree = "<group>"; };
+		E0A898E61B451D2D0065BF83 /* fann_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_io.h; sourceTree = "<group>"; };
+		E0A898E71B451D2D0065BF83 /* fann_train.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_train.h; sourceTree = "<group>"; };
+		E0A898E81B451D2D0065BF83 /* fixedfann.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedfann.h; sourceTree = "<group>"; };
+		E0A898E91B451D2D0065BF83 /* floatfann.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = floatfann.h; sourceTree = "<group>"; };
+		E0A898ED1B451D2D0065BF83 /* ThrowOnError.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ThrowOnError.hpp; sourceTree = "<group>"; };
+		E0A898EE1B451D2D0065BF83 /* DeviceListener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DeviceListener.hpp; sourceTree = "<group>"; };
+		E0A898EF1B451D2D0065BF83 /* Hub.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Hub.hpp; sourceTree = "<group>"; };
+		E0A898F11B451D2D0065BF83 /* Hub_impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Hub_impl.hpp; sourceTree = "<group>"; };
+		E0A898F21B451D2D0065BF83 /* Myo_impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Myo_impl.hpp; sourceTree = "<group>"; };
+		E0A898F31B451D2D0065BF83 /* Pose_impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Pose_impl.hpp; sourceTree = "<group>"; };
+		E0A898F41B451D2D0065BF83 /* Myo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Myo.hpp; sourceTree = "<group>"; };
+		E0A898F51B451D2D0065BF83 /* Pose.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Pose.hpp; sourceTree = "<group>"; };
+		E0A898F61B451D2D0065BF83 /* Quaternion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quaternion.hpp; sourceTree = "<group>"; };
+		E0A898F71B451D2D0065BF83 /* Vector3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vector3.hpp; sourceTree = "<group>"; };
+		E0A898FA1B451D2D0065BF83 /* visibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visibility.h; sourceTree = "<group>"; };
+		E0A898FB1B451D2D0065BF83 /* libmyo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libmyo.h; sourceTree = "<group>"; };
+		E0A898FC1B451D2D0065BF83 /* myo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = myo.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E0A8924C1B451C0C0065BF83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0A899011B451D2D0065BF83 /* libfloatfann.2.2.0.dylib in Frameworks */,
+				E0A899021B451D2D0065BF83 /* myo.framework in Frameworks */,
+				E0A898FE1B451D2D0065BF83 /* libdoublefann.2.2.0.dylib in Frameworks */,
+				E0A899001B451D2D0065BF83 /* libfixedfann.2.2.0.dylib in Frameworks */,
+				E0A898FF1B451D2D0065BF83 /* libfann.2.2.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E0A892461B451C0C0065BF83 = {
+			isa = PBXGroup;
+			children = (
+				E0A898D21B451D2D0065BF83 /* myo.mac */,
+				E0A892511B451C0C0065BF83 /* FANNMyo */,
+				E0A892501B451C0C0065BF83 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E0A892501B451C0C0065BF83 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E0A8924F1B451C0C0065BF83 /* FANNMyo */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E0A892511B451C0C0065BF83 /* FANNMyo */ = {
+			isa = PBXGroup;
+			children = (
+				E059F2611B45A0E100919E56 /* Utilities.h */,
+				E0A892521B451C0C0065BF83 /* main.cpp */,
+			);
+			path = FANNMyo;
+			sourceTree = "<group>";
+		};
+		E0A898D21B451D2D0065BF83 /* myo.mac */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898D31B451D2D0065BF83 /* bin */,
+				E0A898D81B451D2D0065BF83 /* framework */,
+				E0A898DA1B451D2D0065BF83 /* include */,
+				E0A898FD1B451D2D0065BF83 /* lib */,
+			);
+			path = myo.mac;
+			sourceTree = "<group>";
+		};
+		E0A898D31B451D2D0065BF83 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898D41B451D2D0065BF83 /* libdoublefann.2.2.0.dylib */,
+				E0A898D51B451D2D0065BF83 /* libfann.2.2.0.dylib */,
+				E0A898D61B451D2D0065BF83 /* libfixedfann.2.2.0.dylib */,
+				E0A898D71B451D2D0065BF83 /* libfloatfann.2.2.0.dylib */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		E0A898D81B451D2D0065BF83 /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898D91B451D2D0065BF83 /* myo.framework */,
+			);
+			path = framework;
+			sourceTree = "<group>";
+		};
+		E0A898DA1B451D2D0065BF83 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898DB1B451D2D0065BF83 /* fann */,
+				E0A898EA1B451D2D0065BF83 /* myo */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E0A898DB1B451D2D0065BF83 /* fann */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898DC1B451D2D0065BF83 /* compat_time.h */,
+				E0A898DD1B451D2D0065BF83 /* config.h */,
+				E0A898DE1B451D2D0065BF83 /* doublefann.h */,
+				E0A898DF1B451D2D0065BF83 /* fann.h */,
+				E0A898E01B451D2D0065BF83 /* fann_activation.h */,
+				E0A898E11B451D2D0065BF83 /* fann_cascade.h */,
+				E0A898E21B451D2D0065BF83 /* fann_cpp.h */,
+				E0A898E31B451D2D0065BF83 /* fann_data.h */,
+				E0A898E41B451D2D0065BF83 /* fann_error.h */,
+				E0A898E51B451D2D0065BF83 /* fann_internal.h */,
+				E0A898E61B451D2D0065BF83 /* fann_io.h */,
+				E0A898E71B451D2D0065BF83 /* fann_train.h */,
+				E0A898E81B451D2D0065BF83 /* fixedfann.h */,
+				E0A898E91B451D2D0065BF83 /* floatfann.h */,
+			);
+			path = fann;
+			sourceTree = "<group>";
+		};
+		E0A898EA1B451D2D0065BF83 /* myo */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898EB1B451D2D0065BF83 /* cxx */,
+				E0A898F81B451D2D0065BF83 /* libmyo */,
+				E0A898FB1B451D2D0065BF83 /* libmyo.h */,
+				E0A898FC1B451D2D0065BF83 /* myo.hpp */,
+			);
+			path = myo;
+			sourceTree = "<group>";
+		};
+		E0A898EB1B451D2D0065BF83 /* cxx */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898EC1B451D2D0065BF83 /* detail */,
+				E0A898EE1B451D2D0065BF83 /* DeviceListener.hpp */,
+				E0A898EF1B451D2D0065BF83 /* Hub.hpp */,
+				E0A898F01B451D2D0065BF83 /* impl */,
+				E0A898F41B451D2D0065BF83 /* Myo.hpp */,
+				E0A898F51B451D2D0065BF83 /* Pose.hpp */,
+				E0A898F61B451D2D0065BF83 /* Quaternion.hpp */,
+				E0A898F71B451D2D0065BF83 /* Vector3.hpp */,
+			);
+			path = cxx;
+			sourceTree = "<group>";
+		};
+		E0A898EC1B451D2D0065BF83 /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898ED1B451D2D0065BF83 /* ThrowOnError.hpp */,
+			);
+			path = detail;
+			sourceTree = "<group>";
+		};
+		E0A898F01B451D2D0065BF83 /* impl */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898F11B451D2D0065BF83 /* Hub_impl.hpp */,
+				E0A898F21B451D2D0065BF83 /* Myo_impl.hpp */,
+				E0A898F31B451D2D0065BF83 /* Pose_impl.hpp */,
+			);
+			path = impl;
+			sourceTree = "<group>";
+		};
+		E0A898F81B451D2D0065BF83 /* libmyo */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898F91B451D2D0065BF83 /* detail */,
+			);
+			path = libmyo;
+			sourceTree = "<group>";
+		};
+		E0A898F91B451D2D0065BF83 /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				E0A898FA1B451D2D0065BF83 /* visibility.h */,
+			);
+			path = detail;
+			sourceTree = "<group>";
+		};
+		E0A898FD1B451D2D0065BF83 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E0A8924E1B451C0C0065BF83 /* FANNMyo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0A892561B451C0C0065BF83 /* Build configuration list for PBXNativeTarget "FANNMyo" */;
+			buildPhases = (
+				E0A8924B1B451C0C0065BF83 /* Sources */,
+				E0A8924C1B451C0C0065BF83 /* Frameworks */,
+				E0A8924D1B451C0C0065BF83 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FANNMyo;
+			productName = FANNMyo;
+			productReference = E0A8924F1B451C0C0065BF83 /* FANNMyo */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E0A892471B451C0C0065BF83 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Gabriele Di Bari";
+				TargetAttributes = {
+					E0A8924E1B451C0C0065BF83 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+				};
+			};
+			buildConfigurationList = E0A8924A1B451C0C0065BF83 /* Build configuration list for PBXProject "FANNMyo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E0A892461B451C0C0065BF83;
+			productRefGroup = E0A892501B451C0C0065BF83 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E0A8924E1B451C0C0065BF83 /* FANNMyo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E0A8924B1B451C0C0065BF83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0A892531B451C0C0065BF83 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E0A892541B451C0C0065BF83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/myo.mac/include",
+					"$(PROJECT_DIR)/myo.mac/include/myo",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E0A892551B451C0C0065BF83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/myo.mac/include",
+					"$(PROJECT_DIR)/myo.mac/include/myo",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E0A892571B451C0C0065BF83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/myo.mac/framework",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/myo.mac/bin",
+					"$(PROJECT_DIR)/myo.mac/lib",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E0A892581B451C0C0065BF83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/myo.mac/framework",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/myo.mac/bin",
+					"$(PROJECT_DIR)/myo.mac/lib",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E0A8924A1B451C0C0065BF83 /* Build configuration list for PBXProject "FANNMyo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0A892541B451C0C0065BF83 /* Debug */,
+				E0A892551B451C0C0065BF83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0A892561B451C0C0065BF83 /* Build configuration list for PBXNativeTarget "FANNMyo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0A892571B451C0C0065BF83 /* Debug */,
+				E0A892581B451C0C0065BF83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E0A892471B451C0C0065BF83 /* Project object */;
+}
