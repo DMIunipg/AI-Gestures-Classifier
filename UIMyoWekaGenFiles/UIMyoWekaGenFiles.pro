@@ -69,7 +69,8 @@ SOURCES += main.cpp\
     MyoManager.cpp \
     RecordingDialog.cpp \
     FlagsDialog.cpp \
-    MyoTime.cpp
+    MyoTime.cpp \
+    GesturesBuilder.cpp
 
 HEADERS  += GenMyoWindow.h \
     GestureForm.h \
@@ -85,7 +86,8 @@ HEADERS  += GenMyoWindow.h \
     FANNOuput.h \
     MyoDataInput.h \
     MyoSerialize.h \
-    MyoTime.h
+    MyoTime.h \
+    GesturesBuilder.h
 
 FORMS    += GenMyoWindow.ui \
     GestureForm.ui \

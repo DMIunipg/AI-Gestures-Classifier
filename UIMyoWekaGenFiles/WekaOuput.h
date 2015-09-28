@@ -13,6 +13,8 @@
 #include <cstdio>
 #include <vector>
 #include <string>
+#include <QString>
+#include <QList>
 #include <assert.h>
 #include "Utilities.h"
 #include "DataFlags.h"
@@ -27,10 +29,28 @@ public:
     {
         if(mFile) close();
     }
-    
+
     void open(const std::string& path,
               const DataFlags& flags,
               const std::vector<std::string>& mWekaClass)
+    {
+
+        assert(mFlags.mGyroscope     ||
+               mFlags.mAccelerometer ||
+               mFlags.mQuaternion    ||
+               mFlags.mEuler         ||
+               mFlags.mEmg);
+        //set flags
+        mFlags = flags;
+        //compute class string
+        buildHeaderClass(mWekaClass);
+        //open file
+        open(path);
+    }
+
+    void open(const std::string& path,
+              const DataFlags& flags,
+              const QList< QString >& mWekaClass)
     {
 
         assert(mFlags.mGyroscope     ||
@@ -127,6 +147,21 @@ private:
         size_t i=0;
         for(i=0; i!=wekaClass.size()-1 ;++i)  mWekaClass += wekaClass[i] +",";
         mWekaClass+=wekaClass[i];
+    }
+
+    void buildHeaderClass(const QList< QString >& wekaClass)
+    {
+        assert(wekaClass.size());
+        //count
+        size_t i = 0;
+        //first
+        mWekaClass = wekaClass.begin()->toStdString();
+        //next
+        for(auto it= ++wekaClass.begin(); it!=wekaClass.end();++it )
+        {
+            mWekaClass += "," ;
+            mWekaClass += it->toStdString() ;
+        }
     }
 
     void createHeader(std::string& header) const

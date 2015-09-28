@@ -16,8 +16,10 @@ template < class T,
 class WekaRows
 {
 public:
-    using Row  = typename myo::RawDatas< T , J , H, X , N >;
-    using List = typename std::vector< myo::RawDatas< T , J , H, X , N > >;
+    using Row     = typename myo::RawDatas< T , J , H, X , N >;
+    using List    = typename std::vector< myo::RawDatas< T , J , H, X , N > >;
+    using ListIt  = typename std::vector< myo::RawDatas< T , J , H, X , N > >::iterator;
+    using ListCIt = typename std::vector< myo::RawDatas< T , J , H, X , N > >::const_iterator;
 
     void append(const Row& raw)
     {
@@ -44,6 +46,31 @@ public:
     {
         assert(i<=size());
         return mList[i];
+    }
+
+    void resize(size_t size)
+    {
+        mList.resize(size);
+    }
+
+    ListIt begin()
+    {
+        return mList.begin();
+    }
+
+    ListCIt begin() const
+    {
+        return mList.begin();
+    }
+
+    ListIt end()
+    {
+        return mList.end();
+    }
+
+    ListCIt end() const
+    {
+        return mList.end();
     }
 
 private:

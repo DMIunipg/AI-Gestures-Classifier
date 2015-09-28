@@ -4,6 +4,7 @@
 #include "FlagsDialog.h"
 #include "MyoDataOuput.h"
 #include "MyoDataInput.h"
+#include "GesturesBuilder.h"
 #include "ui_GenMyoWindow.h"
 #include <QDebug>
 #include <QFileDialog>
@@ -242,32 +243,88 @@ void GenMyoWindow::saveWEKA()
     {
         //get all items
         size_t nItems=ui->mLWGestures->count();
-        //vector of names
-        std::vector<std::string> classNames;
-        //get all class
-        for(size_t i=0;i!=nItems;++i)
-        {
-            auto item=ui->mLWGestures->item(i);
-            auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-            classNames.push_back(widget->getName().toStdString());
-        }
-        //
+        //ouput
+        MyoListener::TypeOuputWeka ouput;
+        //path
         std::string lPath=mPath.toStdString().c_str();
         assert(lPath.length());
-        //file
-        MyoListener::TypeOuputWeka ouput;
-        ouput.open(lPath,
-                   mFlags,
-                   classNames);
-        //seva all
-        for(size_t i=0;i!=nItems;++i)
+        //cases
+        switch (mFlags.mMode)
         {
-            auto item=ui->mLWGestures->item(i);
-            auto it=mWekaItems.find(item);
-            if(it != mWekaItems.end())
+            case DataFlags::SEMPLE_MODE:
             {
-                ouput.append(classNames[i], it.value());
+                //vector of names
+                std::vector<std::string> classNames;
+                //get all class
+                for(size_t i=0;i!=nItems;++i)
+                {
+                    auto item=ui->mLWGestures->item(i);
+                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
+                    classNames.push_back(widget->getName().toStdString());
+                }
+                //file
+                ouput.open(lPath,
+                           mFlags,
+                           classNames);
+                //seva all
+                for(size_t i=0;i!=nItems;++i)
+                {
+                    auto item=ui->mLWGestures->item(i);
+                    auto it=mWekaItems.find(item);
+                    if(it != mWekaItems.end())
+                    {
+                        ouput.append(classNames[i], it.value());
+                    }
+                }
             }
+            break;
+            case DataFlags::GESTURE_MODE:
+            {
+                GesturesBuilder gbuilder(mFlags);
+                //put all
+                for(size_t i=0;i!=nItems;++i)
+                {
+                    auto item=ui->mLWGestures->item(i);
+                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
+                    auto it=mWekaItems.find(item);
+                    if(it != mWekaItems.end())
+                    {
+                        gbuilder.append(widget->getName(), it.value());
+                    }
+                }
+                //nreps
+                size_t nreps = 1;
+                //get ouput
+                GesturesBuilder::GestureOutput ouputItems;
+                gbuilder.finalize(nreps,ouputItems);
+                //////////////////////////////////////////////////////////////
+                //type of ouput
+                DataFlags flags( mFlags );
+                //change type
+                flags.mMode = DataFlags::SEMPLE_MODE;
+                //set nreps
+                flags.mReps = nreps;
+                //get keys
+                QList< QString > keys = ouputItems.keys();
+                //ouput
+                ouput.open(lPath,
+                           flags,
+                           keys);
+                //write
+                for(auto& name:keys)
+                {
+                    //list of input
+                    auto& inputs=ouputItems.value(name);
+                    //put all into file
+                    for(auto& rows:inputs)
+                    {
+                        ouput.append(name.toStdString(), rows);
+                    }
+                }
+                //////////////////////////////////////////////////////////////
+            }
+            default:
+            break;
         }
     }
 }

@@ -29,6 +29,8 @@ public slots:
 
     void onOk();
     void onCancel();
+    void onSempleMode(bool enabled);
+    void onGestureMode(bool enabled);
 
 private:
 
