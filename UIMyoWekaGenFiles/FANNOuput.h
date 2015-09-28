@@ -7,7 +7,10 @@
 #include <ostream>
 #include <fstream>
 #include <sstream>
+#include <QList>
+#include <QString>
 #include <math.h>
+#include "DataFlags.h"
 
 
 
@@ -21,9 +24,10 @@ public:
         if(isOpen()) close();
     }
 
+
     void open(const std::string& path,
               const DataFlags& flags,
-              const std::vector<std::string>& classes)
+              const QList< QString >& classes)
     {
 
         assert(mFlags.mGyroscope     ||
@@ -38,22 +42,20 @@ public:
         //open file
         open(path);
     }
-
     template < class T,
                class J,
                class H,
                class X,
                const size_t N = 8 >
-    void append(const std::string& className,const WekaRows< T , J , H , X , N >& rows)
+    void append(const QString& className,const WekaRows< T , J , H , X , N >& rows)
     {
 
         //assert
         assert(isOpen());
         assert(EmgN == N);
-        //find
-        auto it=std::find(mClasses.begin(),mClasses.end(),className);
-        assert(it != mClasses.end());
-        size_t idClass= it - mClasses.begin();
+        //find class's id
+        int idClass= mClasses.indexOf(className);
+        assert(idClass != -1);
         //count rows
         size_t nrows=rows.size()/mFlags.mReps;
         //
@@ -136,6 +138,22 @@ private:
         for(auto& line : mLines) mFile << line.str() << "\n";
         //close
         mFile.close();
+        //write meta data
+        writeMataData();
+    }
+
+    void writeMataData() const
+    {
+        //write meta data
+        std::ofstream metaFile;
+        //meta data path
+        std::string mtPath = mPath+".meta";
+        //create file
+        metaFile.open(mtPath);
+        //write
+        metaFile.write((char*)&mFlags,sizeof(mFlags));
+        //close
+        metaFile.close();
     }
 
     void open(const std::string& path)
@@ -144,11 +162,14 @@ private:
         if(isOpen()) close();
         //open file
         mFile.open(path);
+        //save path
+        mPath = path;
     }
 
     //file data
+    std::string mPath;
     std::ofstream  mFile;
-    std::vector < std::string > mClasses;
+    QList < QString > mClasses;
     std::vector < std::stringstream > mLines;
     //flags
     DataFlags mFlags;

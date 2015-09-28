@@ -7,10 +7,12 @@
 //
 #ifndef MYO_UTILITIES_H
 #define MYO_UTILITIES_H
+#pragma once
 
 #include <assert.h>
 #include <myo.hpp>
 #include <cstring>
+#include <cstdio>
 
 namespace myo
 {
@@ -85,6 +87,7 @@ namespace myo
     {
     protected:
         
+        double mTime;
         std::array< T , N > mEmg;
         Vector3< J > mGyro;
         Vector3< H > mAccel;
@@ -94,27 +97,44 @@ namespace myo
         
         RawDatas()
         {
+            mTime = 0.0;
             mEmg.fill(0);
         }
         
         void clear()
         {
+            mTime = 0.0;
             mEmg.fill(0);
             mGyro = Vector3< J >();
             mAccel = Vector3< H >();
             mQuad  = Quaternion< X >();
         }
         
+        void setTime(double time)
+        {
+            mTime = time;
+        }
+
+        double getTime() const
+        {
+            return mTime;
+        }
+
         void setEmg(const std::array< T , N >& value)
         {
             mEmg = value;
         }
-        
+
         const std::array< T , N >& getEmg() const
         {
             return mEmg;
         }
-        
+
+        void setEmg(size_t i, T value)
+        {
+            mEmg[i]=value;
+        }
+
         void setEmgCArray(const T* array, size_t n)
         {
             assert(n <= N);
@@ -158,11 +178,15 @@ namespace myo
 
         std::string toString()
         {
-            std::string str("Emg data: ");
+            std::string str("Time: ");
+            str+=std::to_string(mTime);
+
+            str+="\nEmg data: ";
             for(auto emg : mEmg )
             {
                 str += std::to_string( emg ) + " " ;
             }
+
             str+="\nGyroscope: "+
             std::to_string(mGyro.x())+ " "+
             std::to_string(mGyro.y())+ " "+
@@ -180,6 +204,75 @@ namespace myo
             return str;
         }
         
+        void serialize(FILE* file) const
+        {
+            //write time
+            std::fwrite(&mTime,sizeof(double),1,file);
+            //write emg
+            std::fwrite((void*)mEmg.data(),sizeof(mEmg[0]),mEmg.size(),file);
+            //write gyroscope
+            {
+                J x = mGyro.x(),
+                  y = mGyro.y(),
+                  z = mGyro.z();
+                std::fwrite(&x,sizeof(x),1,file);
+                std::fwrite(&y,sizeof(y),1,file);
+                std::fwrite(&z,sizeof(z),1,file);
+            }
+            //write accelerometer
+            {
+                H x = mAccel.x(),
+                  y = mAccel.y(),
+                  z = mAccel.z();
+                std::fwrite(&x,sizeof(x),1,file);
+                std::fwrite(&y,sizeof(y),1,file);
+                std::fwrite(&z,sizeof(z),1,file);
+            }
+            //write quaternion
+            {
+                X x = mQuad.x(),
+                  y = mQuad.y(),
+                  z = mQuad.z(),
+                  w = mQuad.w();
+                std::fwrite(&x,sizeof(x),1,file);
+                std::fwrite(&y,sizeof(y),1,file);
+                std::fwrite(&z,sizeof(z),1,file);
+                std::fwrite(&w,sizeof(z),1,file);
+            }
+        }
+
+        void deserialize(FILE* file)
+        {
+            //write time
+            std::fread(&mTime,sizeof(double),1,file);
+            //write emg
+            fread(mEmg.data(),sizeof(mEmg[0]),mEmg.size(),file);
+            //write gyroscope
+            {
+                J x = 0 , y = 0, z = 0;
+                std::fread(&x,sizeof(x),1,file);
+                std::fread(&y,sizeof(y),1,file);
+                std::fread(&z,sizeof(z),1,file);
+                mGyro = Vector3< J > ( x,y,z );
+            }
+            //write accelerometer
+            {
+                H  x = 0 , y = 0, z = 0;
+                std::fread(&x,sizeof(x),1,file);
+                std::fread(&y,sizeof(y),1,file);
+                std::fread(&z,sizeof(z),1,file);
+                mAccel = Vector3< H > ( x,y,z );
+            }
+            //write quaternion
+            {
+                X x = 0 , y = 0, z = 0, w = 0;
+                std::fread(&x,sizeof(x),1,file);
+                std::fread(&y,sizeof(y),1,file);
+                std::fread(&z,sizeof(z),1,file);
+                std::fread(&w,sizeof(z),1,file);
+                mQuad = Quaternion< H > ( x,y,z,w );
+            }
+        }
     };
     
     struct ArmStatus

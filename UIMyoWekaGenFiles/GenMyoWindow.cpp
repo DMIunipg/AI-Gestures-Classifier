@@ -300,8 +300,6 @@ void GenMyoWindow::saveWEKA()
                 //////////////////////////////////////////////////////////////
                 //type of ouput
                 DataFlags flags( mFlags );
-                //change type
-                flags.mMode = DataFlags::SEMPLE_MODE;
                 //set nreps
                 flags.mReps = nreps;
                 //get keys
@@ -335,32 +333,87 @@ void GenMyoWindow::saveFANN()
     {
         //get all items
         size_t nItems=ui->mLWGestures->count();
-        //vector of names
-        std::vector<std::string> classNames;
-        //get all class
-        for(size_t i=0;i!=nItems;++i)
-        {
-            auto item=ui->mLWGestures->item(i);
-            auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-            classNames.push_back(widget->getName().toStdString());
-        }
-        //
+        //path
         std::string lPath=mPath.toStdString().c_str();
         assert(lPath.length());
-        //file
+        //ouput serialize
         MyoListener::TypeOuputFANN ouput;
-        ouput.open(lPath,
-                   mFlags,
-                   classNames);
-        //seva all
-        for(size_t i=0;i!=nItems;++i)
+        //types
+        switch (mFlags.mMode)
         {
-            auto item=ui->mLWGestures->item(i);
-            auto it=mWekaItems.find(item);
-            if(it != mWekaItems.end())
+            case DataFlags::SEMPLE_MODE:
             {
-                ouput.append(classNames[i], it.value());
+                //vector of names
+                QList< QString > classNames;
+                //get all class
+                for(size_t i=0;i!=nItems;++i)
+                {
+                    auto item=ui->mLWGestures->item(i);
+                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
+                    classNames.push_back(widget->getName());
+                }
+                //file
+                ouput.open(lPath,
+                           mFlags,
+                           classNames);
+                //seva all
+                for(size_t i=0;i!=nItems;++i)
+                {
+                    auto item=ui->mLWGestures->item(i);
+                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
+                    auto it=mWekaItems.find(item);
+                    if(it != mWekaItems.end())
+                    {
+                        ouput.append(widget->getName(), it.value());
+                    }
+                }
             }
+            break;
+            case DataFlags::GESTURE_MODE:
+            {
+                GesturesBuilder gbuilder(mFlags);
+                //put all
+                for(size_t i=0;i!=nItems;++i)
+                {
+                    auto item=ui->mLWGestures->item(i);
+                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
+                    auto it=mWekaItems.find(item);
+                    if(it != mWekaItems.end())
+                    {
+                        gbuilder.append(widget->getName(), it.value());
+                    }
+                }
+                //nreps
+                size_t nreps = 1;
+                //get ouput
+                GesturesBuilder::GestureOutput ouputItems;
+                gbuilder.finalize(nreps,ouputItems);
+                //////////////////////////////////////////////////////////////
+                //type of ouput
+                DataFlags flags( mFlags );
+                //set nreps
+                flags.mReps = nreps;
+                //get keys
+                QList< QString > keys = ouputItems.keys();
+                //ouput
+                ouput.open(lPath,
+                           flags,
+                           keys);
+                //write
+                for(auto& name:keys)
+                {
+                    //list of input
+                    auto& inputs=ouputItems.value(name);
+                    //put all into file
+                    for(auto& rows:inputs)
+                    {
+                        ouput.append(name, rows);
+                    }
+                }
+                //////////////////////////////////////////////////////////////
+            }
+            default:
+            break;
         }
     }
 }
