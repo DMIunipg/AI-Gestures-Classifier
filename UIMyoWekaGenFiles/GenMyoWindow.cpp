@@ -66,6 +66,13 @@ void GenMyoWindow::onAddGesture()
     });
 }
 
+void GenMyoWindow::onNew()
+{
+    //clear data
+    mWekaItems.clear();
+    ui->mLWGestures->clear();
+}
+
 void GenMyoWindow::onOpen()
 {
     //path

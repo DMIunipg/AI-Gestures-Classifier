@@ -18,19 +18,36 @@ namespace myomethod = myosvm;
 //init
 int main(int argc, const char * argv[])
 {
-    std::string path("datas/pugno_normale.fann");
+    std::string path("datas/left_right_normal.fann");
+    //std::string path("_datas/pugno_normale.fann");
+    //std::string path("__datas/left_right_normal.fann");
     //create model
-    //myomethod::create_model(path);
+    myomethod::create_model(path);
     //myo thread
     MyoThread myo;
     //data
     DataFlags flags;
+    ClassesNames cnames;
     //read flag
-    FILE* file = std::fopen((path+".meta").c_str(), "rb");
-    flags.derialize(file);
-    std::fclose(file);
+    {
+        FILE* file = std::fopen((path+".meta").c_str(), "rb");
+        if(file)
+        {
+            flags.derialize(file);
+            std::fclose(file);
+        }
+    }
+    //read names
+    {
+        FILE* file = std::fopen((path+".classes").c_str(), "rb");
+        if(file)
+        {
+            cnames.derialize(file);
+            std::fclose(file);
+        }
+    }
     //start thread
-    void* context=myomethod::myo_classification(path,myo,flags);
+    void* context=myomethod::myo_classification(path,myo,flags,cnames);
     //wait
     for(;;)
     {

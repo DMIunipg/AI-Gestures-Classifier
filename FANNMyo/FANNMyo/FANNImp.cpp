@@ -26,17 +26,23 @@ void create_model(const std::string& path)
     //ANN
     struct fann* ann = fann_create_standard(num_layers,
                                             train_data->num_input,
+                                            train_data->num_input*3,
                                             train_data->num_input*2,
-                                            train_data->num_input,
                                             train_data->num_output);
     
     std::cout << "Training network.\n";
-    
+#if 0
     fann_set_training_algorithm(ann, /*FANN_TRAIN_INCREMENTAL*/ FANN_TRAIN_QUICKPROP);
     fann_set_learning_rate(ann, 0.5f);
     fann_set_learning_momentum(ann,/*momentum*/ 0.1f);
     fann_set_train_error_function(ann, /*FANN_ERRORFUNC_LINEAR*/ FANN_ERRORFUNC_TANH);
+#else
+    fann_set_training_algorithm(ann, FANN_TRAIN_INCREMENTAL);
+    fann_set_learning_rate(ann, 0.3f);
+    fann_set_learning_momentum(ann,/*momentum*/ 0.01);
+    fann_set_train_error_function(ann, FANN_ERRORFUNC_LINEAR);
     
+#endif
     fann_train_on_data(ann, train_data, 3000, 10, desired_error);
     
     std::cout << "Testing network.\n";
@@ -61,7 +67,7 @@ void create_model(const std::string& path)
     fann_destroy_train(test_data);
 }
 
-void* myo_classification(const std::string& path,MyoThread& myo,DataFlags&  flags)
+void* myo_classification(const std::string& path,MyoThread& myo,DataFlags&  flags,ClassesNames& cnames)
 {
     //load model
     fann* ann=fann_create_from_file( (path+".model").c_str() );

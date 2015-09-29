@@ -149,6 +149,8 @@ private:
         mFile.close();
         //write meta data
         writeMataData();
+        //write map name
+        writeMapNames();
     }
 
     void writeMataData() const
@@ -160,6 +162,31 @@ private:
         mFlags.serialize(metaFile);
         //close
         std::fclose(metaFile);
+    }
+
+    void writeMapNames() const
+    {
+        //path
+        std::string mcPath = mPath+".classes";
+        //file ouput
+        std::ofstream file;
+        //open file
+        file.open(mcPath);
+        //is if open...
+        if(file.is_open())
+        {
+            //max -1 +1 normal class
+            double size = ((double)mClasses.size()-1);
+            //write number of classes
+            file << std::to_string(mClasses.size()) << "\n";
+            //write names
+            for(size_t i=0;i!=mClasses.size();++i)
+            {
+                double id=((double)i / size) * 2.0 - 1.0;
+                file << std::to_string(id) << ", ";
+                file << mClasses[i].toStdString()  << "\n";
+            }
+        }
     }
 
     void open(const std::string& path)

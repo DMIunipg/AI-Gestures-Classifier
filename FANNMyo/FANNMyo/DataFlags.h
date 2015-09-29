@@ -2,6 +2,10 @@
 #define DATAFLAGS_H
 #pragma once
 
+#include <cstdio>
+#include <string>
+#include <map>
+
 struct DataFlags
 {
     //mode
@@ -128,6 +132,36 @@ struct DataFlags
         std::fread(&mEmg, sizeof(mEmg), 1, file);
     }
 
+};
+
+struct ClassesNames
+{
+    std::map< double, std::string > mNames;
+    
+    void derialize(FILE* file)
+    {
+        //get map size
+        unsigned int nclasses = 0;
+        std::fscanf(file, "%u\n", &nclasses);
+        //read all classes
+        for(unsigned int i=0;i!=nclasses;++i)
+        {
+            double key = 0.0;
+            char   buffer[255] = {0};
+            std::fscanf(file, "%le, %s",&key,buffer);
+            mNames[key] = buffer;
+        }
+    }
+    
+    const char* getClassName(double uid) const
+    {
+        //search
+        auto it=mNames.find(uid);
+        //not found?
+        if(it==mNames.end()) return "unknow";
+        //return name of class
+        return it->second.c_str();
+    }
 };
 
 #endif // DATAFLAGS_H

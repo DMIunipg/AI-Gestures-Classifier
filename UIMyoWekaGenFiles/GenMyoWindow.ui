@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>394</width>
-    <height>453</height>
+    <width>422</width>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>394</width>
+     <width>422</width>
      <height>22</height>
     </rect>
    </property>
@@ -40,6 +40,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="mANew"/>
     <addaction name="mAOpen"/>
     <addaction name="separator"/>
     <addaction name="mASaveAs"/>
@@ -80,6 +81,11 @@
   <action name="mAExportAs">
    <property name="text">
     <string>Esport As..</string>
+   </property>
+  </action>
+  <action name="mANew">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>
@@ -198,6 +204,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mANew</sender>
+   <signal>triggered()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onNew()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>196</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAddGesture()</slot>
@@ -207,5 +229,6 @@
   <slot>onExport()</slot>
   <slot>onExportAs()</slot>
   <slot>onOpen()</slot>
+  <slot>onNew()</slot>
  </slots>
 </ui>

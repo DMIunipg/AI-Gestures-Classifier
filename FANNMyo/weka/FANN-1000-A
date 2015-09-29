@@ -1,0 +1,553 @@
+=== Run information ===
+
+Scheme:weka.classifiers.functions.MultilayerPerceptron -L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H 3
+Relation:     myo
+Instances:    15
+Attributes:   163
+[list of attributes omitted]
+Test mode:15-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Sigmoid Node 0
+    Inputs    Weights
+    Threshold    3.64997957508433
+    Node 2    -1.5284645353573696
+    Node 3    -3.4832171051957204
+    Node 4    -3.063647539942803
+Sigmoid Node 1
+    Inputs    Weights
+    Threshold    -3.648200467508247
+    Node 2    1.493212829854277
+    Node 3    3.4939634086851883
+    Node 4    3.081965387057513
+Sigmoid Node 2
+    Inputs    Weights
+    Threshold    0.2763679093035504
+    Attrib time1    0.14272967491832492
+    Attrib emg1_1    -0.13028764068893947
+    Attrib emg1_2    -0.0021947699825813653
+    Attrib emg1_3    -0.030166621391323617
+    Attrib emg1_4    0.02734729932945423
+    Attrib emg1_5    0.07328269246103325
+    Attrib emg1_6    -0.11093025677052443
+    Attrib emg1_7    -0.23190375729596518
+    Attrib emg1_8    -0.2393323018004941
+    Attrib time2    0.02974812805208558
+    Attrib emg2_1    0.03597632562770125
+    Attrib emg2_2    0.07643990749830379
+    Attrib emg2_3    0.12795525329452212
+    Attrib emg2_4    -0.1670346671157991
+    Attrib emg2_5    -0.0909104432944552
+    Attrib emg2_6    -0.24019005526719397
+    Attrib emg2_7    0.009981291650024413
+    Attrib emg2_8    0.04082394369411672
+    Attrib time3    -0.15615711666749962
+    Attrib emg3_1    -0.03789676098751635
+    Attrib emg3_2    -0.12849407155640918
+    Attrib emg3_3    -0.0421619084410717
+    Attrib emg3_4    0.059299087956723326
+    Attrib emg3_5    -0.1083438017348878
+    Attrib emg3_6    -0.26453369614253325
+    Attrib emg3_7    -0.08378432816881984
+    Attrib emg3_8    0.03255244412961763
+    Attrib time4    -0.199499365718549
+    Attrib emg4_1    0.05636677972215007
+    Attrib emg4_2    -0.113207873818931
+    Attrib emg4_3    -0.11936083587712516
+    Attrib emg4_4    0.016092471033202427
+    Attrib emg4_5    -0.10761779062492079
+    Attrib emg4_6    -0.28181465228445407
+    Attrib emg4_7    0.044257264423091934
+    Attrib emg4_8    -0.04051265712851397
+    Attrib time5    -0.0051357817341092585
+    Attrib emg5_1    0.16527699489625466
+    Attrib emg5_2    0.1495856604912977
+    Attrib emg5_3    0.08845987371092766
+    Attrib emg5_4    -0.06594066887566112
+    Attrib emg5_5    -0.020521812483007957
+    Attrib emg5_6    0.13237952435009145
+    Attrib emg5_7    -0.10912542087027911
+    Attrib emg5_8    0.008590992977214055
+    Attrib time6    -0.007978793386986703
+    Attrib emg6_1    -0.04342276521773966
+    Attrib emg6_2    0.046079244834156256
+    Attrib emg6_3    -0.0853229997136065
+    Attrib emg6_4    -0.10237761625352201
+    Attrib emg6_5    -0.026739985540256507
+    Attrib emg6_6    -0.08237358637756512
+    Attrib emg6_7    0.10191591529704604
+    Attrib emg6_8    0.07875958754355572
+    Attrib time7    0.2046008778265952
+    Attrib emg7_1    0.08779106665388133
+    Attrib emg7_2    -0.02664769373679589
+    Attrib emg7_3    0.05401666245663853
+    Attrib emg7_4    0.06618190887988878
+    Attrib emg7_5    -0.059263127949268864
+    Attrib emg7_6    0.06363090789604532
+    Attrib emg7_7    0.03251363454699968
+    Attrib emg7_8    0.23113219438275645
+    Attrib time8    -0.06958629308718241
+    Attrib emg8_1    -0.036215935176340135
+    Attrib emg8_2    -0.09567371594144539
+    Attrib emg8_3    -0.2929867229349911
+    Attrib emg8_4    0.1144556352630515
+    Attrib emg8_5    0.2757752489987397
+    Attrib emg8_6    0.16925940522110913
+    Attrib emg8_7    -0.14572134664300226
+    Attrib emg8_8    0.013088945730490128
+    Attrib time9    -0.2521857439808487
+    Attrib emg9_1    -0.08839453312576724
+    Attrib emg9_2    -0.10775129791566676
+    Attrib emg9_3    -0.1085831857331683
+    Attrib emg9_4    -0.09628205598107074
+    Attrib emg9_5    -0.4285301680849213
+    Attrib emg9_6    0.02732827045516213
+    Attrib emg9_7    -0.20639774233633112
+    Attrib emg9_8    -0.12889620810353783
+    Attrib time10    -0.25685804664528
+    Attrib emg10_1    -0.2816556609685862
+    Attrib emg10_2    -0.11085866827201171
+    Attrib emg10_3    -0.18557368949834632
+    Attrib emg10_4    -0.06975016853908082
+    Attrib emg10_5    -0.102950998242085
+    Attrib emg10_6    -0.15148869168319196
+    Attrib emg10_7    -0.07570019054139
+    Attrib emg10_8    -0.21527076652148963
+    Attrib time11    -0.28103922631586
+    Attrib emg11_1    -0.396899646250865
+    Attrib emg11_2    -0.19483209567102436
+    Attrib emg11_3    0.029248367993620267
+    Attrib emg11_4    -0.013409032528760932
+    Attrib emg11_5    -0.08030696638893403
+    Attrib emg11_6    -0.14536980049453152
+    Attrib emg11_7    0.1296406637641576
+    Attrib emg11_8    -0.272147311267156
+    Attrib time12    -0.12297472357564751
+    Attrib emg12_1    -0.18415862483032164
+    Attrib emg12_2    0.0071972400007429774
+    Attrib emg12_3    0.077926713115123
+    Attrib emg12_4    -0.08396614865888716
+    Attrib emg12_5    0.008200519386356879
+    Attrib emg12_6    -0.14519900694283977
+    Attrib emg12_7    -0.1900958828901994
+    Attrib emg12_8    -0.023458216540602726
+    Attrib time13    -0.11810272339573386
+    Attrib emg13_1    -0.026721466271158015
+    Attrib emg13_2    -0.07156261800662932
+    Attrib emg13_3    -0.027533486917194885
+    Attrib emg13_4    -0.22815787020935782
+    Attrib emg13_5    -0.19687141591663138
+    Attrib emg13_6    -0.06008317071929263
+    Attrib emg13_7    -0.032251443991114105
+    Attrib emg13_8    -0.1359223858087077
+    Attrib time14    -0.10623616909524608
+    Attrib emg14_1    0.045539959079733905
+    Attrib emg14_2    -0.10335882371578248
+    Attrib emg14_3    -0.004644256192202233
+    Attrib emg14_4    -0.05312548716642701
+    Attrib emg14_5    0.057034789660651446
+    Attrib emg14_6    -0.10183066649023244
+    Attrib emg14_7    -0.015337453053620265
+    Attrib emg14_8    -0.08546597370964194
+    Attrib time15    -0.00805562821573166
+    Attrib emg15_1    0.06749865099746256
+    Attrib emg15_2    -0.06532183385699175
+    Attrib emg15_3    -0.0442471009689843
+    Attrib emg15_4    -0.29004898464331236
+    Attrib emg15_5    -0.23833556957956498
+    Attrib emg15_6    -0.3528751611634546
+    Attrib emg15_7    -0.1720691411817662
+    Attrib emg15_8    -0.05245600624176612
+    Attrib time16    0.002981362797696093
+    Attrib emg16_1    0.0881463019646633
+    Attrib emg16_2    0.035074327964649786
+    Attrib emg16_3    0.03168486016517669
+    Attrib emg16_4    0.011737335387576804
+    Attrib emg16_5    0.026731796888709157
+    Attrib emg16_6    0.02424729437264161
+    Attrib emg16_7    -0.5062939121421431
+    Attrib emg16_8    0.0360496329023843
+    Attrib time17    -0.013864742989285417
+    Attrib emg17_1    -0.0052044360671672975
+    Attrib emg17_2    0.037762942035619286
+    Attrib emg17_3    0.045140979983570154
+    Attrib emg17_4    -0.06342286707207989
+    Attrib emg17_5    -0.0714504297408509
+    Attrib emg17_6    -0.06410670284413027
+    Attrib emg17_7    -0.19900883195536204
+    Attrib emg17_8    0.08955232224823727
+    Attrib time18    0.13058242956640326
+    Attrib emg18_1    0.09856325317238832
+    Attrib emg18_2    0.28093313701286915
+    Attrib emg18_3    0.23009245823943356
+    Attrib emg18_4    0.08281248116521096
+    Attrib emg18_5    -0.061711831225952245
+    Attrib emg18_6    -0.12011666845768773
+    Attrib emg18_7    -0.07349735939126026
+    Attrib emg18_8    0.08655260391130473
+Sigmoid Node 3
+    Inputs    Weights
+    Threshold    0.3971965941111813
+    Attrib time1    0.22499901603194122
+    Attrib emg1_1    -0.3269830092189249
+    Attrib emg1_2    0.02798586538702762
+    Attrib emg1_3    -0.0423299545620006
+    Attrib emg1_4    0.02959411461497278
+    Attrib emg1_5    0.008854065717013453
+    Attrib emg1_6    -0.22196835645104596
+    Attrib emg1_7    -0.31027742558691634
+    Attrib emg1_8    -0.3099164886929892
+    Attrib time2    0.028147938170940127
+    Attrib emg2_1    0.019872491765412337
+    Attrib emg2_2    -0.01800100863632391
+    Attrib emg2_3    0.1419684315488429
+    Attrib emg2_4    -0.23405892960449262
+    Attrib emg2_5    -0.10984329075901751
+    Attrib emg2_6    -0.42916060682018387
+    Attrib emg2_7    -0.015268097510410592
+    Attrib emg2_8    0.021980909785554757
+    Attrib time3    -0.31392736309438046
+    Attrib emg3_1    -0.11339320417441344
+    Attrib emg3_2    -0.1625585195807234
+    Attrib emg3_3    -0.07065333430351826
+    Attrib emg3_4    0.0948099135500685
+    Attrib emg3_5    -0.2578518624302572
+    Attrib emg3_6    -0.4096128167780147
+    Attrib emg3_7    -0.058049441251501764
+    Attrib emg3_8    -0.012876889526840076
+    Attrib time4    -0.30584771601186483
+    Attrib emg4_1    0.1057320509956924
+    Attrib emg4_2    -0.21299459381057173
+    Attrib emg4_3    -0.2087259619098039
+    Attrib emg4_4    0.03138985773425029
+    Attrib emg4_5    -0.10781576828728077
+    Attrib emg4_6    -0.42980437934079374
+    Attrib emg4_7    0.0023253612599951614
+    Attrib emg4_8    -0.062263132066327
+    Attrib time5    -0.03640370372505496
+    Attrib emg5_1    0.24333877710224167
+    Attrib emg5_2    0.26711763551362816
+    Attrib emg5_3    0.21785376398725007
+    Attrib emg5_4    -0.11199449497307663
+    Attrib emg5_5    0.023825407701329696
+    Attrib emg5_6    0.275725580758508
+    Attrib emg5_7    -0.16058354173254227
+    Attrib emg5_8    0.08017308656621244
+    Attrib time6    -0.0048436278004273785
+    Attrib emg6_1    -0.031229520007533765
+    Attrib emg6_2    0.013427003223464129
+    Attrib emg6_3    -0.10466695324332917
+    Attrib emg6_4    -0.14725940495813952
+    Attrib emg6_5    -0.10518821899209295
+    Attrib emg6_6    -0.10491298196491557
+    Attrib emg6_7    0.2361476480746189
+    Attrib emg6_8    0.11002340368149852
+    Attrib time7    0.25728249263993064
+    Attrib emg7_1    0.19786390204196283
+    Attrib emg7_2    -0.08488656539182587
+    Attrib emg7_3    0.11810791281591321
+    Attrib emg7_4    0.1466840744269243
+    Attrib emg7_5    -0.16877542816350347
+    Attrib emg7_6    0.11245321797564528
+    Attrib emg7_7    0.015557012281784225
+    Attrib emg7_8    0.39529186072074535
+    Attrib time8    0.00621871211155083
+    Attrib emg8_1    -0.1585483429736339
+    Attrib emg8_2    -0.09715596112305344
+    Attrib emg8_3    -0.4374444228363393
+    Attrib emg8_4    0.1479481425761137
+    Attrib emg8_5    0.40572160909443195
+    Attrib emg8_6    0.23701184955253668
+    Attrib emg8_7    -0.23871171482416936
+    Attrib emg8_8    0.06418440146199415
+    Attrib time9    -0.42353952559458796
+    Attrib emg9_1    -0.1107937577997792
+    Attrib emg9_2    -0.2431348141490739
+    Attrib emg9_3    -0.27863114617765194
+    Attrib emg9_4    -0.2279985176712241
+    Attrib emg9_5    -0.6949349384952657
+    Attrib emg9_6    0.07349251574540833
+    Attrib emg9_7    -0.31765148878675403
+    Attrib emg9_8    -0.20354958734735612
+    Attrib time10    -0.4436743249849073
+    Attrib emg10_1    -0.44195286325191235
+    Attrib emg10_2    -0.12852234708278187
+    Attrib emg10_3    -0.16291836521065245
+    Attrib emg10_4    -0.11703765036775675
+    Attrib emg10_5    -0.11506299099882782
+    Attrib emg10_6    -0.16547482215022496
+    Attrib emg10_7    -0.08588557784675104
+    Attrib emg10_8    -0.2531499117547877
+    Attrib time11    -0.36650775515025735
+    Attrib emg11_1    -0.5743587442017852
+    Attrib emg11_2    -0.20776929999821958
+    Attrib emg11_3    0.028391620490086034
+    Attrib emg11_4    -0.0399044535941828
+    Attrib emg11_5    -0.15226876197273986
+    Attrib emg11_6    -0.25211432523054655
+    Attrib emg11_7    0.09464588932440733
+    Attrib emg11_8    -0.3944510441387683
+    Attrib time12    -0.10412780967702553
+    Attrib emg12_1    -0.28963102737982893
+    Attrib emg12_2    0.06390054354217618
+    Attrib emg12_3    0.12909637609549
+    Attrib emg12_4    -0.09628275591657937
+    Attrib emg12_5    0.026664814025991312
+    Attrib emg12_6    -0.2274561921519296
+    Attrib emg12_7    -0.28207084435091007
+    Attrib emg12_8    -0.1289318742292806
+    Attrib time13    -0.15575321861112987
+    Attrib emg13_1    -0.13520012307543003
+    Attrib emg13_2    -0.13377431349494584
+    Attrib emg13_3    -0.13258383569331642
+    Attrib emg13_4    -0.3209504054409364
+    Attrib emg13_5    -0.26726431873727524
+    Attrib emg13_6    -0.09961144970031467
+    Attrib emg13_7    -0.0738226149841997
+    Attrib emg13_8    -0.21297054124312365
+    Attrib time14    -0.140604674203524
+    Attrib emg14_1    0.10924357140186565
+    Attrib emg14_2    -0.1858756173221734
+    Attrib emg14_3    -0.07109371525928007
+    Attrib emg14_4    -0.07495323887792883
+    Attrib emg14_5    0.00994656255679352
+    Attrib emg14_6    -0.3131424319920022
+    Attrib emg14_7    -0.012064330733986856
+    Attrib emg14_8    -0.07216146311813161
+    Attrib time15    -0.020750588468985372
+    Attrib emg15_1    0.08911306547693319
+    Attrib emg15_2    -0.04136626010226699
+    Attrib emg15_3    -0.10160312595406093
+    Attrib emg15_4    -0.5072688896602386
+    Attrib emg15_5    -0.28057826359916005
+    Attrib emg15_6    -0.5356111519675202
+    Attrib emg15_7    -0.3641346648111301
+    Attrib emg15_8    -0.09403007649050811
+    Attrib time16    0.01544252427606957
+    Attrib emg16_1    0.09816549198521608
+    Attrib emg16_2    0.07045020397737184
+    Attrib emg16_3    0.04076832797856274
+    Attrib emg16_4    0.024386620521115787
+    Attrib emg16_5    0.07035544194282158
+    Attrib emg16_6    0.1720902354193003
+    Attrib emg16_7    -0.770024020117815
+    Attrib emg16_8    0.045096159172397114
+    Attrib time17    -0.06031504463803335
+    Attrib emg17_1    -0.035223131456292425
+    Attrib emg17_2    0.08218670488098749
+    Attrib emg17_3    -0.025008788826210424
+    Attrib emg17_4    -0.08364960217869032
+    Attrib emg17_5    -0.05784630926194501
+    Attrib emg17_6    -0.07407260618067382
+    Attrib emg17_7    -0.2724020071864582
+    Attrib emg17_8    0.08124795780835346
+    Attrib time18    0.2592730211652911
+    Attrib emg18_1    0.06222813629744846
+    Attrib emg18_2    0.5026202090348375
+    Attrib emg18_3    0.3787009845555604
+    Attrib emg18_4    0.04072721611346584
+    Attrib emg18_5    -0.07815460524841222
+    Attrib emg18_6    -0.15318945749309884
+    Attrib emg18_7    -0.156118556491127
+    Attrib emg18_8    0.16505373839462611
+Sigmoid Node 4
+    Inputs    Weights
+    Threshold    0.3681256356391768
+    Attrib time1    0.2558782863924483
+    Attrib emg1_1    -0.2695193659431776
+    Attrib emg1_2    0.05072549422444274
+    Attrib emg1_3    -0.028411556067597682
+    Attrib emg1_4    0.017054734307265784
+    Attrib emg1_5    0.006308286558451442
+    Attrib emg1_6    -0.2018700799409912
+    Attrib emg1_7    -0.34090527752313393
+    Attrib emg1_8    -0.2944196077529777
+    Attrib time2    0.02531037300792891
+    Attrib emg2_1    0.030726740923378293
+    Attrib emg2_2    0.053805477494001774
+    Attrib emg2_3    0.1050632591319028
+    Attrib emg2_4    -0.31771206733665774
+    Attrib emg2_5    -0.09482974632798002
+    Attrib emg2_6    -0.47060098858846156
+    Attrib emg2_7    -0.01265629334542273
+    Attrib emg2_8    0.02423926948468871
+    Attrib time3    -0.23019360212275589
+    Attrib emg3_1    -0.1318684952248346
+    Attrib emg3_2    -0.10425547103186042
+    Attrib emg3_3    -0.08187250268876552
+    Attrib emg3_4    0.09627978814513012
+    Attrib emg3_5    -0.26351324724451963
+    Attrib emg3_6    -0.3159175274194099
+    Attrib emg3_7    -0.029036926713308167
+    Attrib emg3_8    0.04884826194649668
+    Attrib time4    -0.35685519036689783
+    Attrib emg4_1    0.10324190098261708
+    Attrib emg4_2    -0.18732484916841885
+    Attrib emg4_3    -0.21717149498862975
+    Attrib emg4_4    0.006250204609474575
+    Attrib emg4_5    -0.053934995094027674
+    Attrib emg4_6    -0.37178437081283944
+    Attrib emg4_7    0.0045445846084853905
+    Attrib emg4_8    -0.06193126192565977
+    Attrib time5    -0.0038802370953546174
+    Attrib emg5_1    0.21394332862507467
+    Attrib emg5_2    0.2230069998763152
+    Attrib emg5_3    0.20326262272972567
+    Attrib emg5_4    -0.11080692310176984
+    Attrib emg5_5    -0.02713328087973346
+    Attrib emg5_6    0.29190486165987845
+    Attrib emg5_7    -0.18564396093980995
+    Attrib emg5_8    0.059692806555156824
+    Attrib time6    -0.02995494918081807
+    Attrib emg6_1    -0.0380631040425536
+    Attrib emg6_2    0.017229282051866836
+    Attrib emg6_3    -0.0652685661364984
+    Attrib emg6_4    -0.06468444944222626
+    Attrib emg6_5    -0.06157774024806128
+    Attrib emg6_6    -0.05294816182682254
+    Attrib emg6_7    0.1738994711648161
+    Attrib emg6_8    0.11581566437134974
+    Attrib time7    0.29511713310281446
+    Attrib emg7_1    0.22093346013584136
+    Attrib emg7_2    -0.06586233241360241
+    Attrib emg7_3    0.12409154187433373
+    Attrib emg7_4    0.08332744183850466
+    Attrib emg7_5    -0.10058728986621229
+    Attrib emg7_6    0.08734321141086002
+    Attrib emg7_7    0.009194320265324397
+    Attrib emg7_8    0.3238473556697738
+    Attrib time8    -0.03521104372925949
+    Attrib emg8_1    -0.13793787305520502
+    Attrib emg8_2    -0.15179095278928212
+    Attrib emg8_3    -0.3421373755709257
+    Attrib emg8_4    0.1425228992366669
+    Attrib emg8_5    0.383387769589663
+    Attrib emg8_6    0.1968419482239862
+    Attrib emg8_7    -0.29290639219716397
+    Attrib emg8_8    0.0718572826519104
+    Attrib time9    -0.4548866875357834
+    Attrib emg9_1    -0.05584774726603751
+    Attrib emg9_2    -0.19548565521129796
+    Attrib emg9_3    -0.24877203107486828
+    Attrib emg9_4    -0.19949732233357895
+    Attrib emg9_5    -0.6868829606074267
+    Attrib emg9_6    0.02992910421524735
+    Attrib emg9_7    -0.2718073223963403
+    Attrib emg9_8    -0.143454067853518
+    Attrib time10    -0.3656787469817931
+    Attrib emg10_1    -0.4711374344794713
+    Attrib emg10_2    -0.1762570181819043
+    Attrib emg10_3    -0.21367902872113262
+    Attrib emg10_4    -0.1250264132769898
+    Attrib emg10_5    -0.11712606667608674
+    Attrib emg10_6    -0.15745121552350633
+    Attrib emg10_7    -0.09332209923751217
+    Attrib emg10_8    -0.25175173789313465
+    Attrib time11    -0.3163997990117099
+    Attrib emg11_1    -0.5254461704272967
+    Attrib emg11_2    -0.2144205673196848
+    Attrib emg11_3    0.002006516070869025
+    Attrib emg11_4    -0.06670073309859831
+    Attrib emg11_5    -0.15560147821918272
+    Attrib emg11_6    -0.30576684790640185
+    Attrib emg11_7    0.17210423506964867
+    Attrib emg11_8    -0.4235119304737296
+    Attrib time12    -0.16457887637978405
+    Attrib emg12_1    -0.21377420704370234
+    Attrib emg12_2    0.073420611443093
+    Attrib emg12_3    0.11546480558783928
+    Attrib emg12_4    -0.036474818761629973
+    Attrib emg12_5    0.009193209053383741
+    Attrib emg12_6    -0.18943831882763817
+    Attrib emg12_7    -0.20102338180214843
+    Attrib emg12_8    -0.11535739279100303
+    Attrib time13    -0.11679416896126875
+    Attrib emg13_1    -0.1072766900146872
+    Attrib emg13_2    -0.16565591357991705
+    Attrib emg13_3    -0.08637080839452314
+    Attrib emg13_4    -0.29793080983275805
+    Attrib emg13_5    -0.18499219195644395
+    Attrib emg13_6    -0.07231447171883838
+    Attrib emg13_7    -0.002410444369384936
+    Attrib emg13_8    -0.19300372828777798
+    Attrib time14    -0.19429827618937914
+    Attrib emg14_1    0.13862163993747398
+    Attrib emg14_2    -0.13992548897707902
+    Attrib emg14_3    -0.05591051277225632
+    Attrib emg14_4    -0.06580008120525134
+    Attrib emg14_5    -0.037443014881752903
+    Attrib emg14_6    -0.2703839904168381
+    Attrib emg14_7    -0.043906450231577195
+    Attrib emg14_8    -0.02605880121219861
+    Attrib time15    -0.0196034579469752
+    Attrib emg15_1    0.15219172766435865
+    Attrib emg15_2    -0.11551350703238139
+    Attrib emg15_3    -0.10436571709090706
+    Attrib emg15_4    -0.43784709210729206
+    Attrib emg15_5    -0.2707963159224744
+    Attrib emg15_6    -0.47771971050578976
+    Attrib emg15_7    -0.31165875926613984
+    Attrib emg15_8    -0.10516386735699891
+    Attrib time16    -0.04122506588425584
+    Attrib emg16_1    0.14100910222094187
+    Attrib emg16_2    0.12149114193418045
+    Attrib emg16_3    -0.0198538420425343
+    Attrib emg16_4    -0.019318620722570703
+    Attrib emg16_5    0.050431056966116994
+    Attrib emg16_6    0.09949158719789404
+    Attrib emg16_7    -0.72015292664942
+    Attrib emg16_8    0.075982228992281
+    Attrib time17    0.02298961709700403
+    Attrib emg17_1    -0.025637852538468453
+    Attrib emg17_2    0.03264073739669075
+    Attrib emg17_3    0.019103589349405273
+    Attrib emg17_4    0.016491768638894337
+    Attrib emg17_5    -0.08911896972896095
+    Attrib emg17_6    -0.12701707963946807
+    Attrib emg17_7    -0.2634840207051741
+    Attrib emg17_8    0.09717663709280167
+    Attrib time18    0.18301083849857952
+    Attrib emg18_1    0.06863764638083922
+    Attrib emg18_2    0.5130373420258667
+    Attrib emg18_3    0.3628362005414557
+    Attrib emg18_4    0.08168187079958399
+    Attrib emg18_5    -0.10698700212362093
+    Attrib emg18_6    -0.16277620092935421
+    Attrib emg18_7    -0.13449702626215357
+    Attrib emg18_8    0.1536693722884269
+Class normale
+    Input
+    Node 0
+Class pugno
+    Input
+    Node 1
+
+
+Time taken to build model: 0.12 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances           8               53.3333 %
+Incorrectly Classified Instances         7               46.6667 %
+Kappa statistic                          0.1176
+Mean absolute error                      0.4784
+Root mean squared error                  0.6587
+Relative absolute error                 90.3992 %
+Root relative squared error            124.2628 %
+Total Number of Instances               15     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 1         0.875      0.5       1         0.667      0.446    normale
+                 0.125     0          1         0.125     0.222      0.446    pugno
+Weighted Avg.    0.533     0.408      0.767     0.533     0.43       0.446
+
+=== Confusion Matrix ===
+
+ a b   <-- classified as
+ 7 0 | a = normale
+ 7 1 | b = pugno
+

@@ -24,6 +24,7 @@ public:
 private slots:
 
     void onAddGesture();
+    void onNew();
     void onOpen();
     void onSave();
     void onSaveAs();
