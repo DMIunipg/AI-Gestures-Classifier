@@ -99,6 +99,34 @@ struct DataFlags
         //size
         return size;
     }
+    
+    void serialize(FILE* file) const
+    {
+        std::fwrite(&mMode, sizeof(mMode), 1, file);
+        std::fwrite(&mReps, sizeof(mReps), 1, file);
+        std::fwrite(&mTimePerGesture, sizeof(mTimePerGesture), 1, file);
+        std::fwrite(&mDeltaTime, sizeof(mDeltaTime), 1, file);
+        std::fwrite(&mTime, sizeof(mTime), 1, file);
+        std::fwrite(&mGyroscope, sizeof(mGyroscope), 1, file);
+        std::fwrite(&mAccelerometer, sizeof(mAccelerometer), 1, file);
+        std::fwrite(&mQuaternion, sizeof(mQuaternion), 1, file);
+        std::fwrite(&mEuler, sizeof(mEuler), 1, file);
+        std::fwrite(&mEmg, sizeof(mEmg), 1, file);
+    }
+    
+    void derialize(FILE* file)
+    {
+        std::fread(&mMode, sizeof(mMode), 1, file);
+        std::fread(&mReps, sizeof(mReps), 1, file);
+        std::fread(&mTimePerGesture, sizeof(mTimePerGesture), 1, file);
+        std::fread(&mDeltaTime, sizeof(mDeltaTime), 1, file);
+        std::fread(&mTime, sizeof(mTime), 1, file);
+        std::fread(&mGyroscope, sizeof(mGyroscope), 1, file);
+        std::fread(&mAccelerometer, sizeof(mAccelerometer), 1, file);
+        std::fread(&mQuaternion, sizeof(mQuaternion), 1, file);
+        std::fread(&mEuler, sizeof(mEuler), 1, file);
+        std::fread(&mEmg, sizeof(mEmg), 1, file);
+    }
 
 };
 

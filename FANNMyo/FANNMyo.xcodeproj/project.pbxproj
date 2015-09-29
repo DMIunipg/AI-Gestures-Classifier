@@ -7,12 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E0A892531B451C0C0065BF83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0A892521B451C0C0065BF83 /* main.cpp */; };
+		E012C86D1BB92D9000067B30 /* MyoThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E012C86B1BB92D9000067B30 /* MyoThread.cpp */; settings = {ASSET_TAGS = (); }; };
+		E012C8701BB92DCA00067B30 /* MyoTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E012C86E1BB92DCA00067B30 /* MyoTime.cpp */; settings = {ASSET_TAGS = (); }; };
+		E012C8721BB9594000067B30 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E012C8711BB9594000067B30 /* main.cpp */; settings = {ASSET_TAGS = (); }; };
+		E09687531BBAC00800DAF8E7 /* svm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E09687511BBAC00800DAF8E7 /* svm.cpp */; settings = {ASSET_TAGS = (); }; };
+		E09687561BBAC1DD00DAF8E7 /* SVMSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E09687541BBAC1DD00DAF8E7 /* SVMSerialize.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0A892531B451C0C0065BF83 /* _main_.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0A892521B451C0C0065BF83 /* _main_.cpp */; };
 		E0A898FE1B451D2D0065BF83 /* libdoublefann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D41B451D2D0065BF83 /* libdoublefann.2.2.0.dylib */; };
 		E0A898FF1B451D2D0065BF83 /* libfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D51B451D2D0065BF83 /* libfann.2.2.0.dylib */; };
 		E0A899001B451D2D0065BF83 /* libfixedfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D61B451D2D0065BF83 /* libfixedfann.2.2.0.dylib */; };
 		E0A899011B451D2D0065BF83 /* libfloatfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D71B451D2D0065BF83 /* libfloatfann.2.2.0.dylib */; };
 		E0A899021B451D2D0065BF83 /* myo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D91B451D2D0065BF83 /* myo.framework */; };
+		E0AB232C1BBB050C0006369F /* FANNImp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0AB232A1BBB050C0006369F /* FANNImp.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0AB232F1BBB05FB0006369F /* SVMImp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0AB232D1BBB05FB0006369F /* SVMImp.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,9 +35,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E012C86A1BB92D5800067B30 /* DataFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFlags.h; sourceTree = "<group>"; };
+		E012C86B1BB92D9000067B30 /* MyoThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyoThread.cpp; sourceTree = "<group>"; };
+		E012C86C1BB92D9000067B30 /* MyoThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyoThread.h; sourceTree = "<group>"; };
+		E012C86E1BB92DCA00067B30 /* MyoTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyoTime.cpp; sourceTree = "<group>"; };
+		E012C86F1BB92DCA00067B30 /* MyoTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyoTime.h; sourceTree = "<group>"; };
+		E012C8711BB9594000067B30 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E059F2611B45A0E100919E56 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		E09687511BBAC00800DAF8E7 /* svm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svm.cpp; sourceTree = "<group>"; };
+		E09687521BBAC00800DAF8E7 /* svm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svm.h; sourceTree = "<group>"; };
+		E09687541BBAC1DD00DAF8E7 /* SVMSerialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SVMSerialize.cpp; sourceTree = "<group>"; };
+		E09687551BBAC1DD00DAF8E7 /* SVMSerialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMSerialize.h; sourceTree = "<group>"; };
 		E0A8924F1B451C0C0065BF83 /* FANNMyo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FANNMyo; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0A892521B451C0C0065BF83 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E0A892521B451C0C0065BF83 /* _main_.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _main_.cpp; sourceTree = "<group>"; };
 		E0A898D41B451D2D0065BF83 /* libdoublefann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdoublefann.2.2.0.dylib; sourceTree = "<group>"; };
 		E0A898D51B451D2D0065BF83 /* libfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfann.2.2.0.dylib; sourceTree = "<group>"; };
 		E0A898D61B451D2D0065BF83 /* libfixedfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfixedfann.2.2.0.dylib; sourceTree = "<group>"; };
@@ -63,6 +80,10 @@
 		E0A898FA1B451D2D0065BF83 /* visibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visibility.h; sourceTree = "<group>"; };
 		E0A898FB1B451D2D0065BF83 /* libmyo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libmyo.h; sourceTree = "<group>"; };
 		E0A898FC1B451D2D0065BF83 /* myo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = myo.hpp; sourceTree = "<group>"; };
+		E0AB232A1BBB050C0006369F /* FANNImp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FANNImp.cpp; sourceTree = "<group>"; };
+		E0AB232B1BBB050C0006369F /* FANNImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FANNImp.h; sourceTree = "<group>"; };
+		E0AB232D1BBB05FB0006369F /* SVMImp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SVMImp.cpp; sourceTree = "<group>"; };
+		E0AB232E1BBB05FB0006369F /* SVMImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMImp.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +122,22 @@
 		E0A892511B451C0C0065BF83 /* FANNMyo */ = {
 			isa = PBXGroup;
 			children = (
+				E09687511BBAC00800DAF8E7 /* svm.cpp */,
+				E09687521BBAC00800DAF8E7 /* svm.h */,
+				E012C86E1BB92DCA00067B30 /* MyoTime.cpp */,
+				E012C86F1BB92DCA00067B30 /* MyoTime.h */,
+				E012C86A1BB92D5800067B30 /* DataFlags.h */,
 				E059F2611B45A0E100919E56 /* Utilities.h */,
-				E0A892521B451C0C0065BF83 /* main.cpp */,
+				E0A892521B451C0C0065BF83 /* _main_.cpp */,
+				E012C86B1BB92D9000067B30 /* MyoThread.cpp */,
+				E012C86C1BB92D9000067B30 /* MyoThread.h */,
+				E012C8711BB9594000067B30 /* main.cpp */,
+				E09687541BBAC1DD00DAF8E7 /* SVMSerialize.cpp */,
+				E09687551BBAC1DD00DAF8E7 /* SVMSerialize.h */,
+				E0AB232A1BBB050C0006369F /* FANNImp.cpp */,
+				E0AB232B1BBB050C0006369F /* FANNImp.h */,
+				E0AB232D1BBB05FB0006369F /* SVMImp.cpp */,
+				E0AB232E1BBB05FB0006369F /* SVMImp.h */,
 			);
 			path = FANNMyo;
 			sourceTree = "<group>";
@@ -290,7 +325,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0A892531B451C0C0065BF83 /* main.cpp in Sources */,
+				E0AB232C1BBB050C0006369F /* FANNImp.cpp in Sources */,
+				E09687531BBAC00800DAF8E7 /* svm.cpp in Sources */,
+				E0A892531B451C0C0065BF83 /* _main_.cpp in Sources */,
+				E012C86D1BB92D9000067B30 /* MyoThread.cpp in Sources */,
+				E09687561BBAC1DD00DAF8E7 /* SVMSerialize.cpp in Sources */,
+				E012C8721BB9594000067B30 /* main.cpp in Sources */,
+				E012C8701BB92DCA00067B30 /* MyoTime.cpp in Sources */,
+				E0AB232F1BBB05FB0006369F /* SVMImp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

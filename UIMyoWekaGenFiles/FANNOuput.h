@@ -58,6 +58,13 @@ public:
         assert(idClass != -1);
         //count rows
         size_t nrows=rows.size()/mFlags.mReps;
+        //get max time
+        double maxTime = 0.0;
+        //for each
+        for(size_t i=0;i!=rows.size();++i)
+        {
+            maxTime=std::max(maxTime,rows[i].getTime());
+        }
         //
         for(size_t i=0;i!=nrows;++i)
         {
@@ -70,7 +77,9 @@ public:
                 auto& row = rows[i*mFlags.mReps+j];
                 //append time
                 if(mFlags.mTime)
-                        stream << row.getTime() << " ";
+                {
+                    stream << row.getTime()/maxTime << " ";
+                }
                 //append gyroscope
                 if(mFlags.mGyroscope)
                 {
@@ -144,16 +153,13 @@ private:
 
     void writeMataData() const
     {
-        //write meta data
-        std::ofstream metaFile;
-        //meta data path
         std::string mtPath = mPath+".meta";
         //create file
-        metaFile.open(mtPath);
+        FILE* metaFile = std::fopen(mtPath.c_str(),"w");
         //write
-        metaFile.write((char*)&mFlags,sizeof(mFlags));
+        mFlags.serialize(metaFile);
         //close
-        metaFile.close();
+        std::fclose(metaFile);
     }
 
     void open(const std::string& path)
