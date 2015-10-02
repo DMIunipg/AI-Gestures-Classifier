@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
-    <height>565</height>
+    <width>474</width>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>422</width>
+     <width>474</width>
      <height>22</height>
     </rect>
    </property>
@@ -51,7 +51,14 @@
     <addaction name="separator"/>
     <addaction name="mAExit"/>
    </widget>
+   <widget class="QMenu" name="mMenuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="mAShowInputs"/>
+   </widget>
    <addaction name="mMenuFile"/>
+   <addaction name="mMenuWindow"/>
   </widget>
   <action name="mASave">
    <property name="text">
@@ -86,6 +93,14 @@
   <action name="mANew">
    <property name="text">
     <string>New</string>
+   </property>
+  </action>
+  <action name="mAShowInputs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Inputs</string>
    </property>
   </action>
  </widget>

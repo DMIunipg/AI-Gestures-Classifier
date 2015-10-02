@@ -19,19 +19,18 @@ public:
 
     ~RecordingDialog();
 
-    void execute(std::function<void(void)> onEnd)
-    {
-        mOnEnd = onEnd;
-        QDialog::exec();
-    }
+    void execute(std::function<void(void)> onEnd);
 
 public slots:
 
     void onEnd();
+    void updateTimeOfRec();
 
 private:
 
     Ui::RecordingDialog *ui;
+    double  mTime{ 0.0 };
+    QTimer* mTimer{ nullptr };
     std::function<void(void)> mOnEnd { nullptr };
 };
 

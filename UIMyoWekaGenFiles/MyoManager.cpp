@@ -39,6 +39,16 @@ MyoListener::TypeRows MyoManager::endRecording()
     return mDatas;
 }
 
+//get current row
+MyoListener::TypeRaw MyoManager::getCurrentRow()
+{
+    MyoListener::TypeRaw row;
+    mMutex.lock();
+    row  = mListener.mRaw;
+    mMutex.unlock();
+    return row;
+}
+
 //loop
 void MyoManager::run()
 {

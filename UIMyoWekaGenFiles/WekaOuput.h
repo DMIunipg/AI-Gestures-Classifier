@@ -38,7 +38,9 @@ public:
         assert(mFlags.mGyroscope     ||
                mFlags.mAccelerometer ||
                mFlags.mQuaternion    ||
-               mFlags.mEuler         ||
+               mFlags.mPitch         ||
+               mFlags.mYaw           ||
+               mFlags.mRoll          ||
                mFlags.mEmg);
         //set flags
         mFlags = flags;
@@ -56,7 +58,9 @@ public:
         assert(mFlags.mGyroscope     ||
                mFlags.mAccelerometer ||
                mFlags.mQuaternion    ||
-               mFlags.mEuler         ||
+               mFlags.mPitch         ||
+               mFlags.mYaw           ||
+               mFlags.mRoll          ||
                mFlags.mEmg);
         //set flags
         mFlags = flags;
@@ -79,6 +83,13 @@ public:
         assert(EmgN == N);
         //count rows
         size_t nrows=rows.size()/mFlags.mReps;
+        //get max time
+        double maxTime = 0.0;
+        //for each
+        for(size_t i=0;i!=rows.size();++i)
+        {
+            maxTime=std::max(maxTime,rows[i].getTime());
+        }
         //row
         std::string strRow;
         for(size_t i=0;i!=nrows;++i)
@@ -88,41 +99,44 @@ public:
                 auto& row = rows[i*mFlags.mReps+j];
                 //append time
                 if(mFlags.mTime)
-                    strRow += std::to_string(row.getTime())+",";
+                    strRow += std::to_string(mFlags.toNormalize(row.getTime(),maxTime))+",";
                 //append gyroscope
                 if(mFlags.mGyroscope)
                 {
-                    strRow += std::to_string(row.getGyroscope().x()) +",";
-                    strRow += std::to_string(row.getGyroscope().y()) +",";
-                    strRow += std::to_string(row.getGyroscope().z()) +",";
+                    auto gs = mFlags.apply( row.getGyroscope() );
+                    strRow += std::to_string(gs.x()) +",";
+                    strRow += std::to_string(gs.y()) +",";
+                    strRow += std::to_string(gs.z()) +",";
                 }
                 //append accelerometer
                 if(mFlags.mAccelerometer)
                 {
-                    strRow += std::to_string(row.getAccelerometer().x()) +",";
-                    strRow += std::to_string(row.getAccelerometer().y()) +",";
-                    strRow += std::to_string(row.getAccelerometer().z()) +",";
+                    auto ac = mFlags.apply( row.getAccelerometer() );
+                    strRow += std::to_string(ac.x()) +",";
+                    strRow += std::to_string(ac.y()) +",";
+                    strRow += std::to_string(ac.z()) +",";
                 }
                 //append quaternion
                 if(mFlags.mQuaternion)
                 {
-                    strRow += std::to_string(row.getQuaternion().x()) +",";
-                    strRow += std::to_string(row.getQuaternion().y()) +",";
-                    strRow += std::to_string(row.getQuaternion().z()) +",";
-                    strRow += std::to_string(row.getQuaternion().w()) +",";
+                    auto qu = mFlags.apply( row.getQuaternion() );
+                    strRow += std::to_string(qu.x()) +",";
+                    strRow += std::to_string(qu.y()) +",";
+                    strRow += std::to_string(qu.z()) +",";
+                    strRow += std::to_string(qu.w()) +",";
                 }
                 //append euler angle
-                if(mFlags.mEuler)
-                {
-                    strRow += std::to_string(row.getEulerAngles().roll()) +",";
-                    strRow += std::to_string(row.getEulerAngles().pitch()) +",";
-                    strRow += std::to_string(row.getEulerAngles().yaw()) +",";
-                }
+                if(mFlags.mPitch)
+                    strRow += std::to_string(mFlags.apply(row.getEulerAngles().pitch(), M_PI*2.0)) +",";
+                if(mFlags.mYaw)
+                    strRow += std::to_string(mFlags.apply(row.getEulerAngles().yaw(), M_PI*2.0)) +",";
+                if(mFlags.mRoll)
+                    strRow += std::to_string(mFlags.apply(row.getEulerAngles().roll(), M_PI*2.0)) +",";
                 //append emg
                 if(mFlags.mEmg)
                 {
                     for(auto value:row.getEmg())
-                        strRow += std::to_string(value)+",";
+                        strRow += std::to_string(mFlags.apply((double)value,128))+",";
                 }
             }
             //append class
@@ -193,12 +207,14 @@ private:
                 header += "@ATTRIBUTE quaternion"+std::to_string(i+1)+"_z NUMERIC\n";
                 header += "@ATTRIBUTE quaternion"+std::to_string(i+1)+"_w NUMERIC\n";
             }
-            if (mFlags.mEuler)
-            {
-                header += "@ATTRIBUTE roll"+std::to_string(i+1)+" NUMERIC\n";
+
+            if(mFlags.mPitch)
                 header += "@ATTRIBUTE pitch"+std::to_string(i+1)+" NUMERIC\n";
+            if(mFlags.mYaw)
                 header += "@ATTRIBUTE yaw"+std::to_string(i+1)+" NUMERIC\n";
-            }
+            if(mFlags.mRoll)
+                header += "@ATTRIBUTE roll"+std::to_string(i+1)+" NUMERIC\n";
+
             for(size_t j=0;mFlags.mEmg && j!=EmgN;++j)
             {
                 header += "@ATTRIBUTE emg"+ std::to_string(i+1)+'_'+std::to_string(j+1)+" NUMERIC\n";

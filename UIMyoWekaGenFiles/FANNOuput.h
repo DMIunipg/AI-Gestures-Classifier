@@ -33,7 +33,9 @@ public:
         assert(mFlags.mGyroscope     ||
                mFlags.mAccelerometer ||
                mFlags.mQuaternion    ||
-               mFlags.mEuler         ||
+               mFlags.mPitch         ||
+               mFlags.mYaw           ||
+               mFlags.mRoll          ||
                mFlags.mEmg);
         //set flags
         mFlags = flags;
@@ -42,6 +44,13 @@ public:
         //open file
         open(path);
     }
+
+    template < class T >
+    T topositive(const T& t,bool topos)
+    {
+        return topos? (t+1.0)*0.5 : t;
+    }
+
     template < class T,
                class J,
                class H,
@@ -78,12 +87,12 @@ public:
                 //append time
                 if(mFlags.mTime)
                 {
-                    stream << row.getTime()/maxTime << " ";
+                    stream << mFlags.toNormalize( row.getTime(), maxTime ) << " ";
                 }
                 //append gyroscope
                 if(mFlags.mGyroscope)
                 {
-                    auto gn = row.getGyroscope().normalized();
+                    auto gn = mFlags.apply( row.getGyroscope() );
                     stream << gn.x() <<" ";
                     stream << gn.y() <<" ";
                     stream << gn.z() <<" ";
@@ -91,7 +100,7 @@ public:
                 //append accelerometer
                 if(mFlags.mAccelerometer)
                 {
-                    auto an = row.getAccelerometer().normalized();
+                    auto an = mFlags.apply( row.getAccelerometer() );
                     stream <<  an.x() << " ";
                     stream <<  an.y() << " ";
                     stream <<  an.z() << " ";
@@ -99,25 +108,25 @@ public:
                 //append quaternion
                 if(mFlags.mQuaternion)
                 {
-                    auto qn = row.getQuaternion().normalized();
+                    auto qn = mFlags.apply( row.getQuaternion() );
                     stream << qn.x() << " ";
                     stream << qn.y() << " ";
                     stream << qn.z() << " ";
                     stream << qn.w() << " ";
                 }
                 //append euler angle
-                if(mFlags.mEuler)
-                {
-                    stream <<  row.getEulerAngles().roll() / M_PI*2.0 << " ";
-                    stream <<  row.getEulerAngles().pitch()/ M_PI*2.0 << " ";
-                    stream <<  row.getEulerAngles().yaw()  / M_PI*2.0  << " ";
-                }
+                if(mFlags.mPitch)
+                   stream <<  mFlags.apply( row.getEulerAngles().pitch(), (M_PI*2.0) ) << " ";
+                if(mFlags.mYaw)
+                   stream <<  mFlags.apply( row.getEulerAngles().yaw(),   (M_PI*2.0) ) << " ";
+                if(mFlags.mRoll)
+                   stream <<  mFlags.apply( row.getEulerAngles().roll(),  (M_PI*2.0) ) << " ";
                 //append emg
                 if(mFlags.mEmg)
                 {
                     for(int value:row.getEmg())
                     {
-                        stream << std::to_string((double)value/128) << " ";
+                        stream << std::to_string(mFlags.apply( (double)value , 128 )) << " ";
                     }
                 }
             }

@@ -64,8 +64,11 @@ public:
     //callback input
     using Inputs = std::vector< MyoDataCollector::InputRaw >;
     using Callback = std::function< void(const Inputs&,const DataFlags&,std::mutex& mutex) >;
+    using ApplyCallback = std::function< void( size_t gindex, size_t idrow, double value) >;
     //start the thread
     void start(Callback callback,const DataFlags& flags);
+    //utility method
+    static void applay(const Inputs& inputs,const DataFlags& flags,ApplyCallback callback);
     //run 
     void run();
     void joint();

@@ -11,7 +11,7 @@
 		E012C8701BB92DCA00067B30 /* MyoTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E012C86E1BB92DCA00067B30 /* MyoTime.cpp */; settings = {ASSET_TAGS = (); }; };
 		E012C8721BB9594000067B30 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E012C8711BB9594000067B30 /* main.cpp */; settings = {ASSET_TAGS = (); }; };
 		E09687531BBAC00800DAF8E7 /* svm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E09687511BBAC00800DAF8E7 /* svm.cpp */; settings = {ASSET_TAGS = (); }; };
-		E09687561BBAC1DD00DAF8E7 /* SVMSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E09687541BBAC1DD00DAF8E7 /* SVMSerialize.cpp */; settings = {ASSET_TAGS = (); }; };
+		E09687561BBAC1DD00DAF8E7 /* SVMUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E09687541BBAC1DD00DAF8E7 /* SVMUtilities.cpp */; settings = {ASSET_TAGS = (); }; };
 		E0A892531B451C0C0065BF83 /* _main_.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0A892521B451C0C0065BF83 /* _main_.cpp */; };
 		E0A898FE1B451D2D0065BF83 /* libdoublefann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D41B451D2D0065BF83 /* libdoublefann.2.2.0.dylib */; };
 		E0A898FF1B451D2D0065BF83 /* libfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D51B451D2D0065BF83 /* libfann.2.2.0.dylib */; };
@@ -44,8 +44,8 @@
 		E059F2611B45A0E100919E56 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		E09687511BBAC00800DAF8E7 /* svm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svm.cpp; sourceTree = "<group>"; };
 		E09687521BBAC00800DAF8E7 /* svm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svm.h; sourceTree = "<group>"; };
-		E09687541BBAC1DD00DAF8E7 /* SVMSerialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SVMSerialize.cpp; sourceTree = "<group>"; };
-		E09687551BBAC1DD00DAF8E7 /* SVMSerialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMSerialize.h; sourceTree = "<group>"; };
+		E09687541BBAC1DD00DAF8E7 /* SVMUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SVMUtilities.cpp; sourceTree = "<group>"; };
+		E09687551BBAC1DD00DAF8E7 /* SVMUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMUtilities.h; sourceTree = "<group>"; };
 		E0A8924F1B451C0C0065BF83 /* FANNMyo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FANNMyo; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0A892521B451C0C0065BF83 /* _main_.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _main_.cpp; sourceTree = "<group>"; };
 		E0A898D41B451D2D0065BF83 /* libdoublefann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdoublefann.2.2.0.dylib; sourceTree = "<group>"; };
@@ -132,8 +132,8 @@
 				E012C86B1BB92D9000067B30 /* MyoThread.cpp */,
 				E012C86C1BB92D9000067B30 /* MyoThread.h */,
 				E012C8711BB9594000067B30 /* main.cpp */,
-				E09687541BBAC1DD00DAF8E7 /* SVMSerialize.cpp */,
-				E09687551BBAC1DD00DAF8E7 /* SVMSerialize.h */,
+				E09687541BBAC1DD00DAF8E7 /* SVMUtilities.cpp */,
+				E09687551BBAC1DD00DAF8E7 /* SVMUtilities.h */,
 				E0AB232A1BBB050C0006369F /* FANNImp.cpp */,
 				E0AB232B1BBB050C0006369F /* FANNImp.h */,
 				E0AB232D1BBB05FB0006369F /* SVMImp.cpp */,
@@ -329,7 +329,7 @@
 				E09687531BBAC00800DAF8E7 /* svm.cpp in Sources */,
 				E0A892531B451C0C0065BF83 /* _main_.cpp in Sources */,
 				E012C86D1BB92D9000067B30 /* MyoThread.cpp in Sources */,
-				E09687561BBAC1DD00DAF8E7 /* SVMSerialize.cpp in Sources */,
+				E09687561BBAC1DD00DAF8E7 /* SVMUtilities.cpp in Sources */,
 				E012C8721BB9594000067B30 /* main.cpp in Sources */,
 				E012C8701BB92DCA00067B30 /* MyoTime.cpp in Sources */,
 				E0AB232F1BBB05FB0006369F /* SVMImp.cpp in Sources */,

@@ -31,6 +31,7 @@ public slots:
     void onCancel();
     void onSempleMode(bool enabled);
     void onGestureMode(bool enabled);
+    void onNormalize(bool enable);
 
 private:
 

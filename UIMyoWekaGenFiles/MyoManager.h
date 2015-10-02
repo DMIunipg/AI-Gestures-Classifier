@@ -24,6 +24,9 @@ public:
     //end Recording
     MyoListener::TypeRows endRecording();
 
+    //get current row
+    MyoListener::TypeRaw getCurrentRow();
+
     //loop
     void run();
 

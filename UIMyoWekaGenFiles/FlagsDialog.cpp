@@ -17,6 +17,11 @@ FlagsDialog::FlagsDialog(QWidget *parent) :
             SIGNAL(clicked(bool)),
             this,
             SLOT(onGestureMode(bool)));
+
+    connect(ui->mCBNormalize,
+            SIGNAL(clicked(bool)),
+            this,
+            SLOT(onNormalize(bool)));
 }
 
 FlagsDialog::~FlagsDialog()
@@ -46,8 +51,12 @@ void FlagsDialog::setFalgs(const  DataFlags& flags)
     ui->mCBGyroscope->setChecked(flags.mGyroscope);
     ui->mCBAccelerometer->setChecked(flags.mAccelerometer);
     ui->mCBQuaternion->setChecked(flags.mQuaternion);
-    ui->mCBEuler->setChecked(flags.mEuler);
+    ui->mCBPitch->setChecked(flags.mPitch);
+    ui->mCBYaw->setChecked(flags.mYaw);
+    ui->mCBRoll->setChecked(flags.mRoll);
     ui->mCBEmg->setChecked(flags.mEmg);
+    ui->mCBNormalize->setChecked(flags.mNormalize);
+    ui->mCBAllPositive->setChecked(flags.mPositive);
 }
 
 DataFlags FlagsDialog::getFlags()
@@ -63,8 +72,12 @@ DataFlags FlagsDialog::getFlags()
      out.mGyroscope      = ui->mCBGyroscope->isChecked();
      out.mAccelerometer  = ui->mCBAccelerometer->isChecked();
      out.mQuaternion     = ui->mCBQuaternion->isChecked();
-     out.mEuler          = ui->mCBEuler->isChecked();
+     out.mPitch          = ui->mCBPitch->isChecked();
+     out.mYaw            = ui->mCBYaw->isChecked();
+     out.mRoll           = ui->mCBRoll->isChecked();
      out.mEmg            = ui->mCBEmg->isChecked();
+     out.mNormalize      = ui->mCBNormalize->isChecked();
+     out.mPositive       = ui->mCBAllPositive->isChecked() && out.mNormalize ;
      return out;
 }
 
@@ -108,4 +121,10 @@ void FlagsDialog::onGestureMode(bool enabled)
     ui->mGBSemplePerRow->setDisabled(enabled);
     ui->mRBGestureMode->setChecked(enabled);
     ui->mGBGesturePerRow->setEnabled(enabled);
+}
+
+
+void FlagsDialog::onNormalize(bool enable)
+{
+    ui->mCBAllPositive->setEnabled(enable);
 }
