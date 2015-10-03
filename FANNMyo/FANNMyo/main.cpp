@@ -9,26 +9,31 @@
 #include <stdio.h>
 #include <fann/floatfann.h>
 #include "MyoThread.h"
-#include "SVMUtilities.h"
 #include "FANNImp.h"
 #include "SVMImp.h"
+#include "RBFImp.h"
 
 #define SVM 1
 #define FANN 2
+#define RBF 3
 
-#define SVM_OR_FANN  SVM //FANN
+#define SVM_OR_FANN  SVM  //RBF //FANN
 #define CREATE_MODEL  true
 //#define PATH_DATA_SET "ndates/left_toleft_right_toright_normal.fann"
 //#define PATH_DATA_SET "datas/NRL00/data.fann"
 //#define PATH_DATA_SET "datas/NRL02/data.fann"
 //#define PATH_DATA_SET "datas/NRL03/data.fann"
-#define PATH_DATA_SET "datas/NRL07/data.fann"
+//#define PATH_DATA_SET "datas/NRL07/data.fann"
+//#define PATH_DATA_SET "datas/NRL08/data.fann"
+#define PATH_DATA_SET "datas/NRL09/data.fann"
 
 //select method
 #if SVM_OR_FANN == FANN
 namespace myomethod = myofann;
 #elif SVM_OR_FANN == SVM
 namespace myomethod = myosvm;
+#elif SVM_OR_FANN == RBF
+namespace myomethod = myorbf;
 #else
 #error "Select SVM or FANN"
 #endif

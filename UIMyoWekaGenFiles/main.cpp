@@ -8,6 +8,8 @@ int main(int argc, char *argv[])
 {
     //init qt
     QApplication a(argc, argv);
+
+#if 0
     //load style sheet
     QFile qss(":/qdarkstyle/style.qss");
     if (qss.exists())
@@ -16,6 +18,8 @@ int main(int argc, char *argv[])
         QTextStream ts(&qss);
         a.setStyleSheet(ts.readAll());
     }
+#endif
+
     //init window
     GenMyoWindow w;
     w.setWindowFlags( Qt::Window |

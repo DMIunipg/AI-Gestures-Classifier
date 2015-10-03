@@ -64,6 +64,7 @@ void MyoManager::run()
     {
         mMyo->setStreamEmg(myo::Myo::streamEmgEnabled);
         mMyoHub->addListener(&mListener);
+        mMyoHub->setLockingPolicy(myo::Hub::lockingPolicyNone);
 
         while(mLoop)
         {

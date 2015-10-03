@@ -10,9 +10,10 @@
 #include <QFileDialog>
 #include <QDialogButtonBox>
 
-GenMyoWindow::GenMyoWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::GenMyoWindow)
+GenMyoWindow::GenMyoWindow(QWidget *parent)
+  : QMainWindow(parent)
+  , ui(new Ui::GenMyoWindow)
+  , mMyoDialog(this)
 {
     ui->setupUi(this);
     //start path
@@ -21,6 +22,8 @@ GenMyoWindow::GenMyoWindow(QWidget *parent) :
     mPathExport = QDir::currentPath();
     //start
     mMyoManager.start();
+    //set manager to myo dialog
+    mMyoDialog.setMyoManager(&mMyoManager);
 }
 
 GenMyoWindow::~GenMyoWindow()
@@ -423,4 +426,14 @@ void GenMyoWindow::saveFANN()
             break;
         }
     }
+}
+
+
+void GenMyoWindow::onShowInputs(bool show)
+{
+    mMyoDialog.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Dialog);
+    mMyoDialog.show();
+    mMyoDialog.setFocus();
+    mMyoDialog.activateWindow();
+    mMyoDialog.raise();
 }

@@ -16,6 +16,18 @@
 
 namespace myo
 {
+    enum EMG
+    {
+        EMG_TOP = 3,
+        EMG_TOP_LEFT = 2,
+        EMG_TOP_RIGHT = 4,
+        EMG_MID_LEFT = 1,
+        EMG_MID_RIGHT = 5,
+        EMG_DOWN_LEFT = 0,
+        EMG_DOWN_RIGHT = 6,
+        EMG_DOWN = 7
+    };
+    
     template < class T >
     struct EulerAngles
     {

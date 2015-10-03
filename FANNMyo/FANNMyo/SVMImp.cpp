@@ -7,7 +7,7 @@
 //
 
 #include "SVMImp.h"
-#include "SVMUtilities.h"
+#include "SVM/SVMUtilities.h"
 
 namespace myosvm
 {
@@ -41,16 +41,16 @@ void create_model(const std::string& path)
     param.probability = true;
     param.shrinking   = true;
 #elif 1
-    param.svm_type    = NU_SVC;//C_SVC;
-    param.kernel_type = LINEAR;
+    param.svm_type    = C_SVC;//C_SVC;
+    param.kernel_type = RBF;
     param.cache_size  = 100.0f;
     param.coef0       = 0.05f;
-    param.degree      = 20;
-    param.eps         = 0.01f;
-    param.gamma       = 0.25f;
-    param.nu          = 0.1f;
-    param.probability = true;
-    param.shrinking   = false;
+    param.degree      = 10;
+    param.eps         = 0.1f;
+    param.gamma       = 0.2f;
+    param.nu          = 0.05f;
+    param.probability = false;
+    param.shrinking   = true;
 #elif 1
     param.svm_type    = NU_SVC;//C_SVC;
     param.kernel_type = RBF;

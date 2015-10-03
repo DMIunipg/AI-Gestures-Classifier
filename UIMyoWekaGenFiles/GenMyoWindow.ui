@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
-    <height>594</height>
+    <width>489</width>
+    <height>627</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>474</width>
+     <width>489</width>
      <height>22</height>
     </rect>
    </property>
@@ -97,7 +97,7 @@
   </action>
   <action name="mAShowInputs">
    <property name="checkable">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Show Inputs</string>
@@ -235,6 +235,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mAShowInputs</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onShowInputs(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>236</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAddGesture()</slot>
@@ -245,5 +261,6 @@
   <slot>onExportAs()</slot>
   <slot>onOpen()</slot>
   <slot>onNew()</slot>
+  <slot>onShowInputs(bool)</slot>
  </slots>
 </ui>

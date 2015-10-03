@@ -4,9 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui opengl
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = UIMyoWekaGenFiles
 TEMPLATE = app
@@ -70,7 +69,10 @@ SOURCES += main.cpp\
     RecordingDialog.cpp \
     FlagsDialog.cpp \
     MyoTime.cpp \
-    GesturesBuilder.cpp
+    GesturesBuilder.cpp \
+    MyoDialog.cpp \
+    MyoDrawFrame.cpp \
+    qcustomplot/qcustomplot.cpp
 
 HEADERS  += GenMyoWindow.h \
     GestureForm.h \
@@ -87,12 +89,16 @@ HEADERS  += GenMyoWindow.h \
     MyoDataInput.h \
     MyoSerialize.h \
     MyoTime.h \
-    GesturesBuilder.h
+    GesturesBuilder.h \
+    MyoDialog.h \
+    MyoDrawFrame.h \
+    qcustomplot/qcustomplot.h
 
 FORMS    += GenMyoWindow.ui \
     GestureForm.ui \
     RecordingDialog.ui \
-    FlagsDialog.ui
+    FlagsDialog.ui \
+    MyoDialog.ui
 
 #redources
 RESOURCES += \

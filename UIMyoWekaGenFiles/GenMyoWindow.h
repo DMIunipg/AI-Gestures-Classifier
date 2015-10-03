@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QListWidgetItem>
 #include "MyoManager.h"
+#include "MyoDialog.h"
 
 namespace Ui {
 class GenMyoWindow;
@@ -30,6 +31,7 @@ private slots:
     void onSaveAs();
     void onExport();
     void onExportAs();
+    void onShowInputs(bool);
 
 private:
     //save
@@ -41,6 +43,8 @@ private:
     Ui::GenMyoWindow *ui;
     //Myo manager
     MyoManager mMyoManager;
+    //Myo data dialog
+    MyoDialog mMyoDialog;
     //item/rows map
     QMap< QListWidgetItem*, MyoListener::TypeRows > mWekaItems;
     //get dir
