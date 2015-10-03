@@ -31,6 +31,8 @@ void MyoThread::run()
     //get start time
     double timeStart = myo::GetTime();
     double timePush  = myo::GetTime();
+    //alloc for ptrs for smooth
+    auto emgPtrArray = new std::array< int8_t , 8UL >*[mFlags.mReps] ;
     //thread loop
     while(mLoop)
     {
@@ -56,6 +58,13 @@ void MyoThread::run()
                 //or... by reps
                 if (mInputs.size() >= mFlags.mReps)
                 {
+                    //set ptrs
+                    for (size_t i=0; i!= mFlags.mReps; ++i)
+                    {
+                        emgPtrArray[i] = &mInputs[i].getEmg();
+                    }
+                    //applay
+                    mFlags.applayEmgFilter(emgPtrArray, mFlags.mReps);
                     //put input 
                     mCallback(mInputs,mFlags,mMutex);
                     mInputs.clear();
@@ -79,6 +88,8 @@ void MyoThread::run()
             default:break;
         }
     }
+    //dealloc
+    delete [] emgPtrArray;
 }
 
 void MyoThread::applay(const Inputs& inputs,const DataFlags& flags,ApplyCallback callback)

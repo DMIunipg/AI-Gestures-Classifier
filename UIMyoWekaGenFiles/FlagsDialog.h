@@ -32,6 +32,7 @@ public slots:
     void onSempleMode(bool enabled);
     void onGestureMode(bool enabled);
     void onNormalize(bool enable);
+    void onEmg(bool enable);
 
 private:
 

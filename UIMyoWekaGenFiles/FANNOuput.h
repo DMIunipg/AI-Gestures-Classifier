@@ -74,9 +74,22 @@ public:
         {
             maxTime=std::max(maxTime,rows[i].getTime());
         }
-        //
+        //alloc emgs
+        auto listEmgs = new std::array< int8_t, N >[mFlags.mReps];
+        //...
         for(size_t i=0;i!=nrows;++i)
         {
+            if(mFlags.mEmg)
+            {
+                //copy emg
+                for(size_t j=0;j!=mFlags.mReps;++j)
+                {
+                   auto& row   = rows[i*mFlags.mReps+j];
+                   listEmgs[j] = row.getEmg();
+                }
+                //applay filters
+                mFlags.applayEmgFilter(listEmgs,mFlags.mReps);
+            }
             //stream row
             mLines.push_back(std::move(std::stringstream()));
             std::stringstream& stream=mLines[mLines.size()-1];
@@ -124,7 +137,7 @@ public:
                 //append emg
                 if(mFlags.mEmg)
                 {
-                    for(int value:row.getEmg())
+                    for(auto value:listEmgs[j])
                     {
                         stream << std::to_string(mFlags.apply( (double)value , 128 )) << " ";
                     }

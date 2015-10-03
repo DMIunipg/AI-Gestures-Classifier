@@ -35,7 +35,7 @@ void create_model(const std::string& path)
     struct fann* ann = fann_create_standard(num_layers,
                                             train_data->num_input,
                                             train_data->num_input*3,
-                                            train_data->num_input*2,
+                                            train_data->num_input*3,
                                             train_data->num_output);
     
     std::cout << "Training network.\n";
@@ -44,14 +44,19 @@ void create_model(const std::string& path)
     fann_set_learning_rate(ann, 0.5f);
     fann_set_learning_momentum(ann,/*momentum*/ 0.1f);
     fann_set_train_error_function(ann, /*FANN_ERRORFUNC_LINEAR*/ FANN_ERRORFUNC_TANH);
-#else
+#elif 0
     fann_set_training_algorithm(ann, FANN_TRAIN_INCREMENTAL);
     fann_set_learning_rate(ann, 0.31f);
     fann_set_learning_momentum(ann,/*momentum*/ 0.01);
     fann_set_train_error_function(ann, FANN_ERRORFUNC_LINEAR);
-    
+#else
+    fann_set_training_algorithm( ann, FANN_TRAIN_BATCH );
+    fann_set_learning_rate(ann, 0.35f);
+    fann_set_learning_momentum(ann,0.02f);
+    fann_set_train_error_function(ann, FANN_ERRORFUNC_TANH );
 #endif
-    fann_train_on_data(ann, train_data, 4000, 10, desired_error);
+    
+    fann_train_on_data(ann, train_data, 4000, 50, desired_error);
     
     
     if(existsFile((path+".test").c_str()))

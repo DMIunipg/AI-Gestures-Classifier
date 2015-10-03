@@ -17,15 +17,10 @@
 #define FANN 2
 #define RBF 3
 
-#define SVM_OR_FANN  SVM  //RBF //FANN
+#define SVM_OR_FANN  SVM //RBF //FANN
 #define CREATE_MODEL  true
-//#define PATH_DATA_SET "ndates/left_toleft_right_toright_normal.fann"
-//#define PATH_DATA_SET "datas/NRL00/data.fann"
-//#define PATH_DATA_SET "datas/NRL02/data.fann"
-//#define PATH_DATA_SET "datas/NRL03/data.fann"
-//#define PATH_DATA_SET "datas/NRL07/data.fann"
-//#define PATH_DATA_SET "datas/NRL08/data.fann"
-#define PATH_DATA_SET "datas/NRL09/data.fann"
+//#define PATH_DATA_SET "datas/NRL10/data.fann"
+#define PATH_DATA_SET "datas/NRL11/data.fann"
 
 //select method
 #if SVM_OR_FANN == FANN

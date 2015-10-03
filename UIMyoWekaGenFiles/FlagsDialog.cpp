@@ -57,6 +57,8 @@ void FlagsDialog::setFalgs(const  DataFlags& flags)
     ui->mCBEmg->setChecked(flags.mEmg);
     ui->mCBNormalize->setChecked(flags.mNormalize);
     ui->mCBAllPositive->setChecked(flags.mPositive);
+    ui->mCBEmgAbs->setChecked(flags.mEmgAbs);
+    ui->mDSBEmgSmooth->setValue(flags.mEmgSmooth);
 }
 
 DataFlags FlagsDialog::getFlags()
@@ -78,6 +80,8 @@ DataFlags FlagsDialog::getFlags()
      out.mEmg            = ui->mCBEmg->isChecked();
      out.mNormalize      = ui->mCBNormalize->isChecked();
      out.mPositive       = ui->mCBAllPositive->isChecked() && out.mNormalize ;
+     out.mEmgAbs         = ui->mCBEmgAbs->isChecked() && out.mEmg;
+     out.mEmgSmooth      = ui->mDSBEmgSmooth->value() * (double)out.mEmg;
      return out;
 }
 
@@ -123,8 +127,12 @@ void FlagsDialog::onGestureMode(bool enabled)
     ui->mGBGesturePerRow->setEnabled(enabled);
 }
 
-
 void FlagsDialog::onNormalize(bool enable)
 {
     ui->mCBAllPositive->setEnabled(enable);
+}
+
+void FlagsDialog::onEmg(bool enable)
+{
+    ui->mGBEmgFilters->setEnabled(enable);
 }

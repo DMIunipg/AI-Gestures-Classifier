@@ -32,32 +32,32 @@ namespace myo
     struct EulerAngles
     {
         T mRoll{ 0 }, mPitch{ 0 }, mYaw{ 0 };
-        
+
         EulerAngles(){}
-        
+
         EulerAngles(T roll,T pitch,T yaw)
         :mRoll(roll)
         ,mPitch(pitch)
         ,mYaw(yaw)
         {
-            
+
         }
-        
+
         T roll() const
         {
             return mRoll;
         }
-        
+
         T pitch() const
         {
             return mPitch;
         }
-        
+
         T yaw() const
         {
             return mYaw;
         }
-        
+
         void clear()
         {
             mRoll  = 0;
@@ -72,7 +72,7 @@ namespace myo
             " }";
         }
     };
-    
+
     template < class T >
     EulerAngles< T > quaternionToEulerAngles(const myo::Quaternion<T>& quat)
     {
@@ -89,7 +89,7 @@ namespace myo
          );
         return out;
     }
-    
+
     template < class T,
                class J,
                class H,
@@ -98,21 +98,21 @@ namespace myo
     class RawDatas
     {
     protected:
-        
+
         double mTime;
         std::array< T , N > mEmg;
         Vector3< J > mGyro;
         Vector3< H > mAccel;
         Quaternion< X > mQuad;
-        
+
     public:
-        
+
         RawDatas()
         {
             mTime = 0.0;
             mEmg.fill(0);
         }
-        
+
         void clear()
         {
             mTime = 0.0;
@@ -121,7 +121,7 @@ namespace myo
             mAccel = Vector3< H >();
             mQuad  = Quaternion< X >();
         }
-        
+
         void setTime(double time)
         {
             mTime = time;
@@ -137,11 +137,6 @@ namespace myo
             mEmg = value;
         }
 
-        const std::array< T , N >& getEmg() const
-        {
-            return mEmg;
-        }
-
         void setEmg(size_t i, T value)
         {
             mEmg[i]=value;
@@ -152,12 +147,12 @@ namespace myo
             assert(n <= N);
             std::memcpy(mEmg.data(), array, sizeof(T) * n);
         }
-        
+
         void setGyroscope(const Vector3< J >& gyroscope)
         {
             mGyro=gyroscope;
         }
-        
+
         void setAccelerometer(const Vector3< H >& accelerometer)
         {
             mAccel=accelerometer;
@@ -167,13 +162,33 @@ namespace myo
         {
             mQuad=quaternion;
         }
-        
+
+        const std::array< T , N >& getEmg() const
+        {
+            return mEmg;
+        }
+
+        std::array< T , N >& getEmg()
+        {
+            return mEmg;
+        }
+
         const Vector3< J >& getGyroscope() const
         {
             return mGyro;
         }
-        
+
+        Vector3< J >& getGyroscope()
+        {
+            return mGyro;
+        }
+
         const Vector3< H >& getAccelerometer() const
+        {
+            return mAccel;
+        }
+
+        Vector3< H >& getAccelerometer()
         {
             return mAccel;
         }
@@ -183,7 +198,12 @@ namespace myo
             return mQuad;
         }
 
-        const EulerAngles< X >& getEulerAngles() const
+        Quaternion< X >& getQuaternion()
+        {
+            return mQuad;
+        }
+
+        EulerAngles< X > getEulerAngles() const
         {
             return quaternionToEulerAngles(mQuad);
         }
@@ -215,7 +235,7 @@ namespace myo
 
             return str;
         }
-        
+
         void serialize(FILE* file) const
         {
             //write time
@@ -286,76 +306,76 @@ namespace myo
             }
         }
     };
-    
+
     struct ArmStatus
     {
         bool mUnlock { false },
         mSync   { false };
-        
+
         myo::Arm mArm{ myo::Arm::armUnknown };
-        
+
         void clear()
         {
             mUnlock = false;
             mSync   = false;
             mArm    = myo::Arm::armUnknown;
         }
-        
+
         void setArm(myo::Arm arm)
         {
             mArm = arm;
         }
-        
+
         void sync()
         {
             mSync = true;
         }
-        
+
         void unsync()
         {
             mSync = false;
         }
-        
+
         void lock()
         {
             mUnlock = false;
         }
-        
+
         void unlock()
         {
             mUnlock = true;
         }
-        
+
         bool isLeft() const
         {
             return mArm == myo::Arm::armLeft;
         }
-        
+
         bool isRight() const
         {
             return mArm == myo::Arm::armRight;
         }
-        
+
         bool isUnknown() const
         {
             return mArm == myo::Arm::armUnknown;
         }
-        
+
         bool isSync() const
         {
             return mSync;
         }
-        
+
         bool isUnlock() const
         {
             return mUnlock;
         }
-        
+
         bool isLock() const
         {
             return !mUnlock;
         }
-        
+
         std::string toString()
         {
             return
@@ -365,7 +385,7 @@ namespace myo
             + (mArm == myo::armLeft ? "left" :
                (mArm == myo::armRight ? "right": "unknown" ))
             + " }";
-            
+
         }
     };
 };

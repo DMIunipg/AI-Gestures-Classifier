@@ -17,63 +17,17 @@ void create_model(const std::string& path)
     svm_problem* dataset = svm_deserialize(path);
     svm_unnormalize_classes_names(dataset);
     svm_parameter param = {0};
-    
-#if 0
-    param.svm_type    = NU_SVC;//C_SVC;
+
+    param.svm_type    = NU_SVC;
     param.kernel_type = RBF;
     param.cache_size  = 100.0f;
-    param.coef0       = 0.05f;
-    param.degree      = 10;
+    param.coef0       = 0.1f;
+    param.degree      = 3;
     param.eps         = 0.1f;
     param.gamma       = 0.2f;
-    param.nu          = 0.05f;
+    param.nu          = 0.03f;
     param.probability = true;
     param.shrinking   = true;
-#elif 0
-    param.svm_type    = NU_SVC;//C_SVC;
-    param.kernel_type = LINEAR;
-    param.cache_size  = 1.0f;
-    param.coef0       = 0.5f;
-    param.degree      = 10;
-    param.eps         = 0.1f;
-    param.gamma       = 0.2f;
-    param.nu          = 0.001f;
-    param.probability = true;
-    param.shrinking   = true;
-#elif 1
-    param.svm_type    = C_SVC;//C_SVC;
-    param.kernel_type = RBF;
-    param.cache_size  = 100.0f;
-    param.coef0       = 0.05f;
-    param.degree      = 10;
-    param.eps         = 0.1f;
-    param.gamma       = 0.2f;
-    param.nu          = 0.05f;
-    param.probability = false;
-    param.shrinking   = true;
-#elif 1
-    param.svm_type    = NU_SVC;//C_SVC;
-    param.kernel_type = RBF;
-    param.cache_size  = 100.0f;
-    param.coef0       = 0.05f;
-    param.degree      = 20;
-    param.eps         = 0.01f;
-    param.gamma       = 0.25f;
-    param.nu          = 0.1f;
-    param.probability = true;
-    param.shrinking   = false;
-#else
-    param.svm_type    = NU_SVC;//C_SVC;
-    param.kernel_type = RBF;
-    param.cache_size  = 100.0f;
-    param.coef0       = 0.05f;
-    param.degree      = 100;
-    param.eps         = 0.1f;
-    param.gamma       = 0.04f;
-    param.nu          = 0.1f;
-    param.probability = true;
-    param.shrinking   = true;
-#endif
     
     svm_do_cross_validation(param,*dataset,100);
     svm_model* model = svm_train(dataset,&param);
@@ -146,7 +100,7 @@ void* myo_classification(const std::string& path,MyoThread& myo,DataFlags&  flag
                       cNameMoreThenHlProb = 0.0;
                       for(int c=0;c!=model->nr_class;++c)
                           cNameMoreThenHlProb  = std::max(cNameMoreThenHlProb,classProb[c]);
-                      if(cNameMoreThenHlProb>=0.5) cNameMoreThenHl = calcOut;
+                      if(cNameMoreThenHlProb>0.5) cNameMoreThenHl = calcOut;
                       std::cout << "last more then 0.5% is "
                                 << cnames.getClassName(svm_normalize_class_name(cNameMoreThenHl))
                                 << "\n";

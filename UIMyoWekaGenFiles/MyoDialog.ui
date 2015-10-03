@@ -423,7 +423,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_4">
               <property name="text">
-               <string>abs</string>
+               <string>Abs</string>
               </property>
              </widget>
             </item>
@@ -437,12 +437,12 @@
             <item row="1" column="0">
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>smoth</string>
+               <string>Smooth</string>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QDoubleSpinBox" name="mDSBSmoth">
+             <widget class="QDoubleSpinBox" name="mDSBSmooth">
               <property name="maximum">
                <double>1.000000000000000</double>
               </property>

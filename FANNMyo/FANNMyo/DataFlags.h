@@ -32,6 +32,9 @@ struct DataFlags
     bool mEmg             { true };
     bool mNormalize       { true };
     bool mPositive        { true };
+    //filters
+    double mEmgSmooth     { 0.0   };
+    bool   mEmgAbs        { false };
     
     DataFlags(){}
     
@@ -47,7 +50,9 @@ struct DataFlags
               bool roll,
               bool emg,
               bool normalize,
-              bool positive)
+              bool positive,
+              double emgSmooth,
+              bool emgAbs)
     :mMode(mode)
     ,mReps(reps)
     ,mTimePerGesture(timePerGesture)
@@ -61,6 +66,8 @@ struct DataFlags
     ,mEmg(emg)
     ,mNormalize(normalize)
     ,mPositive(positive)
+    ,mEmgSmooth(emgSmooth)
+    ,mEmgAbs(emgAbs)
     {
         
     }
@@ -74,7 +81,9 @@ struct DataFlags
               bool roll,
               bool emg,
               bool normalize,
-              bool positive)
+              bool positive,
+              double emgSmooth,
+              bool emgAbs)
     :mReps(reps)
     ,mGyroscope(gyroscope)
     ,mAccelerometer(accelerometer)
@@ -85,6 +94,8 @@ struct DataFlags
     ,mEmg(emg)
     ,mNormalize(normalize)
     ,mPositive(positive)
+    ,mEmgSmooth(emgSmooth)
+    ,mEmgAbs(emgAbs)
     {
         
     }
@@ -99,7 +110,9 @@ struct DataFlags
               bool    roll,
               bool    emg,
               bool    normalize,
-              bool    positive)
+              bool    positive,
+              double  emgSmooth,
+              bool    emgAbs)
     :mMode(GESTURE_MODE)
     ,mTimePerGesture(timePerGesture)
     ,mDeltaTime(deltaTime)
@@ -112,6 +125,8 @@ struct DataFlags
     ,mEmg(emg)
     ,mNormalize(normalize)
     ,mPositive(positive)
+    ,mEmgSmooth(emgSmooth)
+    ,mEmgAbs(emgAbs)
     {
         
     }
@@ -154,6 +169,8 @@ struct DataFlags
         std::fwrite(&mEmg, sizeof(mEmg), 1, file);
         std::fwrite(&mNormalize, sizeof(mNormalize), 1, file);
         std::fwrite(&mPositive, sizeof(mPositive), 1, file);
+        std::fwrite(&mEmgSmooth, sizeof(mEmgSmooth), 1, file);
+        std::fwrite(&mEmgAbs, sizeof(mEmgAbs), 1, file);
     }
     
     void derialize(FILE* file)
@@ -172,6 +189,8 @@ struct DataFlags
         std::fread(&mEmg, sizeof(mEmg), 1, file);
         std::fread(&mNormalize, sizeof(mNormalize), 1, file);
         std::fread(&mPositive, sizeof(mPositive), 1, file);
+        std::fread(&mEmgSmooth, sizeof(mEmgSmooth), 1, file);
+        std::fread(&mEmgAbs, sizeof(mEmgAbs), 1, file);
     }
     
     /**
@@ -248,6 +267,73 @@ struct DataFlags
     {
         return toPositive(toNormalize(quad));
     }
+    
+    /*
+     Smooth
+     */
+    template < typename T >
+    T smooth(const T& from,const T& to) const
+    {
+        return from * mEmgSmooth + to * (1.0-mEmgSmooth);
+    }
+    /*
+     EMG Smooth
+     */
+    template < typename T, size_t N >
+    void applayEmgSmooth(std::array< T, N > emgs[],size_t nrows) const
+    {
+        for(int r=1;r < nrows;++r)
+            for(int e=0;e!=N;     ++e)
+            {
+                emgs[r][e]=smooth(emgs[r-1][e],emgs[r][e]);
+            }
+    }
+    template < typename T, size_t N >
+    void applayEmgAbs(std::array< T, N > emgs[],size_t nrows) const
+    {
+        for(int r=0;r!=nrows;++r)
+            for(auto& emg:   emgs[r])
+            {
+                emg = std::abs(emg);
+            }
+    }
+    template < typename T, size_t N >
+    void applayEmgFilter(std::array< T, N > emgs[],size_t nrows) const
+    {
+        if(mEmgAbs)    applayEmgAbs(emgs,nrows);
+        if(mEmgSmooth) applayEmgSmooth(emgs,nrows);
+    }
+    
+    
+    /*
+     EMG Smooth ptr...
+     */
+    template < typename T, size_t N >
+    void applayEmgSmooth(std::array< T, N >* vecemgs[],size_t nrows) const
+    {
+        for(int r=1;r < nrows;++r)
+        {
+            auto& emgs0 = *(vecemgs[r-1]);
+            auto& emgs1 = *(vecemgs[r]);
+            for(int e=0;e!=N;     ++e)  emgs1[e]=smooth(emgs0[e],emgs1[e]);
+        }
+    }
+    template < typename T, size_t N >
+    void applayEmgAbs(std::array< T, N >* vecemgs[],size_t nrows) const
+    {
+        for(int r=0;r!=nrows;++r)
+        {
+            auto& emgs = *(vecemgs[r]);
+            for(auto& emg: emgs)  emg = std::abs(emg);
+        }
+    }
+    template < typename T, size_t N >
+    void applayEmgFilter(std::array< T, N >* emgs[],size_t nrows) const
+    {
+        if(mEmgAbs)    applayEmgAbs(emgs,nrows);
+        if(mEmgSmooth) applayEmgSmooth(emgs,nrows);
+    }
+    
 };
 
 struct ClassesNames
@@ -265,14 +351,14 @@ struct ClassesNames
             double key = 0.0;
             char   buffer[255] = {0};
             std::fscanf(file, "%le, %s",&key,buffer);
-            mNames[key] = buffer;
+            mNames[(int)(1.0/key)] = buffer;
         }
     }
     
     const char* getClassName(double uid) const
     {
         //search
-        auto it=mNames.find(uid);
+        auto it=mNames.find((int)(1.0/uid));
         //not found?
         if(it==mNames.end()) return "unknow";
         //return name of class

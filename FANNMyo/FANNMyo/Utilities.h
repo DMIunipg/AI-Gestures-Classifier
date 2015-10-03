@@ -136,12 +136,7 @@ namespace myo
         {
             mEmg = value;
         }
-
-        const std::array< T , N >& getEmg() const
-        {
-            return mEmg;
-        }
-
+        
         void setEmg(size_t i, T value)
         {
             mEmg[i]=value;
@@ -168,7 +163,22 @@ namespace myo
             mQuad=quaternion;
         }
         
+        const std::array< T , N >& getEmg() const
+        {
+            return mEmg;
+        }
+        
+        std::array< T , N >& getEmg()
+        {
+            return mEmg;
+        }
+        
         const Vector3< J >& getGyroscope() const
+        {
+            return mGyro;
+        }
+        
+        Vector3< J >& getGyroscope()
         {
             return mGyro;
         }
@@ -177,13 +187,23 @@ namespace myo
         {
             return mAccel;
         }
-
+        
+        Vector3< H >& getAccelerometer()
+        {
+            return mAccel;
+        }
+        
         const Quaternion< X >& getQuaternion() const
         {
             return mQuad;
         }
+        
+        Quaternion< X >& getQuaternion()
+        {
+            return mQuad;
+        }
 
-        const EulerAngles< X >& getEulerAngles() const
+        EulerAngles< X > getEulerAngles() const
         {
             return quaternionToEulerAngles(mQuad);
         }

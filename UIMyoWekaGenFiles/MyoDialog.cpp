@@ -36,8 +36,9 @@ void MyoDialog::absPlots()
     ui->mCPDown->yAxis->setRange(-1,129);
     //put all value more then 0
     for(auto& vY:mYPlots)
-        for(auto& y:vY)
-            y=std::abs(y);
+    {
+        for(auto& y:vY) y=std::abs(y);
+    }
 }
 void MyoDialog::notAbsPlots()
 {
@@ -195,8 +196,8 @@ void MyoDialog::showEmg(const std::array< int8_t, 8 > &emg)
 
     UiStrength(ui->mLStrength,emg);
     //smoth
-    double emgSmoth = ui->mDSBSmoth->value();
-    bool   emgAbs   = ui->mCBAbs->isChecked();
+    double emgSmooth = ui->mDSBSmooth->value();
+    bool   emgAbs    = ui->mCBAbs->isChecked();
     //put all values into graph
     for(int i=0;i!=8;++i)
     {
@@ -205,7 +206,7 @@ void MyoDialog::showEmg(const std::array< int8_t, 8 > &emg)
         //lerp
         double value = emgAbs ? std::abs(emg[i]) : emg[i];
         //put the new value into the vector
-        mYPlots[i][0]= lerp(oldY[0],value,emgSmoth);;
+        mYPlots[i][0]= lerp(oldY[0],value,emgSmooth);
         //put all value shifted by 1
         for(int j=1;j!=mYPlots[i].size();++j)
         {
@@ -213,14 +214,14 @@ void MyoDialog::showEmg(const std::array< int8_t, 8 > &emg)
         }
     }
     //put values
-    ui->mCPTop->graph(0)->setData(mXPlots,      invSmoth(mYPlots[myo::EMG_TOP],emgSmoth));
-    ui->mCPTopLeft->graph(0)->setData(mXPlots,  invSmoth(mYPlots[myo::EMG_TOP_LEFT],emgSmoth));
-    ui->mCPTopRight->graph(0)->setData(mXPlots, invSmoth(mYPlots[myo::EMG_TOP_RIGHT],emgSmoth));
-    ui->mCPMidLeft->graph(0)->setData(mXPlots,  invSmoth(mYPlots[myo::EMG_MID_LEFT],emgSmoth));
-    ui->mCPMidRight->graph(0)->setData(mXPlots, invSmoth(mYPlots[myo::EMG_MID_RIGHT],emgSmoth));
-    ui->mCPDownLeft->graph(0)->setData(mXPlots, invSmoth(mYPlots[myo::EMG_DOWN_LEFT],emgSmoth));
-    ui->mCPDownRight->graph(0)->setData(mXPlots,invSmoth( mYPlots[myo::EMG_DOWN_RIGHT],emgSmoth));
-    ui->mCPDown->graph(0)->setData(mXPlots,     invSmoth(mYPlots[myo::EMG_DOWN],emgSmoth));
+    ui->mCPTop->graph(0)->setData(mXPlots,      invSmoth(mYPlots[myo::EMG_TOP],emgSmooth));
+    ui->mCPTopLeft->graph(0)->setData(mXPlots,  invSmoth(mYPlots[myo::EMG_TOP_LEFT],emgSmooth));
+    ui->mCPTopRight->graph(0)->setData(mXPlots, invSmoth(mYPlots[myo::EMG_TOP_RIGHT],emgSmooth));
+    ui->mCPMidLeft->graph(0)->setData(mXPlots,  invSmoth(mYPlots[myo::EMG_MID_LEFT],emgSmooth));
+    ui->mCPMidRight->graph(0)->setData(mXPlots, invSmoth(mYPlots[myo::EMG_MID_RIGHT],emgSmooth));
+    ui->mCPDownLeft->graph(0)->setData(mXPlots, invSmoth(mYPlots[myo::EMG_DOWN_LEFT],emgSmooth));
+    ui->mCPDownRight->graph(0)->setData(mXPlots,invSmoth( mYPlots[myo::EMG_DOWN_RIGHT],emgSmooth));
+    ui->mCPDown->graph(0)->setData(mXPlots,     invSmoth(mYPlots[myo::EMG_DOWN],emgSmooth));
     //draw
     doPlots();
 }
