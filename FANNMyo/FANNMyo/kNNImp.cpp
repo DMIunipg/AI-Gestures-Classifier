@@ -37,11 +37,11 @@ void* myo_classification(const std::string& path,MyoThread& myo,DataFlags&  flag
                                         row[i] = value;
                                     });
                   //do classification
-                  kNN::Result res = knn->classify(row,3);
+                  kNN::Result res = knn->classify(row,1);
                   //print res
                   std::cout << "-----------------------------------------------\n";
                   std::cout << "arm in in status: " << cnames.getClassName(res.mClasses);
-                  std::cout << " (" << res.mError << ") \n";
+                  std::cout << " ( error: " << res.mError << " ) \n";
                   std::cout << "-----------------------------------------------\n";
               },
               flags);

@@ -67,7 +67,7 @@ kNN::Result kNN::classify(const kNN::DataRow& row, unsigned int nNN) const
             count   = it.second;
         }
     //return selected
-    return Result( true,  classes, (double)count / nNN );
+    return Result( true,  classes, 1.0-((double)count / nNN) );
 }
 
 double kNN::distance(const kNN::DataRow& left,const kNN::DataRow& right) const
