@@ -95,14 +95,31 @@ void* myo_classification(const std::string& path,MyoThread& myo,DataFlags&  flag
                       }
                       std::cout << ")\n";
                       std::cout << "-----------------------------------------------\n";
+                      //constants
+                      double cNameMoreThenH  = 0.5;
+                      double cNameMoreThenPC = 1.0/model->nr_class+0.1;
+                      //gobals
                       static double cNameMoreThenHl = 0.0;
+                      static double cNameMoreThenPCl = 0.0;
                       static double cNameMoreThenHlProb = 0.0;
+                      //search max
                       cNameMoreThenHlProb = 0.0;
                       for(int c=0;c!=model->nr_class;++c)
+                      {
                           cNameMoreThenHlProb  = std::max(cNameMoreThenHlProb,classProb[c]);
-                      if(cNameMoreThenHlProb>0.5) cNameMoreThenHl = calcOut;
-                      std::cout << "last more then 0.5% is "
+                      }
+                      //select
+                      if(cNameMoreThenHlProb >= cNameMoreThenH) { cNameMoreThenHl  = calcOut; }
+                      if(cNameMoreThenHlProb >= cNameMoreThenPC){ cNameMoreThenPCl = calcOut; }
+                      //print
+                      std::cout << "last probability: "<< cNameMoreThenHlProb << "\n" ;
+                      std::cout << "last more then "   << cNameMoreThenPC     <<" is "
                                 << cnames.getClassName(svm_normalize_class_name(cNameMoreThenHl))
+                                << "(" << cNameMoreThenHl << ")"
+                                << "\n";
+                      std::cout << "last more then 0.5% is "
+                                << cnames.getClassName(svm_normalize_class_name(cNameMoreThenPCl))
+                                << "(" << cNameMoreThenPCl << ")"
                                 << "\n";
                       std::cout << "-----------------------------------------------\n";
                       std::cout.flush();

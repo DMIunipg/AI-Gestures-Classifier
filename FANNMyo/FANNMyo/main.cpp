@@ -12,15 +12,18 @@
 #include "FANNImp.h"
 #include "SVMImp.h"
 #include "RBFImp.h"
+#include "kNNImp.h"
 
 #define SVM 1
 #define FANN 2
 #define RBF 3
+#define kNN 4
 
-#define SVM_OR_FANN  SVM //RBF //FANN
+#define SVM_OR_FANN  kNN // SVM //RBF //FANN
 #define CREATE_MODEL  true
-//#define PATH_DATA_SET "datas/NRL10/data.fann"
-#define PATH_DATA_SET "datas/NRL11/data.fann"
+//#define PATH_DATA_SET "datas/NRL11/data.fann"
+#define PATH_DATA_SET "datas/GAB/data.fann"
+//#define PATH_DATA_SET "datas/DAN2/data.fann"
 
 //select method
 #if SVM_OR_FANN == FANN
@@ -29,6 +32,8 @@ namespace myomethod = myofann;
 namespace myomethod = myosvm;
 #elif SVM_OR_FANN == RBF
 namespace myomethod = myorbf;
+#elif SVM_OR_FANN == kNN
+namespace myomethod = myoknn;
 #else
 #error "Select SVM or FANN"
 #endif
