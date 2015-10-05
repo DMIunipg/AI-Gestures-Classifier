@@ -61,11 +61,29 @@ public:
             mError   = error;
         }
     };
+    //distance method
+    enum DistanceType
+    {
+        EUCLIDE_DISTANCE,
+        MANHATTAN_DISTANCE,
+        HAMMING_DISTANCE
+    };
+    //distance Weight
+    enum DistanceWeight
+    {
+        DEMOCRATIC,
+        ONE_ON_DISTANCE,
+        ONE_MINUS_DISTANCE
+    };
     
     //public methods
     kNN (const std::string& dataset);
     kNN (const DataSet& dataset);
-    Result classify(const DataRow& values, unsigned int nNN = 1) const;
+    //applay classify
+    Result classify(const DataRow& values,
+                    unsigned int nNN = 1,
+                    DistanceType type = EUCLIDE_DISTANCE,
+                    DistanceWeight typeWeight = DEMOCRATIC ) const;
     //read dataset from file
     static bool dataSetFromFile(const std::string& path,DataSet& out);
     
@@ -73,6 +91,8 @@ protected:
     
     //distance
     double distance(const DataRow& left,const DataRow& right) const;
+    double manhattan(const DataRow& left,const DataRow& right) const;
+    double hamming(const DataRow& left,const DataRow& right) const;
     //dataset
     DataSet mDataSet;
     

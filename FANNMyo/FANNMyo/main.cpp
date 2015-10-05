@@ -19,7 +19,7 @@
 #define RBF 3
 #define kNN 4
 
-#define SVM_OR_FANN  kNN // SVM //RBF //FANN
+#define SVM_OR_FANN   SVM //kNN // RBF //FANN
 #define CREATE_MODEL  true
 //#define PATH_DATA_SET "datas/NRL11/data.fann"
 #define PATH_DATA_SET "datas/GAB/data.fann"

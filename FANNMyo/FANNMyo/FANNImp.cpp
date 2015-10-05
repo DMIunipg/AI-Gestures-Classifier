@@ -50,6 +50,7 @@ void create_model(const std::string& path)
     fann_set_learning_momentum(ann,/*momentum*/ 0.01);
     fann_set_train_error_function(ann, FANN_ERRORFUNC_LINEAR);
 #else
+    fann_set_activation_function_hidden(ann, FANN_GAUSSIAN);
     fann_set_training_algorithm( ann, FANN_TRAIN_BATCH );
     fann_set_learning_rate(ann, 0.35f);
     fann_set_learning_momentum(ann,0.02f);
