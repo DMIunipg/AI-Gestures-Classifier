@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SamplingList</class>
+ <widget class="QDialog" name="SamplingList">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>490</width>
+    <height>561</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QListWidget" name="mLWSamples"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="mPBAddSample">
+     <property name="text">
+      <string>Add sample</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mPBAddSample</sender>
+   <signal>clicked()</signal>
+   <receiver>SamplingList</receiver>
+   <slot>onAddSample()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>392</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>195</x>
+     <y>206</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAddSample()</slot>
+ </slots>
+</ui>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GestureForm</class>
- <widget class="QWidget" name="GestureForm">
+ <class>SampleForm</class>
+ <widget class="QWidget" name="SampleForm">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>41</height>
+    <height>45</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,14 +15,18 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QLabel" name="mLBName">
+    <widget class="QLabel" name="mLTInfo">
      <property name="text">
-      <string>Name:</string>
+      <string>Time:</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="mLEName"/>
+    <widget class="QLabel" name="mLTime">
+     <property name="text">
+      <string>0.0</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QPushButton" name="mPBDelete">
@@ -45,7 +49,7 @@
   <connection>
    <sender>mPBDelete</sender>
    <signal>clicked()</signal>
-   <receiver>GestureForm</receiver>
+   <receiver>SampleForm</receiver>
    <slot>onDelete()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -61,7 +65,7 @@
   <connection>
    <sender>mPBRecording</sender>
    <signal>clicked()</signal>
-   <receiver>GestureForm</receiver>
+   <receiver>SampleForm</receiver>
    <slot>onRecording()</slot>
    <hints>
     <hint type="sourcelabel">

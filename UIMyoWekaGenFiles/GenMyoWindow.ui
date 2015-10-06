@@ -16,12 +16,12 @@
   <widget class="QWidget" name="mCentralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QListWidget" name="mLWGestures"/>
+     <widget class="QListWidget" name="mLWClasses"/>
     </item>
     <item>
-     <widget class="QPushButton" name="mPBAddGesture">
+     <widget class="QPushButton" name="mPBAddClass">
       <property name="text">
-       <string>add a gesture</string>
+       <string>Add class</string>
       </property>
      </widget>
     </item>
@@ -108,10 +108,10 @@
  <resources/>
  <connections>
   <connection>
-   <sender>mPBAddGesture</sender>
+   <sender>mPBAddClass</sender>
    <signal>clicked()</signal>
    <receiver>GenMyoWindow</receiver>
-   <slot>onAddGesture()</slot>
+   <slot>onAddClass()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>353</x>
@@ -253,7 +253,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>onAddGesture()</slot>
+  <slot>onAddClass()</slot>
   <slot>onSave()</slot>
   <slot>onSaveAs()</slot>
   <slot>onBuildModel()</slot>

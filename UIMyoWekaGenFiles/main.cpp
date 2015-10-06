@@ -1,4 +1,4 @@
-#include "GestureForm.h"
+#include "SampleForm.h"
 #include "GenMyoWindow.h"
 #include <QApplication>
 #include <QFile>

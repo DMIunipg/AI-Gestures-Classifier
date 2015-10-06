@@ -64,7 +64,6 @@ macx {
 
 SOURCES += main.cpp\
         GenMyoWindow.cpp \
-    GestureForm.cpp \
     MyoManager.cpp \
     RecordingDialog.cpp \
     FlagsDialog.cpp \
@@ -72,10 +71,12 @@ SOURCES += main.cpp\
     GesturesBuilder.cpp \
     MyoDialog.cpp \
     MyoDrawFrame.cpp \
-    qcustomplot/qcustomplot.cpp
+    qcustomplot/qcustomplot.cpp \
+    SamplingList.cpp \
+    ClassForm.cpp \
+    SampleForm.cpp
 
 HEADERS  += GenMyoWindow.h \
-    GestureForm.h \
     Utilities.h \
     WekaOuput.h \
     MyoListener.h \
@@ -92,13 +93,18 @@ HEADERS  += GenMyoWindow.h \
     GesturesBuilder.h \
     MyoDialog.h \
     MyoDrawFrame.h \
-    qcustomplot/qcustomplot.h
+    qcustomplot/qcustomplot.h \
+    SamplingList.h \
+    ClassForm.h \
+    SampleForm.h
 
 FORMS    += GenMyoWindow.ui \
-    GestureForm.ui \
     RecordingDialog.ui \
     FlagsDialog.ui \
-    MyoDialog.ui
+    MyoDialog.ui \
+    SamplingList.ui \
+    ClassForm.ui \
+    SampleForm.ui
 
 #redources
 RESOURCES += \

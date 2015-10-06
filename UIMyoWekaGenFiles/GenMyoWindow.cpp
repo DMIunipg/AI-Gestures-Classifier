@@ -1,10 +1,10 @@
 #include "GenMyoWindow.h"
-#include "GestureForm.h"
 #include "RecordingDialog.h"
 #include "FlagsDialog.h"
 #include "MyoDataOuput.h"
 #include "MyoDataInput.h"
 #include "GesturesBuilder.h"
+#include "SamplingList.h"
 #include "ui_GenMyoWindow.h"
 #include <QDebug>
 #include <QFileDialog>
@@ -35,37 +35,54 @@ GenMyoWindow::~GenMyoWindow()
 }
 
 
-void GenMyoWindow::onAddGesture()
+void GenMyoWindow::onAddClass(const QString& str)
 {
     //alloc item
     auto item=new QListWidgetItem();
-    auto widget=new GestureForm(this);
+    auto widget=new ClassForm(this);
+    //set name
+    widget->setName(str);
     //init size
     item->setSizeHint(widget->sizeHint());
     //add item
-    ui->mLWGestures->addItem(item);
-    ui->mLWGestures->setItemWidget(item,widget);
+    ui->mLWClasses->addItem(item);
+    ui->mLWClasses->setItemWidget(item,widget);
+    //put item into list
+    auto* rows=&mWekaItems[item];
     //on delete
     widget->setOnDelete(
     [this,item]()
     {
+        //remove from list
         mWekaItems.remove(item);
+        //delete item
         delete item;
     });
-    //on end recording
-    auto onEndRecording=
-    [this,item]()
+    //on sempling
+    widget->setOnSampling(
+    [this,rows,widget]()
     {
-        mWekaItems[item] = mMyoManager.endRecording();
-    };
-    //on recording
-    widget->setOnRecording(
-    [this,widget,onEndRecording]()
-    {
-        //start
-        mMyoManager.startRecording();
-        RecordingDialog dialog(this);
-        dialog.execute(onEndRecording);
+        //show sampling list
+        SamplingList dialog(this,rows);
+        dialog.setClassName(widget->getName());
+        //on record a sapling
+        dialog.setOnRecording(
+        [this](SampleForm& sample)
+        {
+            //start rec
+            mMyoManager.startRecording();
+            //sho dialog
+            RecordingDialog dialog(this);
+            //at end save samples
+            dialog.execute(
+            [this,&sample]()
+            {
+                sample.getRows() = mMyoManager.endRecording();
+                sample.updateTime();
+            });
+        });
+        //exec dialog
+        dialog.exec();
     });
 }
 
@@ -73,7 +90,7 @@ void GenMyoWindow::onNew()
 {
     //clear data
     mWekaItems.clear();
-    ui->mLWGestures->clear();
+    ui->mLWClasses->clear();
 }
 
 void GenMyoWindow::onOpen()
@@ -82,36 +99,51 @@ void GenMyoWindow::onOpen()
     QString sPath=QFileDialog::getOpenFileName(this,
                                                "Open",
                                                mPath,
-                                               "Myo Files *.myodata");
+                                               "UIMyo Files *.uim;;"
+                                               "Legacy Myo Files *.myodata");
     if( sPath.length() )
     {
         //save path
         mPath=sPath;
+        //file type
+        bool notLegacy = !mPath.endsWith(".myodata");
         //clear data
         mWekaItems.clear();
-        ui->mLWGestures->clear();
+        ui->mLWClasses->clear();
         //load
         MyoListener::TypeInput myoLoader;
-        myoLoader.read(
-        //file map
-        mPath.toStdString(),
-        //read
-        [this](int idClass,
-               const std::string& className,
-               const myo::RawDatas< int8_t, float, float, float, 8 >& row)
+        //read new file
+        if(notLegacy)
         {
-            //add class
-            if(ui->mLWGestures->count() <= idClass)
+            myoLoader.read(
+            //file map
+            mPath.toStdString(),
+            [this](const std::string& name,MyoListener::TypeInput::ListSamples& lsample)
             {
-                onAddGesture();
-                auto item=ui->mLWGestures->item(idClass);
-                GestureForm* widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-                widget->setName(QString::fromStdString(className));
-            }
-            //put row
-            auto item=ui->mLWGestures->item(idClass);
-            mWekaItems[item].append(row);
-        });
+                onAddClass(QString::fromStdString(name));
+                mWekaItems.last() = lsample;
+            });
+        }
+        //read old file
+        else
+        {
+            myoLoader.readOldFile(
+            //file map
+            mPath.toStdString(),
+            //read
+            [this](int idClass,
+                   const std::string& className,
+                   const MyoListener::TypeInput::Sample& rows)
+            {
+                //add class
+                if(ui->mLWClasses->count() <= idClass)
+                    onAddClass(QString::fromStdString(className));
+                //get item
+                auto item=ui->mLWClasses->item(idClass);
+                //put row into row list
+                mWekaItems[item].append(rows);
+            });
+        }
     }
 }
 
@@ -135,7 +167,7 @@ void GenMyoWindow::onSaveAs()
         QString sPath=QFileDialog::getSaveFileName(this,
                                                   "Save",
                                                    mPath,
-                                                   "Myo Files *.myodata");
+                                                   "UIMyo Files *.uim");
 
         if( sPath.length() )
         {
@@ -190,59 +222,22 @@ void GenMyoWindow::onExportAs()
 }
 
 
-void GenMyoWindow::open(const QString& str)
-{
-    //if(!mWekaItems.empty())
-    {
-        //path
-        QString sPath=QFileDialog::getOpenFileName(this,
-                                                  "Open",
-                                                   mPath,
-                                                   "Myo Files *.myodata");
-
-        if( sPath.length() )
-        {
-            //path
-            mPath=sPath;
-            //get path
-            std::string lPath=mPath.toStdString().c_str();
-            assert(lPath.length());
-            //save
-            MyoListener::TypeInput input;
-            input.read(lPath,
-                       [](int idClass,
-                          const std::string& className,
-                          const MyoListener::TypeRaw& value)
-            {
-
-            });
-        }
-    }
-}
-
 void GenMyoWindow::save()
 {
     if(!mWekaItems.empty())
     {
         //get all items
-        size_t nItems=ui->mLWGestures->count();
+        size_t nItems=ui->mLWClasses->count();
         //get path
         std::string lPath=mPath.toStdString().c_str();
         assert(lPath.length());
         //file
         MyoListener::TypeOuput ouput;
         ouput.open(lPath,nItems);
-
         //seva all
         for(size_t i=0;i!=nItems;++i)
         {
-            auto item=ui->mLWGestures->item(i);
-            auto it=mWekaItems.find(item);
-            auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-            if(it != mWekaItems.end())
-            {
-                ouput.append(widget->getName().toStdString(), it.value());
-            }
+            ouput.append(getNameClass(i).toStdString(),getList(i));
         }
     }
 }
@@ -252,7 +247,7 @@ void GenMyoWindow::saveWEKA()
     if(!mWekaItems.empty())
     {
         //get all items
-        size_t nItems=ui->mLWGestures->count();
+        size_t nclass=ui->mLWClasses->count();
         //ouput
         MyoListener::TypeOuputWeka ouput;
         //path
@@ -264,27 +259,18 @@ void GenMyoWindow::saveWEKA()
             case DataFlags::SEMPLE_MODE:
             {
                 //vector of names
-                std::vector<std::string> classNames;
+                QList< QString > classNames;
                 //get all class
-                for(size_t i=0;i!=nItems;++i)
-                {
-                    auto item=ui->mLWGestures->item(i);
-                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-                    classNames.push_back(widget->getName().toStdString());
-                }
+                for(size_t i=0;i!=nclass;++i)
+                    classNames.push_back(getNameClass(i));
                 //file
-                ouput.open(lPath,
-                           mFlags,
-                           classNames);
+                ouput.open(lPath, mFlags, classNames);
                 //seva all
-                for(size_t i=0;i!=nItems;++i)
+                for(size_t i=0;i!=nclass;++i)
                 {
-                    auto item=ui->mLWGestures->item(i);
-                    auto it=mWekaItems.find(item);
-                    if(it != mWekaItems.end())
-                    {
-                        ouput.append(classNames[i], it.value());
-                    }
+                    auto  name  = getNameClass(i).toStdString();
+                    auto& lrows = getList(i);
+                    for(auto& rows:lrows) ouput.append(name,rows);
                 }
             }
             break;
@@ -292,15 +278,11 @@ void GenMyoWindow::saveWEKA()
             {
                 GesturesBuilder gbuilder(mFlags);
                 //put all
-                for(size_t i=0;i!=nItems;++i)
+                for(size_t i=0;i!=nclass;++i)
                 {
-                    auto item=ui->mLWGestures->item(i);
-                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-                    auto it=mWekaItems.find(item);
-                    if(it != mWekaItems.end())
-                    {
-                        gbuilder.append(widget->getName(), it.value());
-                    }
+                    auto  name  = getNameClass(i);
+                    auto& lrows = getList(i);
+                    for(auto& rows:lrows) gbuilder.append(name,rows);
                 }
                 //nreps
                 size_t nreps = 1;
@@ -315,9 +297,7 @@ void GenMyoWindow::saveWEKA()
                 //get keys
                 QList< QString > keys = ouputItems.keys();
                 //ouput
-                ouput.open(lPath,
-                           flags,
-                           keys);
+                ouput.open(lPath, flags, keys);
                 //write
                 for(auto& name:keys)
                 {
@@ -342,9 +322,9 @@ void GenMyoWindow::saveFANN()
     if(!mWekaItems.empty())
     {
         //get all items
-        size_t nItems=ui->mLWGestures->count();
+        size_t nclass=ui->mLWClasses->count();
         //path
-        std::string lPath=mPath.toStdString().c_str();
+        auto lPath=mPath.toStdString();
         assert(lPath.length());
         //ouput serialize
         MyoListener::TypeOuputFANN ouput;
@@ -356,26 +336,16 @@ void GenMyoWindow::saveFANN()
                 //vector of names
                 QList< QString > classNames;
                 //get all class
-                for(size_t i=0;i!=nItems;++i)
-                {
-                    auto item=ui->mLWGestures->item(i);
-                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-                    classNames.push_back(widget->getName());
-                }
+                for(size_t i=0;i!=nclass;++i)
+                    classNames.push_back(getNameClass(i));
                 //file
-                ouput.open(lPath,
-                           mFlags,
-                           classNames);
+                ouput.open(lPath, mFlags, classNames);
                 //seva all
-                for(size_t i=0;i!=nItems;++i)
+                for(size_t i=0;i!=nclass;++i)
                 {
-                    auto item=ui->mLWGestures->item(i);
-                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-                    auto it=mWekaItems.find(item);
-                    if(it != mWekaItems.end())
-                    {
-                        ouput.append(widget->getName(), it.value());
-                    }
+                    auto  name  = getNameClass(i);
+                    auto& lrows = getList(i);
+                    for(auto& rows:lrows) ouput.append(name,rows);
                 }
             }
             break;
@@ -383,15 +353,11 @@ void GenMyoWindow::saveFANN()
             {
                 GesturesBuilder gbuilder(mFlags);
                 //put all
-                for(size_t i=0;i!=nItems;++i)
+                for(size_t i=0;i!=nclass;++i)
                 {
-                    auto item=ui->mLWGestures->item(i);
-                    auto widget=dynamic_cast<GestureForm*>(ui->mLWGestures->itemWidget(item));
-                    auto it=mWekaItems.find(item);
-                    if(it != mWekaItems.end())
-                    {
-                        gbuilder.append(widget->getName(), it.value());
-                    }
+                    auto  name  = getNameClass(i);
+                    auto& lrows = getList(i);
+                    for(auto& rows:lrows) gbuilder.append(name,rows);
                 }
                 //nreps
                 size_t nreps = 1;
@@ -406,9 +372,7 @@ void GenMyoWindow::saveFANN()
                 //get keys
                 QList< QString > keys = ouputItems.keys();
                 //ouput
-                ouput.open(lPath,
-                           flags,
-                           keys);
+                ouput.open(lPath, flags, keys);
                 //write
                 for(auto& name:keys)
                 {
@@ -428,6 +392,23 @@ void GenMyoWindow::saveFANN()
     }
 }
 
+//utilis
+ClassForm& GenMyoWindow::getFormClass(int i)
+{
+    auto  item    = ui->mLWClasses->item(i);
+    return *dynamic_cast<ClassForm*>(ui->mLWClasses->itemWidget(item));
+}
+
+QString GenMyoWindow::getNameClass(int i)
+{
+    return getFormClass(i).getName();
+}
+
+QLinkedList < MyoListener::TypeRows >& GenMyoWindow::getList(int i)
+{
+    auto  item = ui->mLWClasses->item(i);
+    return *mWekaItems.find(item);
+}
 
 void GenMyoWindow::onShowInputs(bool show)
 {

@@ -7,6 +7,8 @@
 #include <QListWidgetItem>
 #include "MyoManager.h"
 #include "MyoDialog.h"
+#include "ClassForm.h"
+#include "SampleForm.h"
 
 namespace Ui {
 class GenMyoWindow;
@@ -24,7 +26,7 @@ public:
 
 private slots:
 
-    void onAddGesture();
+    void onAddClass(const QString &str="");
     void onNew();
     void onOpen();
     void onSave();
@@ -35,7 +37,6 @@ private slots:
 
 private:
     //save
-    void open(const QString& str);
     void save();
     void saveWEKA();
     void saveFANN();
@@ -46,7 +47,11 @@ private:
     //Myo data dialog
     MyoDialog mMyoDialog;
     //item/rows map
-    QMap< QListWidgetItem*, MyoListener::TypeRows > mWekaItems;
+    QMap< QListWidgetItem*, QLinkedList < MyoListener::TypeRows > > mWekaItems;
+    //utilis
+    ClassForm& getFormClass(int id);
+    QString getNameClass(int id);
+    QLinkedList < MyoListener::TypeRows >& getList(int id);
     //get dir
     QString mPath;
     //get dir
