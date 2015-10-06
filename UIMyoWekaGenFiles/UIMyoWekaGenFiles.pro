@@ -45,10 +45,10 @@ macx {
     #static libs
     #LIBS += -L$$PWD/../myo.mac/lib/ -l<lib>
     #dynamic
-    LIBS += -L$$PWD/../myo.mac/bin/ -ldoublefann
-    LIBS += -L$$PWD/../myo.mac/bin/ -lfann
-    LIBS += -L$$PWD/../myo.mac/bin/ -lfixedfann
-    LIBS += -L$$PWD/../myo.mac/bin/ -lfloatfann
+    LIBS += -L$$PWD/../myo.mac/bin/ -lfann.2.2.0
+    LIBS += -L$$PWD/../myo.mac/bin/ -ldoublefann.2.2.0
+    LIBS += -L$$PWD/../myo.mac/bin/ -lfixedfann.2.2.0
+    LIBS += -L$$PWD/../myo.mac/bin/ -lfloatfann.2.2.0
     #dynamic path
     QMAKE_RPATHDIR += @executable_path/../Dylibs
     #include

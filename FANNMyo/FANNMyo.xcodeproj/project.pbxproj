@@ -13,17 +13,9 @@
 		E026C0231BC12A50004E3D35 /* kNN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E026C0211BC12A50004E3D35 /* kNN.cpp */; settings = {ASSET_TAGS = (); }; };
 		E026C0271BC139CA004E3D35 /* kNNImp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E026C0251BC139CA004E3D35 /* kNNImp.cpp */; settings = {ASSET_TAGS = (); }; };
 		E0A1E2491BC26AF0003A8CF7 /* libdoublefann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E23D1BC26AF0003A8CF7 /* libdoublefann.2.2.0.dylib */; settings = {ASSET_TAGS = (); }; };
-		E0A1E24A1BC26AF0003A8CF7 /* libdoublefann.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E23E1BC26AF0003A8CF7 /* libdoublefann.2.dylib */; settings = {ASSET_TAGS = (); }; };
-		E0A1E24B1BC26AF0003A8CF7 /* libdoublefann.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E23F1BC26AF0003A8CF7 /* libdoublefann.dylib */; settings = {ASSET_TAGS = (); }; };
 		E0A1E24C1BC26AF0003A8CF7 /* libfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2401BC26AF0003A8CF7 /* libfann.2.2.0.dylib */; settings = {ASSET_TAGS = (); }; };
-		E0A1E24D1BC26AF0003A8CF7 /* libfann.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2411BC26AF0003A8CF7 /* libfann.2.dylib */; settings = {ASSET_TAGS = (); }; };
-		E0A1E24E1BC26AF0003A8CF7 /* libfann.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2421BC26AF0003A8CF7 /* libfann.dylib */; settings = {ASSET_TAGS = (); }; };
 		E0A1E24F1BC26AF0003A8CF7 /* libfixedfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2431BC26AF0003A8CF7 /* libfixedfann.2.2.0.dylib */; settings = {ASSET_TAGS = (); }; };
-		E0A1E2501BC26AF0003A8CF7 /* libfixedfann.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2441BC26AF0003A8CF7 /* libfixedfann.2.dylib */; settings = {ASSET_TAGS = (); }; };
-		E0A1E2511BC26AF0003A8CF7 /* libfixedfann.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2451BC26AF0003A8CF7 /* libfixedfann.dylib */; settings = {ASSET_TAGS = (); }; };
 		E0A1E2521BC26AF0003A8CF7 /* libfloatfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2461BC26AF0003A8CF7 /* libfloatfann.2.2.0.dylib */; settings = {ASSET_TAGS = (); }; };
-		E0A1E2531BC26AF0003A8CF7 /* libfloatfann.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2471BC26AF0003A8CF7 /* libfloatfann.2.dylib */; settings = {ASSET_TAGS = (); }; };
-		E0A1E2541BC26AF0003A8CF7 /* libfloatfann.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A1E2481BC26AF0003A8CF7 /* libfloatfann.dylib */; settings = {ASSET_TAGS = (); }; };
 		E0A892531B451C0C0065BF83 /* _main_.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0A892521B451C0C0065BF83 /* _main_.cpp */; };
 		E0A899021B451D2D0065BF83 /* myo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A898D91B451D2D0065BF83 /* myo.framework */; };
 		E0AB232C1BBB050C0006369F /* FANNImp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0AB232A1BBB050C0006369F /* FANNImp.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -61,17 +53,9 @@
 		E026C0261BC139CA004E3D35 /* kNNImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kNNImp.h; sourceTree = "<group>"; };
 		E059F2611B45A0E100919E56 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		E0A1E23D1BC26AF0003A8CF7 /* libdoublefann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdoublefann.2.2.0.dylib; sourceTree = "<group>"; };
-		E0A1E23E1BC26AF0003A8CF7 /* libdoublefann.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdoublefann.2.dylib; sourceTree = "<group>"; };
-		E0A1E23F1BC26AF0003A8CF7 /* libdoublefann.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdoublefann.dylib; sourceTree = "<group>"; };
 		E0A1E2401BC26AF0003A8CF7 /* libfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfann.2.2.0.dylib; sourceTree = "<group>"; };
-		E0A1E2411BC26AF0003A8CF7 /* libfann.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfann.2.dylib; sourceTree = "<group>"; };
-		E0A1E2421BC26AF0003A8CF7 /* libfann.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfann.dylib; sourceTree = "<group>"; };
 		E0A1E2431BC26AF0003A8CF7 /* libfixedfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfixedfann.2.2.0.dylib; sourceTree = "<group>"; };
-		E0A1E2441BC26AF0003A8CF7 /* libfixedfann.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfixedfann.2.dylib; sourceTree = "<group>"; };
-		E0A1E2451BC26AF0003A8CF7 /* libfixedfann.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfixedfann.dylib; sourceTree = "<group>"; };
 		E0A1E2461BC26AF0003A8CF7 /* libfloatfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfloatfann.2.2.0.dylib; sourceTree = "<group>"; };
-		E0A1E2471BC26AF0003A8CF7 /* libfloatfann.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfloatfann.2.dylib; sourceTree = "<group>"; };
-		E0A1E2481BC26AF0003A8CF7 /* libfloatfann.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfloatfann.dylib; sourceTree = "<group>"; };
 		E0A8924F1B451C0C0065BF83 /* FANNMyo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FANNMyo; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0A892521B451C0C0065BF83 /* _main_.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _main_.cpp; sourceTree = "<group>"; };
 		E0A898D91B451D2D0065BF83 /* myo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = myo.framework; sourceTree = "<group>"; };
@@ -128,16 +112,8 @@
 			files = (
 				E0A1E2491BC26AF0003A8CF7 /* libdoublefann.2.2.0.dylib in Frameworks */,
 				E0A899021B451D2D0065BF83 /* myo.framework in Frameworks */,
-				E0A1E2531BC26AF0003A8CF7 /* libfloatfann.2.dylib in Frameworks */,
 				E0A1E24F1BC26AF0003A8CF7 /* libfixedfann.2.2.0.dylib in Frameworks */,
-				E0A1E24B1BC26AF0003A8CF7 /* libdoublefann.dylib in Frameworks */,
-				E0A1E2501BC26AF0003A8CF7 /* libfixedfann.2.dylib in Frameworks */,
-				E0A1E24A1BC26AF0003A8CF7 /* libdoublefann.2.dylib in Frameworks */,
-				E0A1E2511BC26AF0003A8CF7 /* libfixedfann.dylib in Frameworks */,
-				E0A1E2541BC26AF0003A8CF7 /* libfloatfann.dylib in Frameworks */,
-				E0A1E24E1BC26AF0003A8CF7 /* libfann.dylib in Frameworks */,
 				E0A1E24C1BC26AF0003A8CF7 /* libfann.2.2.0.dylib in Frameworks */,
-				E0A1E24D1BC26AF0003A8CF7 /* libfann.2.dylib in Frameworks */,
 				E0A1E2521BC26AF0003A8CF7 /* libfloatfann.2.2.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,17 +134,9 @@
 			isa = PBXGroup;
 			children = (
 				E0A1E23D1BC26AF0003A8CF7 /* libdoublefann.2.2.0.dylib */,
-				E0A1E23E1BC26AF0003A8CF7 /* libdoublefann.2.dylib */,
-				E0A1E23F1BC26AF0003A8CF7 /* libdoublefann.dylib */,
 				E0A1E2401BC26AF0003A8CF7 /* libfann.2.2.0.dylib */,
-				E0A1E2411BC26AF0003A8CF7 /* libfann.2.dylib */,
-				E0A1E2421BC26AF0003A8CF7 /* libfann.dylib */,
 				E0A1E2431BC26AF0003A8CF7 /* libfixedfann.2.2.0.dylib */,
-				E0A1E2441BC26AF0003A8CF7 /* libfixedfann.2.dylib */,
-				E0A1E2451BC26AF0003A8CF7 /* libfixedfann.dylib */,
 				E0A1E2461BC26AF0003A8CF7 /* libfloatfann.2.2.0.dylib */,
-				E0A1E2471BC26AF0003A8CF7 /* libfloatfann.2.dylib */,
-				E0A1E2481BC26AF0003A8CF7 /* libfloatfann.dylib */,
 			);
 			path = bin;
 			sourceTree = "<group>";
