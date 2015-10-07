@@ -10,12 +10,27 @@ MyoDrawFrame::MyoDrawFrame(QWidget *parent)
 }
 MyoDrawFrame::~MyoDrawFrame()
 {
+    mTimer.stop();
     deleteGeometry();
 }
 
 void MyoDrawFrame::setMyoManager(MyoManager* myoManager)
 {
     mMyoManager = myoManager;
+}
+
+void MyoDrawFrame::setDefaultRotation(const myo::Quaternion< float >& rotation)
+{
+    mDefaultRot = myo::Quaternion< double >(rotation.x(),
+                                            rotation.y(),
+                                            rotation.z(),
+                                            rotation.w());
+
+}
+
+void MyoDrawFrame::setDefaultRotation(const myo::Quaternion< double >& rotation)
+{
+    mDefaultRot = rotation;
 }
 
 void MyoDrawFrame::initializeGL()
@@ -128,6 +143,18 @@ void MyoDrawFrame::paintGL()
             );
             dialog->showEmg(row.getEmg());
         }
+    }
+    //default rotation
+    else
+    {
+        //to quad
+        QQuaternion quad(QVector4D{
+            (float)mDefaultRot.z(),
+            (float)mDefaultRot.y(),
+            (float)mDefaultRot.w(),
+            (float)mDefaultRot.x(),
+        });
+        matrix.rotate(quad);
     }
 
     // Set modelview-projection matrix

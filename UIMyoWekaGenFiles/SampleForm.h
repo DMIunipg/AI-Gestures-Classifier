@@ -38,6 +38,7 @@ public slots:
 
     void onDelete();
     void onRecording();
+    void onShowVideo();
 
 private:
     Ui::SampleForm* ui;

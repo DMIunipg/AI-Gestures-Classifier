@@ -28,6 +28,8 @@ GenMyoWindow::GenMyoWindow(QWidget *parent)
 
 GenMyoWindow::~GenMyoWindow()
 {
+    //close window
+    mMyoDialog.close();
     //close
     mMyoManager.close();
     //delete
@@ -36,6 +38,13 @@ GenMyoWindow::~GenMyoWindow()
 
 
 void GenMyoWindow::onAddClass(const QString& str)
+{
+    addClass(str);
+}
+
+
+//add a class
+QListWidgetItem* GenMyoWindow::addClass(const QString &str)
 {
     //alloc item
     auto item=new QListWidgetItem();
@@ -84,6 +93,8 @@ void GenMyoWindow::onAddClass(const QString& str)
         //exec dialog
         dialog.exec();
     });
+    //return last item edded
+    return item;
 }
 
 void GenMyoWindow::onNew()
@@ -120,8 +131,10 @@ void GenMyoWindow::onOpen()
             mPath.toStdString(),
             [this](const std::string& name,MyoListener::TypeInput::ListSamples& lsample)
             {
-                onAddClass(QString::fromStdString(name));
-                mWekaItems.last() = lsample;
+                //add item
+                auto* item    = addClass(QString::fromStdString(name));
+                //put all samples
+                getList(item) = lsample;
             });
         }
         //read old file
@@ -407,6 +420,11 @@ QString GenMyoWindow::getNameClass(int i)
 QLinkedList < MyoListener::TypeRows >& GenMyoWindow::getList(int i)
 {
     auto  item = ui->mLWClasses->item(i);
+    return getList(item);
+}
+
+QLinkedList < MyoListener::TypeRows >& GenMyoWindow::getList(QListWidgetItem* item)
+{
     return *mWekaItems.find(item);
 }
 

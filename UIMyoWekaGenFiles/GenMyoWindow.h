@@ -48,10 +48,13 @@ private:
     MyoDialog mMyoDialog;
     //item/rows map
     QMap< QListWidgetItem*, QLinkedList < MyoListener::TypeRows > > mWekaItems;
+    //add a class
+    QListWidgetItem* addClass(const QString &str="");
     //utilis
     ClassForm& getFormClass(int id);
     QString getNameClass(int id);
     QLinkedList < MyoListener::TypeRows >& getList(int id);
+    QLinkedList < MyoListener::TypeRows >& getList(QListWidgetItem* item);
     //get dir
     QString mPath;
     //get dir

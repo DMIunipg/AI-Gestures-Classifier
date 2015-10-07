@@ -8,6 +8,12 @@
 #include <QThread>
 #include "MyoListener.h"
 
+
+namespace MyoData
+{
+    static const unsigned int msupadate = 1000/20;
+};
+
 class MyoManager : protected QThread
 {
 public:

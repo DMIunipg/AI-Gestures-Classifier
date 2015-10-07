@@ -68,7 +68,7 @@ void MyoManager::run()
 
         while(mLoop)
         {
-            mMyoHub->run(1000/20);
+            mMyoHub->run(MyoData::msupadate);
             //rec
             if(mRecording)
             {

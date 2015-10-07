@@ -75,11 +75,20 @@ void MyoDialog::onAbs()
     }
 }
 
-MyoDialog::MyoDialog(QWidget *parent)
+MyoDialog::MyoDialog(QWidget *parent,
+                     bool disable)
 :QDialog(parent)
 ,ui(new Ui::MyoDialog)
 {
     ui->setupUi(this);
+    //disable video form
+    if(disable)
+    {
+        delete ui->mSTime;
+        delete ui->mLTime;
+        delete ui->mLTimeInfo;
+        delete ui->mGBVideo;
+    }
     //init plotters
     UiPlotDefault(ui->mCPTop);
     UiPlotDefault(ui->mCPTopLeft);
@@ -235,8 +244,81 @@ void MyoDialog::showEulers(double pitch,
     ui->mLRoll->setText(QString::number((int)roll));
 }
 
+void MyoDialog::setVideoToShow(const MyoListener::TypeRows& rows)
+{
+    //current row if first
+    mCurrentRow = 0;
+    //save list of rows
+    mVideoRows  = rows;
+    //set range
+    ui->mSTime->setRange(0,rows.size());
+}
+
+//play/pause event
+void MyoDialog::onPlayPause(bool play)
+{
+    if(play)
+    {
+        mVideoTime = new QBasicTimer();
+        mVideoTime->start(MyoData::msupadate,this);
+    }
+    else if (mVideoTime)
+    {
+        mVideoTime->stop();
+        delete mVideoTime;
+        mVideoTime = nullptr;
+    }
+}
+
+//change slaider
+void MyoDialog::onSlaiderChange(int value)
+{
+    if(!mVideoRows.size()) return ;
+    //set value
+    mCurrentRow = std::min((size_t)value,mVideoRows.size());
+    //show
+    timerEvent(nullptr);
+    //return to the last value
+    --mCurrentRow;
+}
+
+//update video
+void MyoDialog::timerEvent(QTimerEvent *etime)
+{
+    if(!mVideoRows.size()) return ;
+    //show frame
+    const MyoListener::TypeRaw& raw=mVideoRows[mCurrentRow];
+    showEmg(raw.getEmg());
+    //set angles
+    auto eulers=raw.getEulerAngles();
+    showEulers(eulers.mPitch  * 180.0 / M_PI  ,
+               eulers.mYaw  * 180.0 / M_PI ,
+               eulers.mRoll * 180.0 / M_PI );
+    //show time
+    ui->mLTime->setText(QString::number(raw.getTime(),'f',3));
+    //show rotation
+    ui->mMyoDrawFrame->setDefaultRotation(raw.getQuaternion());
+    //redraw
+    repaint();
+    //next frame
+    mCurrentRow = (mCurrentRow+1)  % mVideoRows.size();
+    //set slider position
+    if(etime)
+    {
+        ui->mSTime->blockSignals(true);
+        ui->mSTime->setValue(mCurrentRow);
+        ui->mSTime->blockSignals(false);
+    }
+}
 
 MyoDialog::~MyoDialog()
 {
+    //delete update video
+    if(mVideoTime)
+    {
+        mVideoTime->stop();
+        delete mVideoTime;
+    }
+    //delete ui
     delete ui;
 }

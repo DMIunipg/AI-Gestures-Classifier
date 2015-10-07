@@ -19,6 +19,8 @@ public:
     MyoDrawFrame(QWidget* parent);
     virtual ~MyoDrawFrame();
     void setMyoManager(MyoManager* manager);
+    void setDefaultRotation(const myo::Quaternion< float >& rotation);
+    void setDefaultRotation(const myo::Quaternion< double >& rotation);
 
 protected:
 
@@ -39,8 +41,10 @@ private:
     void initGeometry();
     void drawGeometry();
     void deleteGeometry();
+    //default rotation
+    myo::Quaternion< double > mDefaultRot;
     //shader
-    QGLShaderProgram  mProgramShader;
+    QGLShaderProgram          mProgramShader;
     //projection
     QMatrix4x4 mProjection;
 };

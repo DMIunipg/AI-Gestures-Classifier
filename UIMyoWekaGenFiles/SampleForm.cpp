@@ -1,3 +1,4 @@
+#include "MyoDialog.h"
 #include "SampleForm.h"
 #include "ui_SampleForm.h"
 
@@ -22,6 +23,13 @@ void SampleForm::setOnDelete(std::function<void(SampleForm& sform)> onDelete)
 void SampleForm::setOnRecording(std::function<void(SampleForm& sform)> onRecording)
 {
     mOnRecording=onRecording;
+}
+
+void SampleForm::onShowVideo()
+{
+    MyoDialog mdialog(this,false);
+    mdialog.setVideoToShow(getRows());
+    mdialog.exec();
 }
 
 double SampleForm::getTime() const
