@@ -9,55 +9,91 @@
 #include "MyoListener.h"
 
 
+/*!
+ * \brief Myo Data, namespace where are put all application constants
+ */
 namespace MyoData
 {
-    static const unsigned int msupadate = 1000/20;
+    static const unsigned int msupadate = 1000/20; //! listenere delta time in ms
 };
 
+/*!
+ * \brief The MyoManager class
+ */
 class MyoManager : protected QThread
 {
 public:
 
+    /*!
+     * \brief MyoManager
+     */
     MyoManager();
 
+    /*!
+     * \brief ~MyoManager
+     */
     ~MyoManager();
 
-    //start recording
+    /*!
+     * \brief startRecording
+     */
     void startRecording();
+
+    /*!
+     * \brief startRecording
+     * \param n
+     */
     void startRecording(size_t n,
                         std::function<void(QMutex&,MyoListener::TypeRows&)>);
 
-    //end Recording
+    /*!
+     * \brief endRecording
+     * \return datas registered
+     */
     MyoListener::TypeRows endRecording();
 
-    //get current row
+    /*!
+     * \brief getCurrentRow
+     * \return last raw data registered
+     */
     MyoListener::TypeRaw getCurrentRow();
 
-    //loop
+    /*!
+     * \brief run
+     */
     void run();
 
-    //start
+    /*!
+     * \brief start
+     * \param priority
+     */
     void start(Priority priority = InheritPriority)
     {
         mLoop = true;
         QThread::start(priority);
     }
 
-    //close
+    /*!
+     * \brief close
+     */
     void close()
     {
         mLoop = false;
         QThread::wait();
     }
 
-    //close
+    /*!
+     * \brief terminate
+     */
     void terminate()
     {
         mLoop = false;
         QThread::terminate();
     }
 
-    //close
+    /*!
+     * \brief quit
+     */
     void quit()
     {
         mLoop = false;
@@ -66,28 +102,27 @@ public:
 
 protected:
 
-     //myo utilities
-     myo::Hub*             mMyoHub   { nullptr };
-     myo::Myo*             mMyo      { nullptr };
-     MyoListener           mListener;
-     //thead utilities
-     bool                  mLoop{ false };
-     QMutex                mMutex;
-     //recording utilities
+     myo::Hub*             mMyoHub   { nullptr }; //! myo hub pointer
+     myo::Myo*             mMyo      { nullptr }; //! myo device pointer
+     MyoListener           mListener;             //! myo listener instance
+     bool                  mLoop{ false };        //! loop flag
+     QMutex                mMutex;                //! mutex
+
+     /*!
+      * \brief The State enum
+      */
      enum State
      {
         NO_REC,
         LIST_REC,
         CALLBACK_REC
      };
-     State                 mRecording { NO_REC };
-     MyoListener::TypeRows mDatas;
-     //rec info
-     double                                               mTime{ 0 };
-     //callback info
-     size_t                                               mSizeData{ 0 };
-     size_t                                               mSizeNext{ 0 };
-     std::function<void(QMutex&,MyoListener::TypeRows&)>  mCallback{ nullptr };
+     State                 mRecording { NO_REC };        //! current state
+     MyoListener::TypeRows mDatas;                       //! last raw data
+     double                mTime{ 0 };                   //! time of recording
+     size_t                                               mSizeData{ 0 };      //! size of data
+     size_t                                               mSizeNext{ 0 };      //! next size
+     std::function<void(QMutex&,MyoListener::TypeRows&)>  mCallback{ nullptr };//! callback to pass the raw data
 
 
 };

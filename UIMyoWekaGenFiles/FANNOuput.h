@@ -72,10 +72,10 @@ public:
      * \brief append
      * \param className
      * \param rows
-     * \tparam T
-     * \tparam J
-     * \tparam H
-     * \tparam X
+     * \tparam T type of emg values
+     * \tparam J type of components of gyroscope
+     * \tparam H type of components of accelerometer
+     * \tparam X type of components of quaternion
      * \tparam N the number of the emg sensors
      */
     template < class T,

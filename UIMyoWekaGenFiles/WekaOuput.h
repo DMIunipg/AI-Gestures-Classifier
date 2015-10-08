@@ -19,17 +19,29 @@
 #include "Utilities.h"
 #include "DataFlags.h"
 #include "WekaRows.h"
-
+/*!
+ * \brief Weka Ouput
+ * \tparam EmgN the number of the emg sensors
+ */
 template < const size_t EmgN = 8 >
 class WekaOuput
 {
 public:
 
+    /*!
+     * \brief ~WekaOuput
+     */
     ~WekaOuput()
     {
         if(mFile) close();
     }
 
+    /*!
+     * \brief open
+     * \param path
+     * \param flags
+     * \param mWekaClass
+     */
     void open(const std::string& path,
               const DataFlags& flags,
               const std::vector<std::string>& mWekaClass)
@@ -50,6 +62,12 @@ public:
         open(path);
     }
 
+    /*!
+     * \brief open
+     * \param path
+     * \param flags
+     * \param mWekaClass
+     */
     void open(const std::string& path,
               const DataFlags& flags,
               const QList< QString >& mWekaClass)
@@ -70,6 +88,16 @@ public:
         open(path);
     }
 
+    /*!
+     * \brief append
+     * \param className
+     * \param rows
+     * \tparam T type of emg values
+     * \tparam J type of components of gyroscope
+     * \tparam H type of components of accelerometer
+     * \tparam X type of components of quaternion
+     * \tparam N the number of the emg sensors
+     */
     template < class T,
                class J,
                class H,
@@ -162,6 +190,10 @@ public:
         std::fwrite(strRow.data(),strRow.size(),1,file());
     }
 
+    /*!
+     * \brief isOpen
+     * \return true if file is open
+     */
     bool isOpen() const
     {
         return (bool)mFile;
@@ -170,6 +202,10 @@ public:
 private:
 
 
+    /*!
+     * \brief buildHeaderClass
+     * \param wekaClass
+     */
     void buildHeaderClass(const std::vector<std::string>& wekaClass)
     {
         assert(wekaClass.size());
@@ -179,6 +215,10 @@ private:
         mWekaClass+=wekaClass[i];
     }
 
+    /*!
+     * \brief buildHeaderClass
+     * \param wekaClass
+     */
     void buildHeaderClass(const QList< QString >& wekaClass)
     {
         assert(wekaClass.size());
@@ -194,6 +234,10 @@ private:
         }
     }
 
+    /*!
+     * \brief createHeader
+     * \param header
+     */
     void createHeader(std::string& header) const
     {
         //start header
@@ -242,6 +286,9 @@ private:
         header+="@data\n";
     }
 
+    /*!
+     * \brief writeHeader
+     */
     void writeHeader()
     {
         //create header
@@ -251,6 +298,9 @@ private:
         std::fwrite(header.data(),header.size(),1,file());
     }
 
+    /*!
+     * \brief close
+     */
     void close()
     {
         assert(mFile);
@@ -258,6 +308,10 @@ private:
         mFile=nullptr;
     }
 
+    /*!
+     * \brief open
+     * \param path
+     */
     void open(const std::string& path)
     {
         //close file
@@ -268,16 +322,19 @@ private:
         writeHeader();
     }
 
+    /*!
+     * \brief file
+     * \return file pointer
+     */
     std::FILE* file()
     {
         return mFile;
     }
 
     //file data
-    std::FILE*  mFile { nullptr };
-    std::string mWekaClass;
-    //flags
-    DataFlags mFlags;
+    std::FILE*  mFile { nullptr }; //! file pointer
+    std::string mWekaClass;        //! string of classes in weka format
+    DataFlags mFlags;              //! meta data info
 };
 
 #endif

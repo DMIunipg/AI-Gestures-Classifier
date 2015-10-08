@@ -6,7 +6,16 @@
 
 namespace myo
 {
+    /*!
+     * \brief GetTimeTicks
+     * \return  cpu tricks
+     */
     extern uint64_t GetTimeTicks();
+
+    /*!
+     * \brief GetTime
+     * \return current time in seconds
+     */
     extern double GetTime();
 };
 

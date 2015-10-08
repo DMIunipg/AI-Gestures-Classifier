@@ -16,6 +16,9 @@
 
 namespace myo
 {
+    /*!
+     * \brief The EMG enum
+     */
     enum EMG
     {
         EMG_TOP = 3,
@@ -28,13 +31,28 @@ namespace myo
         EMG_DOWN = 7
     };
 
+    /*!
+     * \brief The EulerAngles struct
+     * \tparam T
+     */
     template < class T >
     struct EulerAngles
     {
-        T mRoll{ 0 }, mPitch{ 0 }, mYaw{ 0 };
+        T mRoll { 0 }  //! roll angle
+        , mPitch{ 0 }  //! pitch angle
+        , mYaw  { 0 }; //! yaw angle
 
+        /*!
+         * \brief EulerAngles
+         */
         EulerAngles(){}
 
+        /*!
+         * \brief EulerAngles
+         * \param roll
+         * \param pitch
+         * \param yaw
+         */
         EulerAngles(T roll,T pitch,T yaw)
         :mRoll(roll)
         ,mPitch(pitch)
@@ -43,27 +61,47 @@ namespace myo
 
         }
 
+        /*!
+         * \brief roll
+         * \return roll factor
+         */
         T roll() const
         {
             return mRoll;
         }
 
+        /*!
+         * \brief pitch
+         * \return pitch factor
+         */
         T pitch() const
         {
             return mPitch;
         }
 
+        /*!
+         * \brief yaw
+         * \return yaw factor
+         */
         T yaw() const
         {
             return mYaw;
         }
 
+        /*!
+         * \brief clear, put all values to 0
+         */
         void clear()
         {
             mRoll  = 0;
             mPitch = 0;
             mYaw   = 0;
         }
+
+        /*!
+         * \brief toString
+         * \return informations about the euler's angles
+         */
         std::string toString()
         {
             return "Angles { roll: "  + std::to_string(mRoll) +
@@ -90,6 +128,14 @@ namespace myo
         return out;
     }
 
+    /*!
+     * \brief The RawDatas class
+     * \tparam T type of emg values
+     * \tparam J type of components of gyroscope
+     * \tparam H type of components of accelerometer
+     * \tparam X type of components of quaternion
+     * \tparam N the number of the emg sensors
+     */
     template < class T,
                class J,
                class H,
@@ -99,20 +145,26 @@ namespace myo
     {
     protected:
 
-        double mTime;
-        std::array< T , N > mEmg;
-        Vector3< J > mGyro;
-        Vector3< H > mAccel;
-        Quaternion< X > mQuad;
+        double mTime;               //! time when sample was taken
+        std::array< T , N > mEmg;   //! emg values
+        Vector3< J > mGyro;         //! gyroscope values
+        Vector3< H > mAccel;        //! accelerometer values
+        Quaternion< X > mQuad;      //! quaternion values
 
     public:
 
+        /*!
+         * \brief RawDatas
+         */
         RawDatas()
         {
             mTime = 0.0;
             mEmg.fill(0);
         }
 
+        /*!
+         * \brief clear
+         */
         void clear()
         {
             mTime = 0.0;
@@ -122,92 +174,166 @@ namespace myo
             mQuad  = Quaternion< X >();
         }
 
+        /*!
+         * \brief setTime
+         * \param time
+         */
         void setTime(double time)
         {
             mTime = time;
         }
 
+        /*!
+         * \brief getTime
+         * \return time when sample was taken
+         */
         double getTime() const
         {
             return mTime;
         }
 
-        void setEmg(const std::array< T , N >& value)
+        /*!
+         * \brief setEmg
+         * \param values
+         */
+        void setEmg(const std::array< T , N >& values)
         {
-            mEmg = value;
+            mEmg = values;
         }
 
+        /*!
+         * \brief setEmg
+         * \param i
+         * \param value
+         */
         void setEmg(size_t i, T value)
         {
             mEmg[i]=value;
         }
 
+        /*!
+         * \brief setEmgCArray
+         * \param array
+         * \param n
+         */
         void setEmgCArray(const T* array, size_t n)
         {
             assert(n <= N);
             std::memcpy(mEmg.data(), array, sizeof(T) * n);
         }
 
+        /*!
+         * \brief setGyroscope
+         * \param gyroscope
+         */
         void setGyroscope(const Vector3< J >& gyroscope)
         {
             mGyro=gyroscope;
         }
 
+        /*!
+         * \brief setAccelerometer
+         * \param accelerometer
+         */
         void setAccelerometer(const Vector3< H >& accelerometer)
         {
             mAccel=accelerometer;
         }
 
+        /*!
+         * \brief setQuaternion
+         * \param quaternion
+         */
         void setQuaternion(const Quaternion< X >& quaternion)
         {
             mQuad=quaternion;
         }
 
+        /*!
+         * \brief getEmg
+         * \return emg values
+         */
         const std::array< T , N >& getEmg() const
         {
             return mEmg;
         }
 
+        /*!
+         * \brief getEmg
+         * \return emg values
+         */
         std::array< T , N >& getEmg()
         {
             return mEmg;
         }
 
+        /*!
+         * \brief getGyroscope
+         * \return gyroscope values
+         */
         const Vector3< J >& getGyroscope() const
         {
             return mGyro;
         }
 
+        /*!
+         * \brief getGyroscope
+         * \return gyroscope values
+         */
         Vector3< J >& getGyroscope()
         {
             return mGyro;
         }
 
+        /*!
+         * \brief getAccelerometer
+         * \return accelerometer values
+         */
         const Vector3< H >& getAccelerometer() const
         {
             return mAccel;
         }
 
+        /*!
+         * \brief getAccelerometer
+         * \return accelerometer values
+         */
         Vector3< H >& getAccelerometer()
         {
             return mAccel;
         }
 
+        /*!
+         * \brief getQuaternion
+         * \return quaternion value
+         */
         const Quaternion< X >& getQuaternion() const
         {
             return mQuad;
         }
 
+        /*!
+         * \brief getQuaternion
+         * \return quaternion value
+         */
         Quaternion< X >& getQuaternion()
         {
             return mQuad;
         }
 
+        /*!
+         * \brief getEulerAngles
+         * \return euler's angles
+         */
         EulerAngles< X > getEulerAngles() const
         {
             return quaternionToEulerAngles(mQuad);
         }
 
+        /*!
+         * \brief toString
+         * \return information about this object
+         */
         std::string toString()
         {
             std::string str("Time: ");
@@ -236,6 +362,10 @@ namespace myo
             return str;
         }
 
+        /*!
+         * \brief serialize
+         * \param file
+         */
         void serialize(FILE* file) const
         {
             //write time
@@ -273,6 +403,10 @@ namespace myo
             }
         }
 
+        /*!
+         * \brief deserialize
+         * \param file
+         */
         void deserialize(FILE* file)
         {
             //write time
@@ -307,13 +441,19 @@ namespace myo
         }
     };
 
+    /*!
+     * \brief The ArmStatus struct
+     */
     struct ArmStatus
     {
-        bool mUnlock { false },
-        mSync   { false };
+        bool mUnlock { false }, //! myo is unloked
+             mSync   { false }; //! myo is synced
 
-        myo::Arm mArm{ myo::Arm::armUnknown };
+        myo::Arm mArm{ myo::Arm::armUnknown }; //! last classification by myo library
 
+        /*!
+         * \brief clear
+         */
         void clear()
         {
             mUnlock = false;
@@ -321,61 +461,106 @@ namespace myo
             mArm    = myo::Arm::armUnknown;
         }
 
+        /*!
+         * \brief setArm
+         * \param arm
+         */
         void setArm(myo::Arm arm)
         {
             mArm = arm;
         }
 
+        /*!
+         * \brief sync
+         */
         void sync()
         {
             mSync = true;
         }
 
+        /*!
+         * \brief unsync
+         */
         void unsync()
         {
             mSync = false;
         }
 
+        /*!
+         * \brief lock
+         */
         void lock()
         {
             mUnlock = false;
         }
 
+        /*!
+         * \brief unlock
+         */
         void unlock()
         {
             mUnlock = true;
         }
 
+        /*!
+         * \brief isLeft
+         * \return true if left is classified
+         */
         bool isLeft() const
         {
             return mArm == myo::Arm::armLeft;
         }
 
+        /*!
+         * \brief isRight
+         * \return true if right is classified
+         */
         bool isRight() const
         {
             return mArm == myo::Arm::armRight;
         }
 
+        /*!
+         * \brief isRight
+         * \return true if classification is failed
+         */
         bool isUnknown() const
         {
             return mArm == myo::Arm::armUnknown;
         }
 
+        /*!
+         * \brief isSync
+         * \return true if myo is synced
+         */
         bool isSync() const
         {
             return mSync;
         }
 
+        /*!
+         * \brief isUnlock
+         * \return true if myo is unloked
+         */
         bool isUnlock() const
         {
             return mUnlock;
         }
 
+
+        /*!
+         * \brief isLock
+         * \return true if myo is locked
+         */
         bool isLock() const
         {
             return !mUnlock;
         }
 
+        /*!
+         * \brief toString
+         * \return string information about object
+         */
         std::string toString()
         {
             return
