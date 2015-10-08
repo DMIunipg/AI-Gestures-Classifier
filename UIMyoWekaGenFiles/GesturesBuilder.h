@@ -6,22 +6,42 @@
 #include <QVector>
 #include "MyoListener.h"
 
+/*!
+ * \brief The GesturesBuilder class
+ */
 class GesturesBuilder
 {
 public:
-    //ouput
+
+    /*!
+     * \brief GestureOutput, map of samples by classes
+     */
     using GestureOutput = QMap< QString, QList < MyoListener::TypeRows > >;
-    //build
+
+    /*!
+     * \brief GesturesBuilder
+     * \param flags
+     */
     GesturesBuilder(const DataFlags& flags);
-    //append a row
+
+    /*!
+     * \brief append
+     * \param className
+     * \param rows
+     */
     void append(const QString& className,const MyoListener::TypeRows& rows);
-    //get rows
+
+    /*!
+     * \brief finalize
+     * \param nrows
+     * \param gout
+     */
     void finalize(size_t& nrows,GestureOutput& gout) const;
 
 private:
 
-    DataFlags mFlags;
-    GestureOutput mContext;
+    DataFlags mFlags;         //! flags used for bilding datas
+    GestureOutput mContext;   //! datas context builts
 
 };
 

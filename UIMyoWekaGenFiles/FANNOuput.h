@@ -13,18 +13,29 @@
 #include "DataFlags.h"
 
 
-
+/*!
+ * \brief The FANNOutput class
+ * \tparam EmgN the number of the emg sensors
+ */
 template < const size_t EmgN = 8 >
 class FANNOutput
 {
 public:
 
+    /*!
+     * \brief ~FANNOutput
+     */
     ~FANNOutput()
     {
         if(isOpen()) close();
     }
 
-
+    /*!
+     * \brief open
+     * \param path
+     * \param flags
+     * \param classes
+     */
     void open(const std::string& path,
               const DataFlags& flags,
               const QList< QString >& classes)
@@ -45,12 +56,28 @@ public:
         open(path);
     }
 
+    /*!
+     * \brief topositive
+     * \param t
+     * \param topos
+     * \return T
+     */
     template < class T >
     T topositive(const T& t,bool topos)
     {
         return topos? (t+1.0)*0.5 : t;
     }
 
+    /*!
+     * \brief append
+     * \param className
+     * \param rows
+     * \tparam T
+     * \tparam J
+     * \tparam H
+     * \tparam X
+     * \tparam N the number of the emg sensors
+     */
     template < class T,
                class J,
                class H,
@@ -152,6 +179,10 @@ public:
         }
     }
 
+    /*!
+     * \brief isOpen
+     * \return true if file is open
+     */
     bool isOpen() const
     {
         return mFile.is_open();
@@ -159,6 +190,9 @@ public:
 
 private:
 
+    /*!
+     * \brief close
+     */
     void close()
     {
         //header
@@ -175,6 +209,9 @@ private:
         writeMapNames();
     }
 
+    /*!
+     * \brief writeMataData
+     */
     void writeMataData() const
     {
         std::string mtPath = mPath+".meta";
@@ -186,6 +223,9 @@ private:
         std::fclose(metaFile);
     }
 
+    /*!
+     * \brief writeMapNames
+     */
     void writeMapNames() const
     {
         //path
@@ -211,6 +251,10 @@ private:
         }
     }
 
+    /*!
+     * \brief open
+     * \param path
+     */
     void open(const std::string& path)
     {
         //close file
@@ -222,12 +266,12 @@ private:
     }
 
     //file data
-    std::string mPath;
-    std::ofstream  mFile;
-    QList < QString > mClasses;
-    std::vector < std::stringstream > mLines;
+    std::string mPath; //! the path of the file
+    std::ofstream  mFile; //! file object
+    QList < QString > mClasses; //! list of classes
+    std::vector < std::stringstream > mLines; //! ouput lines
     //flags
-    DataFlags mFlags;
+    DataFlags mFlags; //! meta data info
 };
 
 

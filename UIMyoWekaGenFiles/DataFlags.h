@@ -7,37 +7,63 @@
 #include <string>
 #include <map>
 
+/*!
+ * \brief The DataFlags struct
+ */
 struct DataFlags
 {
-    //mode
+    /*!
+     * \brief The Mode enum
+     */
     enum Mode
     {
         SEMPLE_MODE,
         GESTURE_MODE
     };
-    Mode mMode            { SEMPLE_MODE };
+    Mode mMode            { SEMPLE_MODE }; //! type of classification
     //reps
-    int  mReps            { 1    };
+    int  mReps            { 1    }; //! number of sample per gesture
     //action time
-    double mTimePerGesture{ 1.0  };
-    double mDeltaTime     { 0.1  };
+    double mTimePerGesture{ 1.0  }; //! time per gesture
+    double mDeltaTime     { 0.1  }; //! sampling delta time
     //type off info
-    bool mTime            { true };
-    bool mGyroscope       { true };
-    bool mAccelerometer   { true };
-    bool mQuaternion      { true };
-    bool mPitch           { true };
-    bool mYaw             { true };
-    bool mRoll            { true };
-    bool mEmg             { true };
-    bool mNormalize       { true };
-    bool mPositive        { true };
+    bool mTime            { true }; //! put time field into dataset
+    bool mGyroscope       { true }; //! put gyroscope fields into dataset
+    bool mAccelerometer   { true }; //! put accelerometer fields into dataset
+    bool mQuaternion      { true }; //! put quaternion fields into dataset
+    bool mPitch           { true }; //! put pitch field into dataset
+    bool mYaw             { true }; //! put yaw field into dataset
+    bool mRoll            { true }; //! put roll field into dataset
+    bool mEmg             { true }; //! put emg field into dataset
+    bool mNormalize       { true }; //! normalize dataset fields
+    bool mPositive        { true }; //! absolute value of all dataset fields
     //filters
-    double mEmgSmooth     { 0.0   };
-    bool   mEmgAbs        { false };
+    double mEmgSmooth     { 0.0   };//! smooth emg dataset fields
+    bool   mEmgAbs        { false };//! absolute value only for emg dataset fields
 
+    /*!
+     * \brief DataFlags default constructor
+     */
     DataFlags(){}
 
+    /*!
+     * \brief DataFlags
+     * \param mode
+     * \param reps
+     * \param timePerGesture
+     * \param deltaTime
+     * \param gyroscope
+     * \param accelerometer
+     * \param quaternion
+     * \param pitch
+     * \param yaw
+     * \param roll
+     * \param emg
+     * \param normalize
+     * \param positive
+     * \param emgSmooth
+     * \param emgAbs
+     */
     DataFlags(Mode mode,
               int  reps,
               double  timePerGesture,
@@ -72,6 +98,21 @@ struct DataFlags
 
     }
 
+    /*!
+     * \brief DataFlags
+     * \param reps
+     * \param gyroscope
+     * \param accelerometer
+     * \param quaternion
+     * \param pitch
+     * \param yaw
+     * \param roll
+     * \param emg
+     * \param normalize
+     * \param positive
+     * \param emgSmooth
+     * \param emgAbs
+     */
     DataFlags(int  reps,
               bool gyroscope,
               bool accelerometer,
@@ -133,7 +174,11 @@ struct DataFlags
 
 
 
-
+    /*!
+     * \brief lineSize
+     * \return size of row
+     * \tparam N size of emg inputs
+     */
     template < const size_t N >
     size_t lineSize() const
     {
@@ -153,6 +198,10 @@ struct DataFlags
         return size;
     }
 
+    /*!
+     * \brief serialize
+     * \param file
+     */
     void serialize(FILE* file) const
     {
         std::fwrite(&mMode, sizeof(mMode), 1, file);
@@ -172,7 +221,10 @@ struct DataFlags
         std::fwrite(&mEmgSmooth, sizeof(mEmgSmooth), 1, file);
         std::fwrite(&mEmgAbs, sizeof(mEmgAbs), 1, file);
     }
-
+    /*!
+     * \brief derialize
+     * \param file
+     */
     void derialize(FILE* file)
     {
         std::fread(&mMode, sizeof(mMode), 1, file);
@@ -193,8 +245,10 @@ struct DataFlags
         std::fread(&mEmgAbs, sizeof(mEmgAbs), 1, file);
     }
 
-    /**
-     * Applay to positive
+    /*!
+     * \brief toPositive
+     * \param value
+     * \return positive value
      */
     double toPositive(double value) const
     {
@@ -203,16 +257,28 @@ struct DataFlags
         return value;
     }
 
+    /*!
+     * \brief toPositive
+     * \param vec
+     * \return posive vector
+     * \tparam T
+     */
     template < class T >
     myo::Vector3< T > toPositive(const myo::Vector3< T >& vec) const
     {
         if(mPositive)
             return myo::Vector3< T > ( (vec.x() + 1.0) * 0.5,
-                                      (vec.y() + 1.0) * 0.5,
-                                      (vec.z() + 1.0) * 0.5 );
+                                       (vec.y() + 1.0) * 0.5,
+                                       (vec.z() + 1.0) * 0.5 );
         return vec;
     }
 
+    /*!
+     * \brief toPositive
+     * \param vec
+     * \return
+     * \tparam T
+     */
     template < class T >
     myo::Quaternion< T > toPositive(const myo::Quaternion< T >& vec) const
     {
@@ -224,8 +290,11 @@ struct DataFlags
         return vec;
     }
 
-    /**
-     * Applay to normalize
+    /*!
+     * \brief toNormalize
+     * \param value
+     * \param max
+     * \return value normalized
      */
     double toNormalize(double value, double max=1.0) const
     {
@@ -233,6 +302,13 @@ struct DataFlags
         return value;
     }
 
+    /*!
+     * \brief toNormalize
+     * \param value
+     * \param max
+     * \return value normalized
+     * \tparam T
+     */
     template < class T >
     myo::Vector3< T > toNormalize(const myo::Vector3< T > & value) const
     {
@@ -240,6 +316,13 @@ struct DataFlags
         return value;
     }
 
+    /*!
+     * \brief toNormalize
+     * \param value
+     * \param max
+     * \return value normalized
+     * \tparam T
+     */
     template < class T >
     myo::Quaternion< T > toNormalize(const myo::Quaternion< T > & value) const
     {
@@ -248,36 +331,63 @@ struct DataFlags
     }
 
 
-    /**
-     * Applay all to value
+    /*!
+     * \brief apply
+     * \param value
+     * \param max
+     * \return the absolute value normalized
      */
     double apply(double value, double max = 1.0) const
     {
         return toPositive(toNormalize(value,max));
     }
 
+
+    /*!
+     * \brief apply
+     * \param value
+     * \param max
+     * \return the absolute value normalized
+     * \tparam T
+     */
     template < class T >
     myo::Vector3< T > apply(const myo::Vector3< T >& vec) const
     {
         return toPositive(toNormalize(vec));
     }
 
+    /*!
+     * \brief apply
+     * \param value
+     * \param max
+     * \return the absolute value normalized
+     * \tparam T
+     */
     template < class T >
     myo::Quaternion< T > apply(const myo::Quaternion< T >& quad) const
     {
         return toPositive(toNormalize(quad));
     }
 
-    /*
-     Smooth
+    /*!
+     * \brief smooth
+     * \param from
+     * \param to
+     * \return the smooth value
+     * \tparam T
      */
     template < typename T >
     T smooth(const T& from,const T& to) const
     {
         return from * mEmgSmooth + to * (1.0-mEmgSmooth);
     }
-    /*
-     EMG Smooth
+
+    /*!
+     * \brief applayEmgSmooth
+     * \param emgs
+     * \param nrows
+     * \tparam T
+     * \tparam N size of vactor of emg values
      */
     template < typename T, size_t N >
     void applayEmgSmooth(std::array< T, N > emgs[],size_t nrows) const
@@ -288,6 +398,14 @@ struct DataFlags
                 emgs[r][e]=smooth(emgs[r-1][e],emgs[r][e]);
             }
     }
+
+    /*!
+     * \brief applayEmgAbs
+     * \param emgs
+     * \param nrows
+     * \tparam T
+     * \tparam N size of vactor of emg values
+     */
     template < typename T, size_t N >
     void applayEmgAbs(std::array< T, N > emgs[],size_t nrows) const
     {
@@ -297,14 +415,27 @@ struct DataFlags
                 emg = std::abs(emg);
             }
     }
+
+    /*!
+     * \brief applayEmgFilter
+     * \param emgs
+     * \param nrows
+     * \tparam T
+     * \tparam N size of vactor of emg values
+     */
     template < typename T, size_t N >
     void applayEmgFilter(std::array< T, N > emgs[],size_t nrows) const
     {
         if(mEmgAbs)    applayEmgAbs(emgs,nrows);
         if(mEmgSmooth) applayEmgSmooth(emgs,nrows);
     }
-    /*
-     EMG Smooth ptr...
+
+    /*!
+     * \brief applayEmgSmooth
+     * \param vecemgs
+     * \param nrows
+     * \tparam T
+     * \tparam N size of vactor of emg values
      */
     template < typename T, size_t N >
     void applayEmgSmooth(std::array< T, N >* vecemgs[],size_t nrows) const
@@ -316,6 +447,14 @@ struct DataFlags
             for(int e=0;e!=N;     ++e)  emgs1[e]=smooth(emgs0[e],emgs1[e]);
         }
     }
+
+    /*!
+     * \brief applayEmgAbs
+     * \param vecemgs
+     * \param nrows
+     * \tparam T
+     * \tparam N size of vactor of emg values
+     */
     template < typename T, size_t N >
     void applayEmgAbs(std::array< T, N >* vecemgs[],size_t nrows) const
     {
@@ -325,6 +464,14 @@ struct DataFlags
             for(auto& emg: emgs)  emg = std::abs(emg);
         }
     }
+
+    /*!
+     * \brief applayEmgFilter
+     * \param emgs
+     * \param nrows
+     * \tparam T
+     * \tparam N size of vactor of emg values
+     */
     template < typename T, size_t N >
     void applayEmgFilter(std::array< T, N >* emgs[],size_t nrows) const
     {
@@ -334,10 +481,17 @@ struct DataFlags
 
 };
 
+/*!
+ * \brief The ClassesNames struct
+ */
 struct ClassesNames
 {
-    std::map< double, std::string > mNames;
+    std::map< double, std::string > mNames; //! Map of class name
 
+    /*!
+     * \brief derialize
+     * \param file
+     */
     void derialize(FILE* file)
     {
         //get map size
@@ -353,6 +507,11 @@ struct ClassesNames
         }
     }
 
+    /*!
+     * \brief getClassName
+     * \param uid
+     * \return class name
+     */
     const char* getClassName(double uid) const
     {
         //search

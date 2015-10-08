@@ -37,20 +37,20 @@ GenMyoWindow::~GenMyoWindow()
 }
 
 
-void GenMyoWindow::onAddClass(const QString& str)
+void GenMyoWindow::onAddClass(const QString& cname)
 {
-    addClass(str);
+    addClass(cname);
 }
 
 
 //add a class
-QListWidgetItem* GenMyoWindow::addClass(const QString &str)
+QListWidgetItem* GenMyoWindow::addClass(const QString &cname)
 {
     //alloc item
     auto item=new QListWidgetItem();
     auto widget=new ClassForm(this);
     //set name
-    widget->setName(str);
+    widget->setName(cname);
     //init size
     item->setSizeHint(widget->sizeHint());
     //add item

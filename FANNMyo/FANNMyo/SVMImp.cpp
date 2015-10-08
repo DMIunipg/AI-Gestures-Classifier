@@ -117,7 +117,7 @@ void* myo_classification(const std::string& path,MyoThread& myo,DataFlags&  flag
                                 << cnames.getClassName(svm_normalize_class_name(cNameMoreThenHl))
                                 << "(" << cNameMoreThenHl << ")"
                                 << "\n";
-                      std::cout << "last more then 0.5% is "
+                      std::cout << "last more then 0.5 is "
                                 << cnames.getClassName(svm_normalize_class_name(cNameMoreThenPCl))
                                 << "(" << cNameMoreThenPCl << ")"
                                 << "\n";

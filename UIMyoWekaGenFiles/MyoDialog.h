@@ -10,49 +10,103 @@ namespace Ui {
 class MyoDialog;
 }
 
+/*!
+ * \brief The MyoDialog class
+ */
 class MyoDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    //myo dialog con.
+
+    /*!
+     * \brief MyoDialog
+     * \param parent
+     * \param disable
+     */
     explicit MyoDialog(QWidget *parent = 0, bool disable=true);
+
+    /*!
+     * \brief ~MyoDialog
+     */
     ~MyoDialog();
-    //myo manager
+
+    /*!
+     * \brief setMyoManager
+     * \param myoManager
+     */
     void setMyoManager(MyoManager* myoManager);
-    //show pitch, yaw, roll
+
+    /*!
+     * \brief showEulers
+     * \param pitch
+     * \param yaw
+     * \param roll
+     */
     void showEulers(double pitch,
                     double yaw,
                     double roll);
-    //show emg
+
+    /*!
+     * \brief showEmg
+     * \param emg
+     */
     void showEmg(const std::array< int8_t, 8 >& emg);
-    //put video
+
+    /*!
+     * \brief setVideoToShow
+     * \param rows
+     */
     void setVideoToShow(const MyoListener::TypeRows& rows);
 
 public slots:
 
-    //module
+    /*!
+     * \brief onAbs
+     */
     void onAbs();
-    //play/pause event
+
+    /*!
+     * \brief onPlayPause
+     * \param event
+     */
     void onPlayPause(bool event);
-    //change slaider
+
+    /*!
+     * \brief onSlaiderChange
+     * \param value
+     */
     void onSlaiderChange(int value);
 
 private:
-    //ui dialog
-    Ui::MyoDialog *ui { nullptr };
-    //graph temp values
-    QVector<double> mXPlots;
-    std::array< QVector<double>, 8 > mYPlots;
+
+    Ui::MyoDialog *ui { nullptr };               //! ui pointer
+    QVector<double> mXPlots;                     //! vector of values of x axis
+    std::array< QVector<double>, 8 > mYPlots;    //! vectors of values of all y axis
     //video info
-    size_t                mCurrentRow{ 0 };
-    QBasicTimer*          mVideoTime { nullptr };
-    MyoListener::TypeRows mVideoRows;
-    //video update
+    size_t                mCurrentRow{ 0 };      //! id of the current data
+    QBasicTimer*          mVideoTime { nullptr };//! timer of the video
+    MyoListener::TypeRows mVideoRows;            //! list of rows (will be showed)
+
+    /*!
+     * \brief timerEvent
+     * \param e
+     */
     void timerEvent(QTimerEvent *e);
-    //utilities
+
+    /*!
+     * \brief absPlots
+     */
     void absPlots();
+
+    /*!
+     * \brief notAbsPlots
+     */
     void notAbsPlots();
+
+    /*!
+     * \brief doPlots
+     */
     void doPlots();
 };
 

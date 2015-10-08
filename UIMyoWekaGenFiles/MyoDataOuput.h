@@ -14,16 +14,29 @@ namespace MyoData
     static const short version = 1.0;
 };
 
+/*!
+* \brief MyoDataOuput
+* \tparam EmgN the number of the emg sensors
+*/
 template < const size_t EmgN = 8 >
 class MyoDataOuput
 {
 public:
+
+    /*!
+     * \brief ~MyoDataOuput
+     */
 
     ~MyoDataOuput()
     {
         if(mFile) close();
     }
 
+    /*!
+     * \brief open
+     * \param path
+     * \param nclass
+     */
     void open(const std::string& path,size_t nclass)
     {
         //open file
@@ -38,7 +51,16 @@ public:
         mNClass = nclass;
     }
 
-
+    /*!
+     * \brief append
+     * \param className
+     * \param listRows
+     * \tparam T
+     * \tparam J
+     * \tparam H
+     * \tparam X
+     * \tparam EmgN the number of the emg sensors
+     */
     template < class T,
                class J,
                class H,
@@ -58,11 +80,18 @@ public:
         for(auto& wrows:listRows) serialize(wrows,file());
     }
 
+    /*!
+     * \brief isOpen
+     * \return true if file is open
+     */
     bool isOpen() const
     {
         return (bool)mFile;
     }
 
+    /*!
+     * \brief close
+     */
     void close()
     {
         assert(mFile);
@@ -74,6 +103,10 @@ public:
 
 private:
 
+    /*!
+     * \brief open
+     * \param path
+     */
     void open(const std::string& path)
     {
         //close file
@@ -82,14 +115,18 @@ private:
         mFile = std::fopen(path.c_str(),"wb");
     }
 
+    /*!
+     * \brief file
+     * \return
+     */
     std::FILE* file()
     {
         return mFile;
     }
 
-    //file data
-    int mNClass { 0 };
-    std::FILE*  mFile { nullptr };
+
+    int mNClass { 0 };              //! number of classes
+    std::FILE*  mFile { nullptr };  //! file pointer
 };
 
 #endif // MYODATAOUPUT

@@ -35,9 +35,9 @@ QString ClassForm::getName() const
     return ui->mLEName->text();
 }
 
-void ClassForm::setName(const QString& str)
+void ClassForm::setName(const QString& cname)
 {
-    ui->mLEName->setText(str);
+    ui->mLEName->setText(cname);
 }
 
 

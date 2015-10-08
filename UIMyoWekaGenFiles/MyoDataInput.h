@@ -10,6 +10,14 @@
 #include "Utilities.h"
 #include "MyoSerialize.h"
 
+/*!
+ * \brief The MyoDataInput class
+ * \tparam T
+ * \tparam J
+ * \tparam H
+ * \tparam X
+ * \tparam EmgN the number of the emg sensors
+ */
 template < class T,
            class J,
            class H,
@@ -24,7 +32,12 @@ public:
     using Callback    = std::function< void( const std::string& , ListSamples& ) >;
     using LGCallback  = std::function< void( int idClass, const std::string& className, const Sample& ) >;
 
-    /* read file */
+    /*!
+     * \brief read
+     * \param path
+     * \param callback
+     * \return success to write file
+     */
     bool read(const std::string& path, Callback callback)
     {
         //open file
@@ -63,7 +76,13 @@ public:
         }
 
     }
-    /* legacy */
+
+    /*!
+     * \brief readOldFile
+     * \param path
+     * \param callback
+     * \return success to write file
+     */
     bool readOldFile(const std::string& path, LGCallback callback) const
     {
         //open file
