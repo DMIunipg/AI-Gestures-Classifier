@@ -129,6 +129,7 @@ void GenMyoWindow::onOpen()
             myoLoader.read(
             //file map
             mPath.toStdString(),
+            mFlags,
             [this](const std::string& name,MyoListener::TypeInput::ListSamples& lsample)
             {
                 //add item
@@ -216,11 +217,14 @@ void GenMyoWindow::onExportAs()
         QString sPath=QFileDialog::getSaveFileName(this,
                                                   "Export",
                                                    mPath,
+                                                   "DataSet Files *.ds;;"
                                                    "Weka Files *.arff;;"
                                                    "FANN Files *.fann");
 
         if( sPath.length() &&
-           (sPath.endsWith(".arff") || sPath.endsWith(".fann")) )
+           (sPath.endsWith(".ds") ||
+            sPath.endsWith(".arff") ||
+            sPath.endsWith(".fann")) )
         {
             //save path
             mPath=sPath;
@@ -228,7 +232,8 @@ void GenMyoWindow::onExportAs()
             FlagsDialog flagsDialog(this);
             if(!flagsDialog.exec(mFlags)) return;
             //save file
-            if(mPath.endsWith(".arff")) saveWEKA();
+            if(mPath.endsWith(".ds")) saveDATASET();
+            else if(mPath.endsWith(".arff")) saveWEKA();
             else if(mPath.endsWith(".fann")) saveFANN();
         }
     }
@@ -246,11 +251,86 @@ void GenMyoWindow::save()
         assert(lPath.length());
         //file
         MyoListener::TypeOuput ouput;
-        ouput.open(lPath,nItems);
+        ouput.open(lPath,mFlags,nItems);
         //seva all
         for(size_t i=0;i!=nItems;++i)
         {
             ouput.append(getNameClass(i).toStdString(),getList(i));
+        }
+    }
+}
+
+void GenMyoWindow::saveDATASET()
+{
+    if(!mWekaItems.empty())
+    {
+        //get all items
+        size_t nclass=ui->mLWClasses->count();
+        //path
+        auto lPath=mPath.toStdString();
+        assert(lPath.length());
+        //ouput serialize
+        MyoListener::TypeOuputDataSet ouput;
+        //types
+        switch (mFlags.mMode)
+        {
+            case DataFlags::SAMPLE_MODE:
+            {
+                //vector of names
+                QList< QString > classNames;
+                //get all class
+                for(size_t i=0;i!=nclass;++i)
+                    classNames.push_back(getNameClass(i));
+                //file
+                ouput.open(lPath, mFlags, classNames);
+                //seva all
+                for(size_t i=0;i!=nclass;++i)
+                {
+                    auto  name  = getNameClass(i);
+                    auto& lrows = getList(i);
+                    for(auto& rows:lrows) ouput.append(name,rows);
+                }
+            }
+            break;
+            case DataFlags::GESTURE_MODE:
+            {
+                GesturesBuilder gbuilder(mFlags);
+                //put all
+                for(size_t i=0;i!=nclass;++i)
+                {
+                    auto  name  = getNameClass(i);
+                    auto& lrows = getList(i);
+                    for(auto& rows:lrows) gbuilder.append(name,rows);
+                }
+                //nreps
+                size_t nreps = 1;
+                //get ouput
+                GesturesBuilder::GestureOutput ouputItems;
+                gbuilder.finalize(nreps,ouputItems);
+                //////////////////////////////////////////////////////////////
+                //type of ouput
+                DataFlags flags( mFlags );
+                //set nreps
+                flags.mReps = nreps;
+                //get keys
+                QList< QString > keys = ouputItems.keys();
+                //ouput
+                ouput.open(lPath, flags, keys);
+                //write
+                for(auto& name:keys)
+                {
+                    //list of input
+                    auto& inputs=ouputItems.value(name);
+                    //put all into file
+                    for(auto& rows:inputs)
+                    {
+                        ouput.append(name, rows);
+                    }
+                }
+                //////////////////////////////////////////////////////////////
+            }
+            default:
+            break;
         }
     }
 }
@@ -269,7 +349,7 @@ void GenMyoWindow::saveWEKA()
         //cases
         switch (mFlags.mMode)
         {
-            case DataFlags::SEMPLE_MODE:
+            case DataFlags::SAMPLE_MODE:
             {
                 //vector of names
                 QList< QString > classNames;
@@ -344,7 +424,7 @@ void GenMyoWindow::saveFANN()
         //types
         switch (mFlags.mMode)
         {
-            case DataFlags::SEMPLE_MODE:
+            case DataFlags::SAMPLE_MODE:
             {
                 //vector of names
                 QList< QString > classNames;

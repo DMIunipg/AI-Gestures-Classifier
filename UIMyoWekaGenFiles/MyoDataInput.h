@@ -9,6 +9,8 @@
 #include <QLinkedList>
 #include "Utilities.h"
 #include "MyoSerialize.h"
+#include "MyoData.h"
+#include "DataFlags.h"
 
 /*!
  * \brief The MyoDataInput class
@@ -38,20 +40,31 @@ public:
      * \param callback
      * \return success to write file
      */
-    bool read(const std::string& path, Callback callback)
+    bool read(const std::string& path,
+              DataFlags& flags,
+              Callback callback)
     {
         //open file
         std::FILE* file=std::fopen(path.c_str(),"rb");
         //read
         if(file)
         {
-            short  byte;
-            short  version;
-            size_t nclass;
+            unsigned short  byte     = 0;
+            unsigned short  version  = 0;
+            size_t nclass            = 0;
+            unsigned int    msupdate = 0;
             //deserialize
             deserialize(byte,file);
             deserialize(version,file);
             deserialize(nclass,file);
+            //if version 2.0
+            if(version == 2)
+            {
+                //get update time
+                deserialize(msupdate,file);
+                //get flags info
+                flags.deserialize(file);
+            }
             //for all class
             for(size_t id=0; id!=nclass; ++id)
             {

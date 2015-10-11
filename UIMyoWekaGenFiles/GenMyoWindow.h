@@ -84,6 +84,12 @@ private:
      * \brief save MUI
      */
     void save();
+
+    /*!
+     * \brief save DATASET file
+     */
+    void saveDATASET();
+
     /*!
      * \brief save WEKA file
      */

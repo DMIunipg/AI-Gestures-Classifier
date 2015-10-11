@@ -7,12 +7,9 @@
 #include <algorithm>
 #include <QLinkedList>
 #include "MyoSerialize.h"
+#include "DataFlags.h"
+#include "MyoData.h"
 
-namespace MyoData
-{
-    static const short byte    = sizeof(size_t);
-    static const short version = 1.0;
-};
 
 /*!
 * \brief Myo Data Ouput
@@ -37,7 +34,9 @@ public:
      * \param path
      * \param nclass
      */
-    void open(const std::string& path,size_t nclass)
+    void open(const std::string& path,
+              const DataFlags& flags,
+              size_t nclass)
     {
         //open file
         open(path);
@@ -47,6 +46,10 @@ public:
         serialize(MyoData::version,file());
         //write count of class
         serialize(nclass,file());
+        //write delta time
+        serialize(MyoData::msupadate,file());
+        //write flags
+        flags.serialize(file());
         //classes
         mNClass = nclass;
     }

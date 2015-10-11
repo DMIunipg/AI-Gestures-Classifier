@@ -5,9 +5,10 @@
 #include <array>
 #include <myo.hpp>
 #include "Utilities.h"
-#include "WekaOuput.h"
 #include "MyoDataOuput.h"
 #include "MyoDataInput.h"
+#include "DataSetOutput.h"
+#include "WekaOuput.h"
 #include "FANNOuput.h"
 
 /*!
@@ -36,6 +37,11 @@ public:
      * \brief Type Input
      */
     using TypeInput    = MyoDataInput<int8_t, float, float, float, 8>;
+
+    /*!
+     * Type Ouput DataSet
+     */
+    using TypeOuputDataSet= DataSetOutput<8>;
 
     /*!
      * Type Ouput Weka

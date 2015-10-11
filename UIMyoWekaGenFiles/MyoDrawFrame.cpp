@@ -185,7 +185,7 @@ void MyoDrawFrame::initGeometry()
         QVector3D( 0.25, -0.25,  1.0),  // v1
         QVector3D(-0.25,  0.25,  1.0),  // v2
         QVector3D( 0.25,  0.25,  1.0),  // v3
-        QVector3D( 0.0,  0.0, -1.0),  // v4
+        QVector3D( 0.0,   0.0,  -1.0)   // v4
 
     };
 
@@ -233,10 +233,14 @@ void MyoDrawFrame::drawGeometry()
 }
 void MyoDrawFrame::deleteGeometry()
 {
-    // delete VBO
-    if(mVBuffer) glDeleteBuffers(1, &mVBuffer);
-    // delete IBO
-    if(mVBuffer) glDeleteBuffers(1, &mIBuffer);
+    if(context())
+    {
+        context()->makeCurrent();
+        // delete VBO
+        if(mVBuffer) glDeleteBuffers(1, &mVBuffer);
+        // delete IBO
+        if(mVBuffer) glDeleteBuffers(1, &mIBuffer);
+    }
 }
 
 

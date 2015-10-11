@@ -1,0 +1,562 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E012C86D1BB92D9000067B30 /* MyoThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E012C86B1BB92D9000067B30 /* MyoThread.cpp */; settings = {ASSET_TAGS = (); }; };
+		E012C8701BB92DCA00067B30 /* MyoTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E012C86E1BB92DCA00067B30 /* MyoTime.cpp */; settings = {ASSET_TAGS = (); }; };
+		E012C8721BB9594000067B30 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E012C8711BB9594000067B30 /* main.cpp */; settings = {ASSET_TAGS = (); }; };
+		E026C0231BC12A50004E3D35 /* kNN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E026C0211BC12A50004E3D35 /* kNN.cpp */; settings = {ASSET_TAGS = (); }; };
+		E026C0271BC139CA004E3D35 /* kNNImp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E026C0251BC139CA004E3D35 /* kNNImp.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0A892531B451C0C0065BF83 /* _main_.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0A892521B451C0C0065BF83 /* _main_.cpp */; };
+		E0AB232C1BBB050C0006369F /* FANNImp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0AB232A1BBB050C0006369F /* FANNImp.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0C1C4311BBF33750093A3AD /* svm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0C1C42B1BBF33750093A3AD /* svm.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0C1C4331BBF33750093A3AD /* SVMUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0C1C42F1BBF33750093A3AD /* SVMUtilities.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0C1C4361BBF33C10093A3AD /* SVMImp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0C1C4341BBF33C10093A3AD /* SVMImp.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0C1C43D1BBF33E20093A3AD /* KmeansPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0C1C4381BBF33E20093A3AD /* KmeansPP.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0C1C43E1BBF33E20093A3AD /* RBFNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0C1C43A1BBF33E20093A3AD /* RBFNetwork.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0C1C4421BBF35080093A3AD /* RBFImp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0C1C4401BBF35080093A3AD /* RBFImp.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0C1C4461BBF36E40093A3AD /* RBFUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0C1C4451BBF36E40093A3AD /* RBFUtil.cpp */; settings = {ASSET_TAGS = (); }; };
+		E0EF02941BCA507400A48BCA /* libdoublefann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF026A1BCA507400A48BCA /* libdoublefann.2.2.0.dylib */; settings = {ASSET_TAGS = (); }; };
+		E0EF02951BCA507400A48BCA /* libfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF026B1BCA507400A48BCA /* libfann.2.2.0.dylib */; settings = {ASSET_TAGS = (); }; };
+		E0EF02961BCA507400A48BCA /* libfixedfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF026C1BCA507400A48BCA /* libfixedfann.2.2.0.dylib */; settings = {ASSET_TAGS = (); }; };
+		E0EF02971BCA507400A48BCA /* libfloatfann.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF026D1BCA507400A48BCA /* libfloatfann.2.2.0.dylib */; settings = {ASSET_TAGS = (); }; };
+		E0EF02981BCA507400A48BCA /* myo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF026F1BCA507400A48BCA /* myo.framework */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E0A8924D1B451C0C0065BF83 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E012C86A1BB92D5800067B30 /* DataFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFlags.h; sourceTree = "<group>"; };
+		E012C86B1BB92D9000067B30 /* MyoThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyoThread.cpp; sourceTree = "<group>"; };
+		E012C86C1BB92D9000067B30 /* MyoThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyoThread.h; sourceTree = "<group>"; };
+		E012C86E1BB92DCA00067B30 /* MyoTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyoTime.cpp; sourceTree = "<group>"; };
+		E012C86F1BB92DCA00067B30 /* MyoTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyoTime.h; sourceTree = "<group>"; };
+		E012C8711BB9594000067B30 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E026C0211BC12A50004E3D35 /* kNN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kNN.cpp; sourceTree = "<group>"; };
+		E026C0221BC12A50004E3D35 /* kNN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kNN.h; sourceTree = "<group>"; };
+		E026C0251BC139CA004E3D35 /* kNNImp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kNNImp.cpp; sourceTree = "<group>"; };
+		E026C0261BC139CA004E3D35 /* kNNImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kNNImp.h; sourceTree = "<group>"; };
+		E059F2611B45A0E100919E56 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		E0A8924F1B451C0C0065BF83 /* FANNMyo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FANNMyo; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0A892521B451C0C0065BF83 /* _main_.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _main_.cpp; sourceTree = "<group>"; };
+		E0AB232A1BBB050C0006369F /* FANNImp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FANNImp.cpp; sourceTree = "<group>"; };
+		E0AB232B1BBB050C0006369F /* FANNImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FANNImp.h; sourceTree = "<group>"; };
+		E0C1C42B1BBF33750093A3AD /* svm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svm.cpp; sourceTree = "<group>"; };
+		E0C1C42C1BBF33750093A3AD /* svm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svm.h; sourceTree = "<group>"; };
+		E0C1C42F1BBF33750093A3AD /* SVMUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SVMUtilities.cpp; sourceTree = "<group>"; };
+		E0C1C4301BBF33750093A3AD /* SVMUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMUtilities.h; sourceTree = "<group>"; };
+		E0C1C4341BBF33C10093A3AD /* SVMImp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SVMImp.cpp; sourceTree = "<group>"; };
+		E0C1C4351BBF33C10093A3AD /* SVMImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMImp.h; sourceTree = "<group>"; };
+		E0C1C4381BBF33E20093A3AD /* KmeansPP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KmeansPP.cpp; sourceTree = "<group>"; };
+		E0C1C4391BBF33E20093A3AD /* KmeansPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KmeansPP.h; sourceTree = "<group>"; };
+		E0C1C43A1BBF33E20093A3AD /* RBFNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBFNetwork.cpp; sourceTree = "<group>"; };
+		E0C1C43B1BBF33E20093A3AD /* RBFNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBFNetwork.h; sourceTree = "<group>"; };
+		E0C1C43C1BBF33E20093A3AD /* RBFUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBFUtil.h; sourceTree = "<group>"; };
+		E0C1C43F1BBF341E0093A3AD /* Datapoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Datapoint.h; sourceTree = "<group>"; };
+		E0C1C4401BBF35080093A3AD /* RBFImp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBFImp.cpp; sourceTree = "<group>"; };
+		E0C1C4411BBF35080093A3AD /* RBFImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBFImp.h; sourceTree = "<group>"; };
+		E0C1C4451BBF36E40093A3AD /* RBFUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RBFUtil.cpp; sourceTree = "<group>"; };
+		E0EF026A1BCA507400A48BCA /* libdoublefann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdoublefann.2.2.0.dylib; sourceTree = "<group>"; };
+		E0EF026B1BCA507400A48BCA /* libfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfann.2.2.0.dylib; sourceTree = "<group>"; };
+		E0EF026C1BCA507400A48BCA /* libfixedfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfixedfann.2.2.0.dylib; sourceTree = "<group>"; };
+		E0EF026D1BCA507400A48BCA /* libfloatfann.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfloatfann.2.2.0.dylib; sourceTree = "<group>"; };
+		E0EF026F1BCA507400A48BCA /* myo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = myo.framework; sourceTree = "<group>"; };
+		E0EF02721BCA507400A48BCA /* compat_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compat_time.h; sourceTree = "<group>"; };
+		E0EF02731BCA507400A48BCA /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		E0EF02741BCA507400A48BCA /* doublefann.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = doublefann.h; sourceTree = "<group>"; };
+		E0EF02751BCA507400A48BCA /* fann.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann.h; sourceTree = "<group>"; };
+		E0EF02761BCA507400A48BCA /* fann_activation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_activation.h; sourceTree = "<group>"; };
+		E0EF02771BCA507400A48BCA /* fann_cascade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_cascade.h; sourceTree = "<group>"; };
+		E0EF02781BCA507400A48BCA /* fann_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_cpp.h; sourceTree = "<group>"; };
+		E0EF02791BCA507400A48BCA /* fann_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_data.h; sourceTree = "<group>"; };
+		E0EF027A1BCA507400A48BCA /* fann_error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_error.h; sourceTree = "<group>"; };
+		E0EF027B1BCA507400A48BCA /* fann_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_internal.h; sourceTree = "<group>"; };
+		E0EF027C1BCA507400A48BCA /* fann_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_io.h; sourceTree = "<group>"; };
+		E0EF027D1BCA507400A48BCA /* fann_train.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fann_train.h; sourceTree = "<group>"; };
+		E0EF027E1BCA507400A48BCA /* fixedfann.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedfann.h; sourceTree = "<group>"; };
+		E0EF027F1BCA507400A48BCA /* floatfann.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = floatfann.h; sourceTree = "<group>"; };
+		E0EF02831BCA507400A48BCA /* ThrowOnError.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ThrowOnError.hpp; sourceTree = "<group>"; };
+		E0EF02841BCA507400A48BCA /* DeviceListener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DeviceListener.hpp; sourceTree = "<group>"; };
+		E0EF02851BCA507400A48BCA /* Hub.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Hub.hpp; sourceTree = "<group>"; };
+		E0EF02871BCA507400A48BCA /* Hub_impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Hub_impl.hpp; sourceTree = "<group>"; };
+		E0EF02881BCA507400A48BCA /* Myo_impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Myo_impl.hpp; sourceTree = "<group>"; };
+		E0EF02891BCA507400A48BCA /* Pose_impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Pose_impl.hpp; sourceTree = "<group>"; };
+		E0EF028A1BCA507400A48BCA /* Myo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Myo.hpp; sourceTree = "<group>"; };
+		E0EF028B1BCA507400A48BCA /* Pose.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Pose.hpp; sourceTree = "<group>"; };
+		E0EF028C1BCA507400A48BCA /* Quaternion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quaternion.hpp; sourceTree = "<group>"; };
+		E0EF028D1BCA507400A48BCA /* Vector3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vector3.hpp; sourceTree = "<group>"; };
+		E0EF02901BCA507400A48BCA /* visibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visibility.h; sourceTree = "<group>"; };
+		E0EF02911BCA507400A48BCA /* libmyo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libmyo.h; sourceTree = "<group>"; };
+		E0EF02921BCA507400A48BCA /* myo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = myo.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E0A8924C1B451C0C0065BF83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0EF02971BCA507400A48BCA /* libfloatfann.2.2.0.dylib in Frameworks */,
+				E0EF02981BCA507400A48BCA /* myo.framework in Frameworks */,
+				E0EF02941BCA507400A48BCA /* libdoublefann.2.2.0.dylib in Frameworks */,
+				E0EF02961BCA507400A48BCA /* libfixedfann.2.2.0.dylib in Frameworks */,
+				E0EF02951BCA507400A48BCA /* libfann.2.2.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E026C0241BC12A55004E3D35 /* kNN */ = {
+			isa = PBXGroup;
+			children = (
+				E026C0211BC12A50004E3D35 /* kNN.cpp */,
+				E026C0221BC12A50004E3D35 /* kNN.h */,
+			);
+			path = kNN;
+			sourceTree = "<group>";
+		};
+		E0A892461B451C0C0065BF83 = {
+			isa = PBXGroup;
+			children = (
+				E0EF02681BCA507400A48BCA /* myo.mac */,
+				E0A892511B451C0C0065BF83 /* FANNMyo */,
+				E0A892501B451C0C0065BF83 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E0A892501B451C0C0065BF83 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E0A8924F1B451C0C0065BF83 /* FANNMyo */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E0A892511B451C0C0065BF83 /* FANNMyo */ = {
+			isa = PBXGroup;
+			children = (
+				E026C0241BC12A55004E3D35 /* kNN */,
+				E0C1C42A1BBF33750093A3AD /* SVM */,
+				E0C1C4371BBF33E20093A3AD /* RBFNetwork */,
+				E0C1C4341BBF33C10093A3AD /* SVMImp.cpp */,
+				E0C1C4351BBF33C10093A3AD /* SVMImp.h */,
+				E026C0251BC139CA004E3D35 /* kNNImp.cpp */,
+				E026C0261BC139CA004E3D35 /* kNNImp.h */,
+				E0C1C4401BBF35080093A3AD /* RBFImp.cpp */,
+				E0C1C4411BBF35080093A3AD /* RBFImp.h */,
+				E0AB232A1BBB050C0006369F /* FANNImp.cpp */,
+				E0AB232B1BBB050C0006369F /* FANNImp.h */,
+				E012C86E1BB92DCA00067B30 /* MyoTime.cpp */,
+				E012C86F1BB92DCA00067B30 /* MyoTime.h */,
+				E012C86A1BB92D5800067B30 /* DataFlags.h */,
+				E059F2611B45A0E100919E56 /* Utilities.h */,
+				E0A892521B451C0C0065BF83 /* _main_.cpp */,
+				E012C86B1BB92D9000067B30 /* MyoThread.cpp */,
+				E012C86C1BB92D9000067B30 /* MyoThread.h */,
+				E012C8711BB9594000067B30 /* main.cpp */,
+			);
+			path = FANNMyo;
+			sourceTree = "<group>";
+		};
+		E0C1C42A1BBF33750093A3AD /* SVM */ = {
+			isa = PBXGroup;
+			children = (
+				E0C1C42B1BBF33750093A3AD /* svm.cpp */,
+				E0C1C42C1BBF33750093A3AD /* svm.h */,
+				E0C1C42F1BBF33750093A3AD /* SVMUtilities.cpp */,
+				E0C1C4301BBF33750093A3AD /* SVMUtilities.h */,
+			);
+			path = SVM;
+			sourceTree = "<group>";
+		};
+		E0C1C4371BBF33E20093A3AD /* RBFNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				E0C1C4381BBF33E20093A3AD /* KmeansPP.cpp */,
+				E0C1C4391BBF33E20093A3AD /* KmeansPP.h */,
+				E0C1C43A1BBF33E20093A3AD /* RBFNetwork.cpp */,
+				E0C1C43B1BBF33E20093A3AD /* RBFNetwork.h */,
+				E0C1C43C1BBF33E20093A3AD /* RBFUtil.h */,
+				E0C1C43F1BBF341E0093A3AD /* Datapoint.h */,
+				E0C1C4451BBF36E40093A3AD /* RBFUtil.cpp */,
+			);
+			path = RBFNetwork;
+			sourceTree = "<group>";
+		};
+		E0EF02681BCA507400A48BCA /* myo.mac */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF02691BCA507400A48BCA /* bin */,
+				E0EF026E1BCA507400A48BCA /* framework */,
+				E0EF02701BCA507400A48BCA /* include */,
+				E0EF02931BCA507400A48BCA /* lib */,
+			);
+			name = myo.mac;
+			path = ../myo.mac;
+			sourceTree = "<group>";
+		};
+		E0EF02691BCA507400A48BCA /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF026A1BCA507400A48BCA /* libdoublefann.2.2.0.dylib */,
+				E0EF026B1BCA507400A48BCA /* libfann.2.2.0.dylib */,
+				E0EF026C1BCA507400A48BCA /* libfixedfann.2.2.0.dylib */,
+				E0EF026D1BCA507400A48BCA /* libfloatfann.2.2.0.dylib */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		E0EF026E1BCA507400A48BCA /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF026F1BCA507400A48BCA /* myo.framework */,
+			);
+			path = framework;
+			sourceTree = "<group>";
+		};
+		E0EF02701BCA507400A48BCA /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF02711BCA507400A48BCA /* fann */,
+				E0EF02801BCA507400A48BCA /* myo */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E0EF02711BCA507400A48BCA /* fann */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF02721BCA507400A48BCA /* compat_time.h */,
+				E0EF02731BCA507400A48BCA /* config.h */,
+				E0EF02741BCA507400A48BCA /* doublefann.h */,
+				E0EF02751BCA507400A48BCA /* fann.h */,
+				E0EF02761BCA507400A48BCA /* fann_activation.h */,
+				E0EF02771BCA507400A48BCA /* fann_cascade.h */,
+				E0EF02781BCA507400A48BCA /* fann_cpp.h */,
+				E0EF02791BCA507400A48BCA /* fann_data.h */,
+				E0EF027A1BCA507400A48BCA /* fann_error.h */,
+				E0EF027B1BCA507400A48BCA /* fann_internal.h */,
+				E0EF027C1BCA507400A48BCA /* fann_io.h */,
+				E0EF027D1BCA507400A48BCA /* fann_train.h */,
+				E0EF027E1BCA507400A48BCA /* fixedfann.h */,
+				E0EF027F1BCA507400A48BCA /* floatfann.h */,
+			);
+			path = fann;
+			sourceTree = "<group>";
+		};
+		E0EF02801BCA507400A48BCA /* myo */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF02811BCA507400A48BCA /* cxx */,
+				E0EF028E1BCA507400A48BCA /* libmyo */,
+				E0EF02911BCA507400A48BCA /* libmyo.h */,
+				E0EF02921BCA507400A48BCA /* myo.hpp */,
+			);
+			path = myo;
+			sourceTree = "<group>";
+		};
+		E0EF02811BCA507400A48BCA /* cxx */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF02821BCA507400A48BCA /* detail */,
+				E0EF02841BCA507400A48BCA /* DeviceListener.hpp */,
+				E0EF02851BCA507400A48BCA /* Hub.hpp */,
+				E0EF02861BCA507400A48BCA /* impl */,
+				E0EF028A1BCA507400A48BCA /* Myo.hpp */,
+				E0EF028B1BCA507400A48BCA /* Pose.hpp */,
+				E0EF028C1BCA507400A48BCA /* Quaternion.hpp */,
+				E0EF028D1BCA507400A48BCA /* Vector3.hpp */,
+			);
+			path = cxx;
+			sourceTree = "<group>";
+		};
+		E0EF02821BCA507400A48BCA /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF02831BCA507400A48BCA /* ThrowOnError.hpp */,
+			);
+			path = detail;
+			sourceTree = "<group>";
+		};
+		E0EF02861BCA507400A48BCA /* impl */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF02871BCA507400A48BCA /* Hub_impl.hpp */,
+				E0EF02881BCA507400A48BCA /* Myo_impl.hpp */,
+				E0EF02891BCA507400A48BCA /* Pose_impl.hpp */,
+			);
+			path = impl;
+			sourceTree = "<group>";
+		};
+		E0EF028E1BCA507400A48BCA /* libmyo */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF028F1BCA507400A48BCA /* detail */,
+			);
+			path = libmyo;
+			sourceTree = "<group>";
+		};
+		E0EF028F1BCA507400A48BCA /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				E0EF02901BCA507400A48BCA /* visibility.h */,
+			);
+			path = detail;
+			sourceTree = "<group>";
+		};
+		E0EF02931BCA507400A48BCA /* lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E0A8924E1B451C0C0065BF83 /* FANNMyo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0A892561B451C0C0065BF83 /* Build configuration list for PBXNativeTarget "FANNMyo" */;
+			buildPhases = (
+				E0A8924B1B451C0C0065BF83 /* Sources */,
+				E0A8924C1B451C0C0065BF83 /* Frameworks */,
+				E0A8924D1B451C0C0065BF83 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FANNMyo;
+			productName = FANNMyo;
+			productReference = E0A8924F1B451C0C0065BF83 /* FANNMyo */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E0A892471B451C0C0065BF83 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Gabriele Di Bari";
+				TargetAttributes = {
+					E0A8924E1B451C0C0065BF83 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+				};
+			};
+			buildConfigurationList = E0A8924A1B451C0C0065BF83 /* Build configuration list for PBXProject "FANNMyo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E0A892461B451C0C0065BF83;
+			productRefGroup = E0A892501B451C0C0065BF83 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E0A8924E1B451C0C0065BF83 /* FANNMyo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E0A8924B1B451C0C0065BF83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E026C0271BC139CA004E3D35 /* kNNImp.cpp in Sources */,
+				E0C1C4461BBF36E40093A3AD /* RBFUtil.cpp in Sources */,
+				E0C1C4311BBF33750093A3AD /* svm.cpp in Sources */,
+				E0C1C43D1BBF33E20093A3AD /* KmeansPP.cpp in Sources */,
+				E0AB232C1BBB050C0006369F /* FANNImp.cpp in Sources */,
+				E0C1C4331BBF33750093A3AD /* SVMUtilities.cpp in Sources */,
+				E0A892531B451C0C0065BF83 /* _main_.cpp in Sources */,
+				E012C86D1BB92D9000067B30 /* MyoThread.cpp in Sources */,
+				E012C8721BB9594000067B30 /* main.cpp in Sources */,
+				E0C1C4421BBF35080093A3AD /* RBFImp.cpp in Sources */,
+				E0C1C43E1BBF33E20093A3AD /* RBFNetwork.cpp in Sources */,
+				E026C0231BC12A50004E3D35 /* kNN.cpp in Sources */,
+				E012C8701BB92DCA00067B30 /* MyoTime.cpp in Sources */,
+				E0C1C4361BBF33C10093A3AD /* SVMImp.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E0A892541B451C0C0065BF83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/myo.mac/include",
+					"$(PROJECT_DIR)/myo.mac/include/myo",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E0A892551B451C0C0065BF83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/myo.mac/include",
+					"$(PROJECT_DIR)/myo.mac/include/myo",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E0A892571B451C0C0065BF83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../myo.mac/framework",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/../myo.mac/include",
+					"$(PROJECT_DIR)/../myo.mac/include/myo",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../myo.mac/bin",
+					"$(PROJECT_DIR)/../myo.mac/lib",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E0A892581B451C0C0065BF83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../myo.mac/framework",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/../myo.mac/include",
+					"$(PROJECT_DIR)/../myo.mac/include/myo",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../myo.mac/bin",
+					"$(PROJECT_DIR)/../myo.mac/lib",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E0A8924A1B451C0C0065BF83 /* Build configuration list for PBXProject "FANNMyo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0A892541B451C0C0065BF83 /* Debug */,
+				E0A892551B451C0C0065BF83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0A892561B451C0C0065BF83 /* Build configuration list for PBXNativeTarget "FANNMyo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0A892571B451C0C0065BF83 /* Debug */,
+				E0A892581B451C0C0065BF83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E0A892471B451C0C0065BF83 /* Project object */;
+}

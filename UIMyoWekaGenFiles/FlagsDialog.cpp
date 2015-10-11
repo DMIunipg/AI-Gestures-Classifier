@@ -36,7 +36,7 @@ void FlagsDialog::setFalgs(const  DataFlags& flags)
     //value
     switch (flags.mMode)
     {
-        case DataFlags::SEMPLE_MODE:
+        case DataFlags::SAMPLE_MODE:
             onSempleMode(true);
         break;
         case DataFlags::GESTURE_MODE:
@@ -65,7 +65,7 @@ DataFlags FlagsDialog::getFlags()
 {
      DataFlags out;
      out.mMode           = ui->mRBSempleMode->isChecked() ?
-                           DataFlags::SEMPLE_MODE :
+                           DataFlags::SAMPLE_MODE :
                            DataFlags::GESTURE_MODE;
      out.mReps           = ui->mSBReps->value();
      out.mTimePerGesture = ui->mDSBTimePerGesture->value();

@@ -7,15 +7,7 @@
 #include <QMutex>
 #include <QThread>
 #include "MyoListener.h"
-
-
-/*!
- * \brief Myo Data, namespace where are put all application constants
- */
-namespace MyoData
-{
-    static const unsigned int msupadate = 1000/20; //! listenere delta time in ms
-};
+#include "MyoData.h"
 
 /*!
  * \brief The MyoManager class

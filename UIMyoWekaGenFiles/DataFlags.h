@@ -17,10 +17,10 @@ struct DataFlags
      */
     enum Mode
     {
-        SEMPLE_MODE,
+        SAMPLE_MODE,
         GESTURE_MODE
     };
-    Mode mMode            { SEMPLE_MODE }; //! type of classification
+    Mode mMode            { SAMPLE_MODE }; //! type of classification
     //reps
     int  mReps            { 1    }; //! number of sample per gesture
     //action time
@@ -221,11 +221,60 @@ struct DataFlags
         std::fwrite(&mEmgSmooth, sizeof(mEmgSmooth), 1, file);
         std::fwrite(&mEmgAbs, sizeof(mEmgAbs), 1, file);
     }
+
     /*!
-     * \brief derialize
+     * \brief textSerialize (human readable)
      * \param file
      */
-    void derialize(FILE* file)
+    void textSerialize(FILE* file)
+    {
+        std::fprintf(file,"Mode: %s\n",mMode == SAMPLE_MODE ? "sample" : "gesture");
+        std::fprintf(file,"Reps: %d\n",mReps);
+        std::fprintf(file,"TimePerGesture: %le\n",mTimePerGesture);
+        std::fprintf(file,"DeltaTime: %f\n",mDeltaTime);
+        std::fprintf(file,"Time: %s\n",mTime ? "true" : "false");
+        std::fprintf(file,"Gyroscope: %s\n",mGyroscope ? "true" : "false");
+        std::fprintf(file,"Accelerometer: %s\n",mAccelerometer ? "true" : "false");
+        std::fprintf(file,"Quaternion: %s\n",mQuaternion ? "true" : "false");
+        std::fprintf(file,"Pitch: %s\n",mPitch ? "true" : "false");
+        std::fprintf(file,"Yaw: %s\n",mYaw ? "true" : "false");
+        std::fprintf(file,"Roll: %s\n",mRoll ? "true" : "false");
+        std::fprintf(file,"Emg: %s\n",mEmg ? "true" : "false");
+        std::fprintf(file,"Normalize: %s\n",mNormalize ? "true" : "false");
+        std::fprintf(file,"Positive: %s\n",mPositive ? "true" : "false");
+        std::fprintf(file,"EmgSmooth: %le\n",mEmgSmooth);
+        std::fprintf(file,"EmgAbs: %s\n",mEmgAbs ? "true" : "false");
+    }
+
+    /*!
+     * \brief textSerialize (human readable)
+     * \param sstream
+     */
+    void textSerialize(std::ostream& sstream)
+    {
+        sstream << "Mode: " << (mMode == SAMPLE_MODE ? "sample" : "gesture")<<"\n";
+        sstream << "Reps: " << mReps << "\n";
+        sstream << "TimePerGesture: " << mTimePerGesture << "\n";
+        sstream << "DeltaTime: " << mDeltaTime << "\n";
+        sstream << "Time: " << (mTime ? "true" : "false") << "\n";
+        sstream << "Gyroscope: " << (mGyroscope ? "true" : "false") << "\n";
+        sstream << "Accelerometer: " << (mAccelerometer ? "true" : "false") << "\n";
+        sstream << "Quaternion: " << (mQuaternion ? "true" : "false") << "\n";
+        sstream << "Pitch: " << (mPitch ? "true" : "false") << "\n";
+        sstream << "Yaw: " << (mYaw ? "true" : "false") << "\n";
+        sstream << "Roll: " << (mRoll ? "true" : "false") << "\n";
+        sstream << "Emg: " << (mEmg ? "true" : "false") << "\n";
+        sstream << "Normalize: " << (mNormalize ? "true" : "false") << "\n";
+        sstream << "Positive: " << (mPositive ? "true" : "false") << "\n";
+        sstream << "EmgSmooth: " << mEmgSmooth << "\n";
+        sstream << "EmgAbs: " << (mEmgAbs ? "true" : "false") << "\n";
+    }
+
+    /*!
+     * \brief deserialize
+     * \param file
+     */
+    void deserialize(FILE* file)
     {
         std::fread(&mMode, sizeof(mMode), 1, file);
         std::fread(&mReps, sizeof(mReps), 1, file);
@@ -243,6 +292,58 @@ struct DataFlags
         std::fread(&mPositive, sizeof(mPositive), 1, file);
         std::fread(&mEmgSmooth, sizeof(mEmgSmooth), 1, file);
         std::fread(&mEmgAbs, sizeof(mEmgAbs), 1, file);
+    }
+
+    /*!
+     * \brief textDeserialize (human readable)
+     * \param file
+     */
+    void textDeserialize(FILE* file)
+    {
+        char buffer[255]={0};
+        //Mode
+        std::fscanf(file,"Mode: %s\n",buffer);
+        mMode = std::strcmp(buffer,"sample") == 0 ? SAMPLE_MODE :GESTURE_MODE;
+        //Reps
+        std::fscanf(file,"Reps: %d\n",&mReps);
+        //Times values
+        std::fscanf(file,"TimePerGesture: %le\n",&mTimePerGesture);
+        std::fscanf(file,"DeltaTime: %le\n",&mDeltaTime);
+        //Time flag
+        std::fscanf(file,"Time: %s\n",buffer);
+        mTime = std::strcmp(buffer,"true") == 0;
+        //Gyroscope flag
+        std::fscanf(file,"Gyroscope: %s\n",buffer);
+        mGyroscope = std::strcmp(buffer,"true") == 0;
+        //Accelerometer flag
+        std::fscanf(file,"Accelerometer: %s\n",buffer);
+        mAccelerometer = std::strcmp(buffer,"true") == 0;
+        //Quaternion flag
+        std::fscanf(file,"Quaternion: %s\n",buffer);
+        mQuaternion = std::strcmp(buffer,"true") == 0;
+        //Pitch flag
+        std::fscanf(file,"Pitch: %s\n",buffer);
+        mPitch = std::strcmp(buffer,"true") == 0;
+        //Yaw flag
+        std::fscanf(file,"Yaw: %s\n",buffer);
+        mYaw = std::strcmp(buffer,"true") == 0;
+        //Roll flag
+        std::fscanf(file,"Roll: %s\n",buffer);
+        mRoll = std::strcmp(buffer,"true") == 0;
+        //Emg flag
+        std::fscanf(file,"Emg: %s\n",buffer);
+        mEmg = std::strcmp(buffer,"true") == 0;
+        //Normalize flag
+        std::fscanf(file,"Normalize: %s\n",buffer);
+        mNormalize = std::strcmp(buffer,"true") == 0;
+        //Positive flag
+        std::fscanf(file,"Positive: %s\n",buffer);
+        mPositive = std::strcmp(buffer,"true") == 0;
+        //EmgSmooth
+        std::fscanf(file,"EmgSmooth: %le\n",&mEmgSmooth);
+        //EmgAbs flag
+        std::fscanf(file,"EmgAbs: %s\n",buffer);
+        mEmgAbs = std::strcmp(buffer,"true") == 0;
     }
 
     /*!
@@ -268,8 +369,8 @@ struct DataFlags
     {
         if(mPositive)
             return myo::Vector3< T > ( (vec.x() + 1.0) * 0.5,
-                                       (vec.y() + 1.0) * 0.5,
-                                       (vec.z() + 1.0) * 0.5 );
+                                      (vec.y() + 1.0) * 0.5,
+                                      (vec.z() + 1.0) * 0.5 );
         return vec;
     }
 
@@ -488,11 +589,28 @@ struct ClassesNames
 {
     std::map< double, std::string > mNames; //! Map of class name
 
+
     /*!
-     * \brief derialize
+     * \brief serialize
      * \param file
      */
-    void derialize(FILE* file)
+    void serialize(FILE* file)
+    {
+        //put map size
+        unsigned int nclasses = (unsigned int)mNames.size();
+        std::fprintf(file, "%u\n", nclasses);
+        //write all classes
+        for(auto it:mNames)
+        {
+            std::fprintf(file, "%le, %s\n",it.first,it.second.c_str());
+        }
+    }
+
+    /*!
+     * \brief deserialize
+     * \param file
+     */
+    void deserialize(FILE* file)
     {
         //get map size
         unsigned int nclasses = 0;
@@ -502,7 +620,7 @@ struct ClassesNames
         {
             double key = 0.0;
             char   buffer[255] = {0};
-            std::fscanf(file, "%le, %s",&key,buffer);
+            std::fscanf(file, "%le, %s\n",&key,buffer);
             mNames[key] = buffer;
         }
     }

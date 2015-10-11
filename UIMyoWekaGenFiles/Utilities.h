@@ -2,8 +2,8 @@
 //  Utilities.h
 //  MyoWekaGenFiles
 //
-//  Created by Daniele on 26/06/15.
-//  Copyright (c) 2015 Daniele. All rights reserved.
+//  Created by Gabriele on 26/06/15.
+//  Copyright (c) 2015 Gabriele. All rights reserved.
 //
 #ifndef MYO_UTILITIES_H
 #define MYO_UTILITIES_H

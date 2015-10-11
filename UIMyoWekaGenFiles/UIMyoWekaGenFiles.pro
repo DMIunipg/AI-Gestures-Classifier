@@ -45,10 +45,10 @@ macx {
     #static libs
     #LIBS += -L$$PWD/../myo.mac/lib/ -l<lib>
     #dynamic
-    LIBS += -L$$PWD/../myo.mac/bin/ -lfann.2.2.0
-    LIBS += -L$$PWD/../myo.mac/bin/ -ldoublefann.2.2.0
-    LIBS += -L$$PWD/../myo.mac/bin/ -lfixedfann.2.2.0
-    LIBS += -L$$PWD/../myo.mac/bin/ -lfloatfann.2.2.0
+    #LIBS += -L$$PWD/../myo.mac/bin/ -lfann.2.2.0
+    #LIBS += -L$$PWD/../myo.mac/bin/ -ldoublefann.2.2.0
+    #LIBS += -L$$PWD/../myo.mac/bin/ -lfixedfann.2.2.0
+    #LIBS += -L$$PWD/../myo.mac/bin/ -lfloatfann.2.2.0
     #dynamic path
     QMAKE_RPATHDIR += @executable_path/../Dylibs
     #include
@@ -96,7 +96,9 @@ HEADERS  += GenMyoWindow.h \
     qcustomplot/qcustomplot.h \
     SamplingList.h \
     ClassForm.h \
-    SampleForm.h
+    SampleForm.h \
+    MyoData.h \
+    DataSetOutput.h
 
 FORMS    += GenMyoWindow.ui \
     RecordingDialog.ui \
