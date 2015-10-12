@@ -11,12 +11,28 @@
 
 #include <string>
 
+/*!
+ * \brief Myo Model Interface, interface used to represent a model of classification method
+ */
 class MyoModelInterface
 {
 public:
     
+    /*!
+     * \brief ~MyoModelInterface
+     */
     virtual ~MyoModelInterface() {};
+    
+    /*!
+     * \brief serialize
+     * \param path
+     */
     virtual void serialize(const std::string& path) = 0;
+    
+    /*!
+     * \brief deserialize
+     * \param path
+     */
     virtual void deserialize(const std::string& path) = 0;
 };
 

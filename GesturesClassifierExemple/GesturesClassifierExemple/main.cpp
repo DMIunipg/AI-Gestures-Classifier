@@ -12,9 +12,9 @@
 
 int main(int argc, const char * argv[])
 { 
-    MyoClassifierManager mcmanager(Classifier::CLA_kNN);
-    mcmanager.buildModel("datas/DAD2/data.ds");
-    mcmanager.setProbabilityFilter(0.3);
+    MyoClassifierManager mcmanager(Classifier::CLA_SVM);
+    mcmanager.buildModel("datas/MARY/data.ds");
+    mcmanager.setProbabilityFilter(0.2);
     mcmanager.classification([](const std::string& cname)
                              {
                                  std::cout << "Current gesture: " << cname << "\n";
