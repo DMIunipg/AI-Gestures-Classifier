@@ -10,9 +10,26 @@
 #pragma once
 
 #include <assert.h>
-#include <myo.hpp>
+#include <cxx/Quaternion.hpp>
+#include <cxx/Vector3.hpp>
+#include <cxx/DeviceListener.hpp>
 #include <cstring>
 #include <cstdio>
+#include <string>
+
+#ifdef __ANDROID_API__
+#include <array>
+#include <sstream>
+namespace std
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream ss;
+        ss << n ;
+        return ss.str() ;
+    }
+}
+#endif
 
 namespace myo
 {

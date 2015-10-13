@@ -9,6 +9,7 @@
 #include <MyoThread.h>
 #include <MyoTime.h>
 #include <MyoData.h>
+#include <myo.hpp>
 
 void MyoThread::start(MyoThread::Callback callback,const DataFlags& flags,unsigned int update)
 {
@@ -16,7 +17,6 @@ void MyoThread::start(MyoThread::Callback callback,const DataFlags& flags,unsign
     mFlags = flags;
     mUpdate = update;
     mCallback = callback;
-    mMyoHub = std::unique_ptr<myo::Hub>(new myo::Hub("com.runtime.fnnamyo"));
     mMyoDevice = mMyoHub->waitForMyo(10000);
     //exit case
     if(!mMyoDevice) return ;
@@ -174,9 +174,14 @@ void MyoThread::joint()
     //wait end....
     if(mThread.get()) mThread->join();
 }
-
+//contructor
+MyoThread::MyoThread()
+{
+    mMyoHub = new myo::Hub("com.runtime.gesturesclassifier");
+}
 //destructor
 MyoThread::~MyoThread()
 {
     if(mLoop) joint();
+    if(mMyoHub) delete mMyoHub;
 }

@@ -8,7 +8,7 @@
 
 #include <RBFImp.h>
 #include <RBFNetwork/RBFNetwork.h>
-
+#include <iostream>
 
 class MyoModelRBFNetwork : public MyoModelInterface
 {

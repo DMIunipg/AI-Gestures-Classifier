@@ -480,7 +480,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../myo.mac/include",
+					"$(PROJECT_DIR)/../myo.mac/include/**",
 					"$(PROJECT_DIR)/source/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -492,7 +492,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../myo.mac/include",
+					"$(PROJECT_DIR)/../myo.mac/include/**",
 					"$(PROJECT_DIR)/source/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

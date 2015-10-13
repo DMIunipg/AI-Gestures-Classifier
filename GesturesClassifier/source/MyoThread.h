@@ -13,13 +13,14 @@
 #include <mutex>
 #include <memory>
 #include <mutex>
-#include <myo.hpp>
 #include <array>
+#include <vector>
+#include <string>
 #include <functional>
 #include <time.h>
 #include <DataFlags.h>
 #include <Utilities.h>
-
+#include <cxx/DeviceListener.hpp>
 
 class MyoDataCollector : public myo::DeviceListener
 {
@@ -58,6 +59,10 @@ private:
     InputRaw mRaw;
 };
 
+
+// forward declaration
+namespace myo{ class Hub; }
+// thread
 class MyoThread
 {
 public:
@@ -72,6 +77,8 @@ public:
     //run 
     void run();
     void joint();
+    //constructor
+    MyoThread();
     //destructor
     ~MyoThread();
     
@@ -79,7 +86,7 @@ private:
     //MyO data
     myo::Myo* mMyoDevice;
     MyoDataCollector mMyoListener;
-    std::unique_ptr< myo::Hub > mMyoHub;
+    myo::Hub* mMyoHub;
     //thread data
     unsigned int mUpdate { 20 };
     bool mLoop;

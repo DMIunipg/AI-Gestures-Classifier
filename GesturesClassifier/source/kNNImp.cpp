@@ -67,8 +67,12 @@ public:
         if(file)
         {
             fscanf(file, "MinRowPerClass: %d\n", &mMinRowPerClass);
+            //deserialize
             mData.deserialize(file);
+            //close file
             fclose(file);
+            //create model
+            mModel = std::unique_ptr<kNN>(new kNN(mData.getRows()));
         }
     }
 };

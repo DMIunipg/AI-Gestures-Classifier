@@ -318,7 +318,7 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../myo.mac/framework";
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../myo.mac/include",
+					"$(PROJECT_DIR)/../myo.mac/include/**",
 					"$(PROJECT_DIR)/../GesturesClassifier/source",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../GesturesClassifier/build/Debug";
@@ -332,7 +332,7 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../myo.mac/framework";
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../myo.mac/include",
+					"$(PROJECT_DIR)/../myo.mac/include/**",
 					"$(PROJECT_DIR)/../GesturesClassifier/source",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../GesturesClassifier/build/Release";
