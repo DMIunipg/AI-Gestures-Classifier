@@ -116,6 +116,7 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
                         mArduinoDevice = device;
                         //stop scan
                         BLEArduinoAppCompatActivity.this.mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                        onArduinoEndScan();
                         //connect
                         mBluetoothLeService.connect(mArduinoDevice.getAddress());
                     }
@@ -163,10 +164,10 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
         onArduinoConnected(mArduinoDevice);
     }
 
-    public  void onArduinoConnected(BluetoothDevice device){
+    protected  void onArduinoConnected(BluetoothDevice device){
 
     }
-    public  void onArduinoDisconnected(){
+    protected  void onArduinoDisconnected(){
 
     }
 
@@ -186,32 +187,44 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
         new Thread() {
             @Override
             public void run() {
-                mBluetoothAdapter.startLeScan(mLeScanCallback);
-
-                try {
-                    Thread.sleep(SCAN_PERIOD);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                synchronized(BLEArduinoAppCompatActivity.this) {
+                    onArduinoStartScan();
+                    mBluetoothAdapter.startLeScan(mLeScanCallback);
+                    try {  Thread.sleep(SCAN_PERIOD);  } catch (Exception e){}
+                    mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    onArduinoEndScan();
                 }
-
-                mBluetoothAdapter.stopLeScan(mLeScanCallback);
             }
         }.start();
     }
 
-    public boolean isBluetoothSupport()
-    {
+    protected void onArduinoStartScan() {
+
+    }
+
+    protected void onArduinoEndScan() {
+
+    }
+
+    public boolean isBluetoothSupport()  {
         return mBluetoothAdapter!=null;
     }
 
-    public boolean isConnected()
-    {
-        return mConnected;
+    public boolean isConnected() {
+        return mConnected ;
     }
 
-    public boolean canExecuteCommand()
-    {
+    public boolean canExecuteCommand() {
         return isConnected() && mCharacteristicTx!=null && mBluetoothLeService != null;
+    }
+
+    public void disconnectArduino()
+    {
+        if( isConnected() && mBluetoothLeService != null )
+        {
+            mBluetoothLeService.disconnect();
+            mConnected = false;
+        }
     }
 
     @Override

@@ -41,6 +41,7 @@ public class FileBrowserActivity extends Activity {
 	public static final String INTENT_ACTION_SELECT_FILE = "com.vassiliev.androidfilebrowser.SELECT_FILE_ACTION";
 
 	// Intent parameters names constants
+	public static final String setActionParameter = "com.vassiliev.androidfilebrowser.action";
 	public static final String startDirectoryParameter = "com.vassiliev.androidfilebrowser.directoryPath";
 	public static final String returnDirectoryParameter = "com.vassiliev.androidfilebrowser.directoryPathRet";
 	public static final String returnFileParameter = "com.vassiliev.androidfilebrowser.filePathRet";
@@ -85,16 +86,14 @@ public class FileBrowserActivity extends Activity {
 
 		// Set action for this activity
 		Intent thisInt = this.getIntent();
+		//default state
 		currentAction = SELECT_DIRECTORY;// This would be a default action in
-											// case not set by intent
-		if (thisInt.getAction().equalsIgnoreCase(INTENT_ACTION_SELECT_FILE)) {
-			Log.d(LOGTAG, "SELECT ACTION - SELECT FILE");
+		//get extra action
+		if (thisInt.getStringExtra(setActionParameter).equalsIgnoreCase(INTENT_ACTION_SELECT_FILE)) {
 			currentAction = SELECT_FILE;
 		}
-
-		showHiddenFilesAndDirs = thisInt.getBooleanExtra(
-				showCannotReadParameter, true);
-
+		//get .. extras
+		showHiddenFilesAndDirs = thisInt.getBooleanExtra( showCannotReadParameter, true);
 		filterFileExtension = thisInt.getStringExtra(filterExtension);
 
 		setInitialDirectory();
@@ -213,14 +212,14 @@ public class FileBrowserActivity extends Activity {
 
 	private void initializeFileListView() {
 		ListView lView = (ListView) this.findViewById(R.id.fileListView);
-		lView.setBackgroundColor(Color.LTGRAY);
+	  //lView.setBackgroundColor(Color.LTGRAY);
 		LinearLayout.LayoutParams lParam = new LinearLayout.LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		lParam.setMargins(15, 5, 15, 5);
 		lView.setAdapter(this.adapter);
 		lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+									int position, long id) {
 				chosenFile = fileList.get(position).file;
 				File sel = new File(path + "/" + chosenFile);
 				Log.d(LOGTAG, "Clicked:" + chosenFile);
@@ -238,7 +237,7 @@ public class FileBrowserActivity extends Activity {
 						showToast("Path does not exist or cannot be read");
 					}// } else {//if(sel.canRead()) {
 				}// if (sel.isDirectory()) {
-					// File picked or an empty directory message clicked
+				// File picked or an empty directory message clicked
 				else {// if (sel.isDirectory()) {
 					Log.d(LOGTAG, "item clicked");
 					if (!directoryShownIsEmpty) {
@@ -263,6 +262,7 @@ public class FileBrowserActivity extends Activity {
 		this.setResult(RESULT_OK, retIntent);
 		this.finish();
 	}// END private void returnDirectoryFinishActivity() {
+
 
 	private void loadFileList() {
 		try {
@@ -357,7 +357,7 @@ public class FileBrowserActivity extends Activity {
 				// TODO: change next line for empty directory, so text will be
 				// centered
 				textView.setCompoundDrawablePadding(dp3);
-				textView.setBackgroundColor(Color.LTGRAY);
+			  //textView.setBackgroundColor(Color.LTGRAY);
 				return view;
 			}// public View getView(int position, View convertView, ViewGroup
 		};// adapter = new ArrayAdapter<Item>(this,

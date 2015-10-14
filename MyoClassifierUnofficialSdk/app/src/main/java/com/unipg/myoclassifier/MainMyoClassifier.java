@@ -1,12 +1,14 @@
 package com.unipg.myoclassifier;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.vassiliev.androidfilebrowser.FileBrowserActivity;
@@ -23,11 +25,13 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
     static {
         System.loadLibrary("GesturesClassifier");
     }
-    //default activity
-    final Activity mActivityForButton = this;
-    private final int REQUEST_CODE_PICK_FILE = 1;
+    //return code when select a file
+    private final int REQUEST_CODE_MYO_LIST = 1;
+    private final int REQUEST_CODE_PICK_FILE = 2;
     //native classifier
-    MyoNativeClassifierManager mNClassifierManager;
+    private MyoNativeClassifierManager mNClassifierManager;
+    //last myo connected
+    Myo mMyo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +41,32 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         ((Button)findViewById(R.id.btConnect)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scanLeDevice();
+                if(isConnected())
+                    disconnectArduino();
+                else
+                    scanLeDevice();
             }
         });
         //event
         ((Button)findViewById(R.id.btSearchMyo)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //create transition
-                Intent intent = new Intent(MainMyoClassifier.this, MyoList.class);
-                //change
-                MainMyoClassifier.this.startActivityForResult(intent, 0);
+                //disconnect from myo
+                if(mMyo!=null) {
+                    disconnectMyo();
+                    ((Button)findViewById(R.id.btSearchMyo)).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((Button) findViewById(R.id.btSearchMyo)).setText("Search Myo");
+                        }
+                    });
+                }
+                else {
+                    //create transition
+                    Intent intent = new Intent(MainMyoClassifier.this, MyoList.class);
+                    //change
+                    MainMyoClassifier.this.startActivityForResult(intent, REQUEST_CODE_MYO_LIST);
+                }
             }
         });
 
@@ -57,13 +76,14 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
             public void onClick(View v) {
                 //create transition
                 Intent fileExploreIntent = new Intent(
-                        com.vassiliev.androidfilebrowser.FileBrowserActivity.INTENT_ACTION_SELECT_FILE,
-                        null,
-                        mActivityForButton,
+                        MainMyoClassifier.this,
                         com.vassiliev.androidfilebrowser.FileBrowserActivity.class
                 );
+                fileExploreIntent.putExtra(FileBrowserActivity.setActionParameter,
+                        FileBrowserActivity.INTENT_ACTION_SELECT_FILE
+                );
                 fileExploreIntent.putExtra(
-                        com.vassiliev.androidfilebrowser.FileBrowserActivity.showCannotReadParameter,
+                        FileBrowserActivity.showCannotReadParameter,
                         false);
                 //change
                 MainMyoClassifier.this.startActivityForResult(fileExploreIntent, REQUEST_CODE_PICK_FILE);
@@ -74,23 +94,93 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         mNClassifierManager = new MyoNativeClassifierManager(MyoNativeClassifierManager.kNN);
     }
 
+
+
+    /**
+     * Myo Relative Layout Widget
+     */
+    private RelativeLayout mUIRLMain = null;
+    private Thread mUIRLMainMyoAnimationThread = null;
+    private boolean mUIRLMainMyoAnimationThreadLoop = false;
+
     @Override
-    public  void onArduinoConnected(BluetoothDevice device){
+    protected void onArduinoStartScan() {
+        //get main relative layout
+        mUIRLMain = (RelativeLayout)findViewById(R.id.rlMainUi);
+        //ui main
+        if(mUIRLMain != null) {
+            mUIRLMain.post(new Runnable() {
+                @Override
+                public void run() {
+                    mUIRLMain.setBackgroundResource(R.drawable.wifi_arduino_rs);
+                    mUIRLMain.getBackground().setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.MULTIPLY);
+                }
+            });
+        }
+        //start animation
+        mUIRLMainMyoAnimationThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //animation factor
+                double sfactor = Math.PI*0.5;
+                //update
+                while(mUIRLMain != null && mUIRLMainMyoAnimationThreadLoop) {
+                    try {
+                        Thread.sleep(33, 0);
+                    } catch (Exception e) {
+                        //none
+                    }
+                    //next color
+                    sfactor += 0.1f;
+                    final int color = (int)(((Math.sin(sfactor)+1.0)*0.5)*255);
+                    //post to ui thread
+                    mUIRLMain.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Drawable background = mUIRLMain.getBackground();
+                            if(background != null) {
+                                mUIRLMain.getBackground().setColorFilter(
+                                        Color.argb(color, color / 3, color / 3, color),
+                                        PorterDuff.Mode.MULTIPLY);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        mUIRLMainMyoAnimationThreadLoop = true;
+        mUIRLMainMyoAnimationThread.start();
+    }
+
+    @Override
+    protected void onArduinoEndScan() {
+        if(mUIRLMainMyoAnimationThreadLoop && mUIRLMainMyoAnimationThread!=null) {
+            mUIRLMainMyoAnimationThreadLoop = false;
+            mUIRLMainMyoAnimationThread = null;
+            mUIRLMain.post(new Runnable() {
+                @Override
+                public void run() {
+                    mUIRLMain.setBackgroundResource(0);
+                }
+            });
+        }
+    }
+
+    @Override
+    protected  void onArduinoConnected(BluetoothDevice device){
         ((Button)findViewById(R.id.btConnect)).post(new Runnable() {
             @Override
             public void run() {
-                ((Button)findViewById(R.id.btConnect)).setEnabled(false);
-                ((Button)findViewById(R.id.btConnect)).setText("Connected to Arduino");
+                ((Button)findViewById(R.id.btConnect)).setText("Arduino Connected");
             }
         });
     }
 
     @Override
-    public  void onArduinoDisconnected(){
+    protected  void onArduinoDisconnected(){
         ((Button)findViewById(R.id.btConnect)).post(new Runnable() {
             @Override
             public void run() {
-                ((Button)findViewById(R.id.btConnect)).setEnabled(true);
                 ((Button)findViewById(R.id.btConnect)).setText("Connect to Arduino");
             }
         });
@@ -98,12 +188,10 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         //load file
-        if(requestCode == REQUEST_CODE_PICK_FILE)
-        {
-            if(resultCode == this.RESULT_OK)
-            {
+        if(requestCode == REQUEST_CODE_PICK_FILE)  {
+
+            if(resultCode == this.RESULT_OK) {
                 String path =  data.getStringExtra(FileBrowserActivity.returnFileParameter);
                 mNClassifierManager.loadModel(path);
                 //to do... check success to load
@@ -134,13 +222,22 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
                     }
                 });
             }
+
         }
-        //if myo was selected
-        if(MyoList.getMyoSelected()!=null)
-            onConnectedToMyo(MyoList.getMyoSelected());
+        else if(requestCode == REQUEST_CODE_MYO_LIST) {
+            //if myo was selected
+            if (MyoList.getMyoSelected() != null)
+                onConnectedToMyo(MyoList.getMyoSelected());
+        }
+        else {
+            //send to super
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void onConnectedToMyo(Myo myo){
+        //save last myo
+        mMyo = myo;
         //connect to myo
         myo.connect();
         myo.setConnectionSpeed(BaseMyo.ConnectionSpeed.HIGH);
@@ -165,6 +262,21 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         //add listeners
         emgProcessor.addListener(myoNListener);
         imuProcessor.addListener(myoNListener);
+        //change button
+        ((Button)findViewById(R.id.btSearchMyo)).post(new Runnable() {
+            @Override
+            public void run() {
+                ((Button)findViewById(R.id.btSearchMyo)).setText("Myo Connected");
+            }
+        });
+    }
 
+    public void disconnectMyo() {
+        if (mMyo != null &&
+                (  mMyo.getConnectionState() == BaseMyo.ConnectionState.CONNECTED||
+                   mMyo.getConnectionState() == BaseMyo.ConnectionState.CONNECTING  )) {
+            mMyo.disconnect();
+        }
+        mMyo = null;
     }
 }

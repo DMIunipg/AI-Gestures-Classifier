@@ -29,7 +29,7 @@ void MyoThread::run()
     //alloc for ptrs for smooth
     auto emgPtrArray = new std::array< int8_t , 8UL >*[mFlags.mReps] ;
     //update usleap
-    unsigned int usfactor = 1000/std::max((unsigned int)mUpdate,(unsigned int)20);
+    unsigned int usfactor = 1000/std::max((unsigned int)mUpdate,(unsigned int)2);
     //thread loop
     while(mLoop)
     {
