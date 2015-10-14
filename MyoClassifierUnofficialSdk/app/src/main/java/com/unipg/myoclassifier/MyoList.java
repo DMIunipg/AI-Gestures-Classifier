@@ -24,6 +24,11 @@ public class MyoList extends Activity {
     static protected Myo mMyoSelected = null;
 
     /**
+     * Myo scanner
+     */
+    private MyoConnector mConnector = null;
+
+    /**
      * @brief getMyoSelected
      * @return myo selected
      */
@@ -43,27 +48,30 @@ public class MyoList extends Activity {
         //put "selected myo"  to null
         mMyoSelected = null;
         //serach myos
-        MyoConnector connector = new MyoConnector(getBaseContext());
-        connector.scan(2000, new MyoConnector.ScannerCallback() {
+        mConnector = new MyoConnector(getBaseContext());
+        mConnector.scan(20000, new MyoConnector.ScannerCallback() {
             @Override
             public void onScanFinished(List<Myo> myos) {
-                for(Myo myo:myos)
-                {
-                    //device button
-                    final Button deviceButton=MyoList.this.addButton(myo);
-                    //add name
-                    myo.readDeviceName(new Myo.ReadDeviceNameCallback() {
-                        @Override
-                        public void onDeviceNameRead(Myo myo, MyoMsg msg, final String deviceName) {
-                            deviceButton.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    deviceButton.setText(deviceName);
-                                }
-                            });
-                        }
-                    });
-                }
+                /* void */
+            }
+            @Override
+            public void onScanFind(Myo myo)
+            {
+                //device button
+                final Button deviceButton=MyoList.this.addButton(myo);
+                //add name
+                myo.readDeviceName(new Myo.ReadDeviceNameCallback() {
+                    @Override
+                    public void onDeviceNameRead(Myo myo, MyoMsg msg, final String deviceName) {
+                        deviceButton.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                deviceButton.setText(deviceName);
+                            }
+                        });
+                    }
+                });
+
             }
         });
     }
@@ -90,6 +98,7 @@ public class MyoList extends Activity {
                 MyoList.mMyoSelected = myo;
                 MyoList.this.setResult(RESULT_OK,null);
                 MyoList.this.finish();
+                MyoList.this.mConnector.stopScan();
             }
         });
         //update ui

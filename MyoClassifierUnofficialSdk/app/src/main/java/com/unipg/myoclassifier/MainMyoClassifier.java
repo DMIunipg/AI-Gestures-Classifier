@@ -1,6 +1,7 @@
 package com.unipg.myoclassifier;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import eu.darken.myolib.msgs.MyoMsg;
 import eu.darken.myolib.processor.emg.EmgProcessor;
 import eu.darken.myolib.processor.imu.ImuProcessor;
 
-public class MainMyoClassifier extends AppCompatActivity {
+public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoAppCompatActivity {
 
     static {
         System.loadLibrary("GesturesClassifier");
@@ -32,7 +33,13 @@ public class MainMyoClassifier extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_myo_classifier);
-
+        //connect
+        ((Button)findViewById(R.id.btConnect)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanLeDevice();
+            }
+        });
         //event
         ((Button)findViewById(R.id.btSearchMyo)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +75,28 @@ public class MainMyoClassifier extends AppCompatActivity {
     }
 
     @Override
+    public  void onArduinoConnected(BluetoothDevice device){
+        ((Button)findViewById(R.id.btConnect)).post(new Runnable() {
+            @Override
+            public void run() {
+                ((Button)findViewById(R.id.btConnect)).setEnabled(false);
+                ((Button)findViewById(R.id.btConnect)).setText("Connected to Arduino");
+            }
+        });
+    }
+
+    @Override
+    public  void onArduinoDisconnected(){
+        ((Button)findViewById(R.id.btConnect)).post(new Runnable() {
+            @Override
+            public void run() {
+                ((Button)findViewById(R.id.btConnect)).setEnabled(true);
+                ((Button)findViewById(R.id.btConnect)).setText("Connect to Arduino");
+            }
+        });
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //load file
@@ -89,6 +118,17 @@ public class MainMyoClassifier extends AppCompatActivity {
                             @Override
                             public void run() {
                                 tvClassifier.setText(className);
+                                if(isConnected())
+                                {
+                                    if(className.equals("normal"))
+                                        arduinoMove('x');
+                                    else if(className.equals("fist"))
+                                        arduinoMove('^');
+                                    else if(className.equals("right"))
+                                        arduinoMove('>');
+                                    else if(className.equals("left"))
+                                        arduinoMove('<');
+                                }
                             }
                         });
                     }
