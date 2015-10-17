@@ -1,7 +1,12 @@
 package com.unipg.myoclassifier;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -30,13 +35,58 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
     private final int REQUEST_CODE_PICK_FILE = 2;
     //native classifier
     private MyoNativeClassifierManager mNClassifierManager;
+    private boolean mKillApp = false;
     //last myo connected
     Myo mMyo = null;
+
+    //Classifier / Arduino Actions
+    protected void executeArduinoAction(String className) {
+        if(isConnected())  {
+            if(className.equals("normal"))
+                arduinoMove('x');
+            else if(className.equals("fist"))
+                arduinoMove('^');
+            else if(className.equals("right"))
+                arduinoMove('>');
+            else if(className.equals("left"))
+                arduinoMove('<');
+        }
+    }
+
+    protected void bluetoothUnsupportedDialog()
+    {
+        final AlertDialog.Builder closeApplicationDialog = new AlertDialog.Builder(MainMyoClassifier.this);
+        closeApplicationDialog.setMessage("Bluetooth unsupported");
+        closeApplicationDialog.setCancelable(false);
+        closeApplicationDialog.setPositiveButton("Close application",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        MainMyoClassifier.this.mKillApp = true;
+                        MainMyoClassifier.this.finish();
+                    }
+                });
+        final AlertDialog dialog=closeApplicationDialog.create();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialog.show();
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set orientation
+        super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        //set view
         setContentView(R.layout.activity_main_myo_classifier);
+        //if bluetooth unsupported then not attach listeners to ui
+        if(!isBluetoothSupport())
+        {
+            return;
+        }
         //connect
         ((Button)findViewById(R.id.btConnect)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,17 +134,29 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
                 );
                 fileExploreIntent.putExtra(
                         FileBrowserActivity.showCannotReadParameter,
-                        false);
+                        false
+                );
+                fileExploreIntent.putExtra(
+                        FileBrowserActivity.filterExtension,
+                        ".*\\.(knn|svm|net)"
+                );
                 //change
                 MainMyoClassifier.this.startActivityForResult(fileExploreIntent, REQUEST_CODE_PICK_FILE);
             }
         });
 
-        //alloc native classifier
-        mNClassifierManager = new MyoNativeClassifierManager(MyoNativeClassifierManager.kNN);
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //if bluetooth unsupported then show alert dialog
+        if(!isBluetoothSupport())
+        {
+            bluetoothUnsupportedDialog();
+        }
+    }
 
     /**
      * Myo Relative Layout Widget
@@ -181,9 +243,25 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         ((Button)findViewById(R.id.btConnect)).post(new Runnable() {
             @Override
             public void run() {
-                ((Button)findViewById(R.id.btConnect)).setText("Connect to Arduino");
+                ((Button) findViewById(R.id.btConnect)).setText("Connect to Arduino");
             }
         });
+    }
+
+    @Override
+    protected void  onDestroy()
+    {
+        //close connections
+        if(isBluetoothSupport()) {
+            disconnectMyo();
+            disconnectArduino();
+        }
+        else if(mKillApp) {
+            //kill process
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
+        //call parent
+        super.onDestroy();
     }
 
     @Override
@@ -193,6 +271,20 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
 
             if(resultCode == this.RESULT_OK) {
                 String path =  data.getStringExtra(FileBrowserActivity.returnFileParameter);
+                //default type NONE
+                int typeClassifier = -1;
+                //get type of model
+                if(path.endsWith("knn"))
+                    typeClassifier = MyoNativeClassifierManager.kNN;
+                else if(path.endsWith("svm"))
+                    typeClassifier = MyoNativeClassifierManager.SVM;
+                else if(path.endsWith("net"))
+                    typeClassifier = MyoNativeClassifierManager.RBFNETWORK;
+                //fail to load
+                if(typeClassifier == -1) return;
+                //alloc native classifier
+                mNClassifierManager = new MyoNativeClassifierManager(MyoNativeClassifierManager.kNN);
+                //load
                 mNClassifierManager.loadModel(path);
                 //to do... check success to load
                 //set filter
@@ -206,19 +298,10 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
                             @Override
                             public void run() {
                                 tvClassifier.setText(className);
-                                if(isConnected())
-                                {
-                                    if(className.equals("normal"))
-                                        arduinoMove('x');
-                                    else if(className.equals("fist"))
-                                        arduinoMove('^');
-                                    else if(className.equals("right"))
-                                        arduinoMove('>');
-                                    else if(className.equals("left"))
-                                        arduinoMove('<');
-                                }
                             }
                         });
+                        //execute an Arduino action
+                        executeArduinoAction(className);
                     }
                 });
             }

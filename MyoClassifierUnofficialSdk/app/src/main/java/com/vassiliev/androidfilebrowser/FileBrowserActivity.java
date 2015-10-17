@@ -286,7 +286,7 @@ public class FileBrowserActivity extends Activity {
 
 						// If it is a file check the extension if provided
 						if (sel.isFile() && filterFileExtension != null) {
-							return (showReadableFile && sel.getName().endsWith(
+							return (showReadableFile && sel.getName().matches(
 									filterFileExtension));
 						}
 						return (showReadableFile);

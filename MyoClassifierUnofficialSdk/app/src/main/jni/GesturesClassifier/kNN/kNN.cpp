@@ -129,12 +129,22 @@ double kNN::distance(const kNN::DataRaw& left,const kNN::DataRaw& right) const
     assert(left.size() == right.size());
     double distance = 0.0;
     //compute distance
-    #pragma omp parallel for
-    for(size_t i=0; i!= left.size(); ++i)
+#if defined(_OPENMP)
+    size_t lSize = left.size();
+    #pragma omp parallel for reduction(+:distance)
+    for(size_t i=0; i < lSize; ++i)
+    {
+        double idiff  = left[i] - right[i];
+               idiff *= idiff;
+        distance = distance + idiff;
+    }
+#else
+    for(size_t i=0; i != left.size(); ++i)
     {
         double idiff = left[i] - right[i];
         distance    += idiff * idiff;
     }
+#endif
     return std::sqrt(distance);
 }
 
@@ -143,11 +153,20 @@ double kNN::manhattan(const DataRaw& left,const DataRaw& right) const
     assert(left.size() == right.size());
     double distance = 0.0;
     //compute distance
-    #pragma omp parallel for
-    for(size_t i=0; i!= left.size(); ++i)
+#if defined(_OPENMP)
+    size_t lSize = left.size();
+    #pragma omp parallel for reduction(+:distance)
+    for(size_t i=0; i < lSize; ++i)
+    {
+        double dis=std::abs(left[i] - right[i]);
+        distance  = distance + dis;
+    }
+#else
+    for(size_t i=0; i != left.size(); ++i)
     {
         distance += std::abs(left[i] - right[i]);
     }
+#endif
     return distance;
 }
 
@@ -156,12 +175,23 @@ double kNN::hamming(const DataRaw& left,const DataRaw& right) const
     assert(left.size() == right.size());
     double distance = 0.0;
     //compute distance
-    #pragma omp parallel for
+#if defined(_OPENMP)
+    size_t lSize = left.size();
+    #pragma omp parallel for reduction(+:distance)
+    for(size_t i=0; i < lSize; ++i)
+    {
+        // hamming :
+        // if is equal  then  0 else 1
+        double dis=(double)(left[i] != right[i]);
+        distance  = distance + dis;
+    }
+#else
     for(size_t i=0; i != left.size(); ++i)
     {
         // hamming :
         // if is equal  then  0 else 1
         distance += (left[i] != right[i]);
     }
+#endif
     return distance;
 }

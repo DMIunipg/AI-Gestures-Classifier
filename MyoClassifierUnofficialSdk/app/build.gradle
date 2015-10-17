@@ -36,14 +36,18 @@ model {
 
     android.ndk {
         moduleName = "GesturesClassifier"
+        //  CFlags    += ["-fopenmp"]
+        //  ldFlags   += ["-fopenmp"]
+        //  cppFlags  += "-fopenmp"
+        cppFlags  += ["-lbar", "-pedantic", "-pthread", "-pedantic"]
         cppFlags  += ["-std=c++14"]
+        cppFlags  += ["-O3"]
         cppFlags  += "-I${file("src/main/jni").absolutePath}".toString()
         cppFlags  += "-I${file("src/main/jni/cxx").absolutePath}".toString()
         cppFlags  += "-I${file("src/main/jni/GesturesClassifier").absolutePath}".toString()
         cppFlags  += "-I${file("src/main/jni/GesturesClassifier/kNN").absolutePath}".toString()
         cppFlags  += "-I${file("src/main/jni/GesturesClassifier/SVM").absolutePath}".toString()
         cppFlags  += "-I${file("src/main/jni/GesturesClassifier/RBFNetwork").absolutePath}".toString()
-    //  cppFlags  += "-I${file("../../GesturesClassifier/source").absolutePath}".toString()
         stl        = "gnustl_static"
     }
 

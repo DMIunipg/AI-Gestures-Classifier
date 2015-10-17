@@ -233,11 +233,14 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
         //connection
         final BluetoothManager mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = mBluetoothManager.getAdapter();
-        //bind service
-        Intent gattServiceIntent = new Intent(BLEArduinoAppCompatActivity.this,  RBLService.class);
-        bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-        //reg input listener
-        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+        //is bluetooth supported?
+        if(isBluetoothSupport()) {
+            //bind service
+            Intent gattServiceIntent = new Intent(BLEArduinoAppCompatActivity.this, RBLService.class);
+            bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+            //reg input listener
+            registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+        }
     }
 
 
@@ -245,7 +248,7 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if (!mBluetoothAdapter.isEnabled()) {
+        if ( isBluetoothSupport() && !mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
