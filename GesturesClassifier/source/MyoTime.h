@@ -6,7 +6,16 @@
 
 namespace myo
 {
+    /*!
+     * \brief GetTimeTicks
+     * \return tricks
+     */
     extern uint64_t GetTimeTicks();
+    
+    /*!
+     * \brief GetTime
+     * \return time in seconds
+     */
     extern double GetTime();
 };
 

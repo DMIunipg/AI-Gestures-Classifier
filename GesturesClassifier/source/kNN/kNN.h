@@ -13,26 +13,49 @@
 #include <string>
 #include <DataSetReader.h>
 
+/*!
+ * \brief kNN implementation
+ */
 class kNN
 {
     
 public:
     
-    //type of a raw
+    /*!
+     * \brief type of a raw
+     */
     using  DataRaw  = DataSetReader::AttributesRaw;
-    //type of a field of the dataset
+    
+    /*!
+     * \brief type of a field of the dataset
+     */
     using  DataField = DataSetReader::Row;
-    //type of dataset
+    
+    /*!
+     * \brief type of dataset
+     */
     using  DataSet   = DataSetReader::Rows;
-    //type of classification result
+
+    /*!
+     * \brief type of classification result
+     */
     struct Result
     {
         bool   mSuccess { false };
         double mClasses { 0.0   };
         double mError   { 1.0   };
-        //default
+        
+        /*!
+         * \brief Result
+         */
         Result(){}
-        //init
+        
+        /*!
+         * \brief Result
+         * \param success
+         * \param classes
+         * \param error
+         */
         Result(bool   success,
                double classes,
                double error)
@@ -43,13 +66,20 @@ public:
         }
     };
     //distance method
+    
+    /*!
+     * \brief enum DistanceType
+     */
     enum DistanceType
     {
         EUCLIDE_DISTANCE,
         MANHATTAN_DISTANCE,
         HAMMING_DISTANCE
     };
-    //distance Weight
+    
+    /*!
+     * \brief enum DistanceWeight
+     */
     enum DistanceWeight
     {
         DEMOCRATIC,
@@ -57,9 +87,18 @@ public:
         ONE_MINUS_DISTANCE
     };
     
-    //public methods
+    /*!
+     * \brief kNN
+     */
     kNN (const DataSet& dataset);
-    //applay classify
+    
+    /*!
+     * \brief classify execute the classification
+     * \param values
+     * \param nNN
+     * \param type
+     * \param typeWeight
+     */
     Result classify(const DataRaw& values,
                     unsigned int nNN = 1,
                     DistanceType type = EUCLIDE_DISTANCE,

@@ -18,8 +18,8 @@
 #include <string>
 
 #ifdef __ANDROID_API__
-#include <sstream>
 #include <array>
+#include <sstream>
 namespace std
 {
     template < typename T > std::string to_string( const T& n )
