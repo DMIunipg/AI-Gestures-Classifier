@@ -42,9 +42,20 @@ public class MyoList extends Activity {
      * Myo List Widget
      */
     private LinearLayout mUIListMyo = null;
+
+    /**
+     * Animation thread
+     */
     private Thread mUIListMyoAnimationThread = null;
+    
+    /**
+     * Animation loop flag
+     */
     private boolean mUIListMyoAnimationThreadLoop = false;
 
+    /**
+     * @breif startLoadingAnimation
+     */
     private void startLoadingAnimation() {
         mUIListMyoAnimationThread = new Thread(new Runnable() {
             @Override
@@ -80,6 +91,9 @@ public class MyoList extends Activity {
         mUIListMyoAnimationThread.start();
     }
 
+    /**
+     * @brief stopLoadingAnimation
+     */
     private void stopLoadingAnimation(){
         if(mUIListMyoAnimationThreadLoop && mUIListMyoAnimationThread!=null) {
             mUIListMyoAnimationThreadLoop = false;
@@ -89,6 +103,7 @@ public class MyoList extends Activity {
 
     /**
      * View loading backgound
+     * @brief showLoading
      */
     private void showLoading(){
         if(mUIListMyo != null) {
@@ -103,6 +118,10 @@ public class MyoList extends Activity {
             startLoadingAnimation();
         }
     }
+
+    /**
+     * @brief hideLoading, hide the loading icon
+     */
     private  void hideLoading() {
         stopLoadingAnimation();
 
@@ -141,6 +160,9 @@ public class MyoList extends Activity {
         startScanning();
     }
 
+    /**
+     * @brief onDestroy
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -148,6 +170,9 @@ public class MyoList extends Activity {
             this.mConnector.stopScan();
     }
 
+    /**
+     * @brief startScanning
+     */
     private void startScanning(){
         //stop last search
         if(mConnector!=null){
@@ -240,6 +265,7 @@ public class MyoList extends Activity {
 
     /**
      * Add the retry button
+     * @breif addRetryButton
      */
     private void addRetryButton()
     {

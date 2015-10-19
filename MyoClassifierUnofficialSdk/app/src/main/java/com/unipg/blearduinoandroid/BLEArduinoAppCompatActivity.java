@@ -164,25 +164,47 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
         onArduinoConnected(mArduinoDevice);
     }
 
+    /**
+     * @brief onArduinoConnected, called when a Arduino is connected
+     * @param device 
+     */
     protected  void onArduinoConnected(BluetoothDevice device){
 
     }
+
+    /**
+     * @brief onArduinoConnected, called when a Arduino is disconnected
+     * @param device 
+     */
     protected  void onArduinoDisconnected(){
 
     }
 
+
+    /**
+     * @brief arduinoMove, send to arduino a command
+     * @param dir 
+     */
     public void arduinoMove(char dir){
         byte[] buf = new byte[] {(byte)'m', (byte)dir};
         mCharacteristicTx.setValue(buf);
         mBluetoothLeService.writeCharacteristic(mCharacteristicTx);
     }
 
+
+    /**
+     * @brief arduinoMove, send to arduino a reset command
+     * @param dir 
+     */
     public void arduinoReset(){
         byte[] buf = new byte[] {(byte)'r',(byte)0};
         mCharacteristicTx.setValue(buf);
         mBluetoothLeService.writeCharacteristic(mCharacteristicTx);
     }
 
+    /**
+     * @brief scaLeDevice, start scanning of Arduino devices
+     */
     public void scanLeDevice() {
         new Thread() {
             @Override
@@ -198,26 +220,47 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
         }.start();
     }
 
+    /**
+     *  @brief onArduinoStartScan, called when a new Arduino scanning is started
+     */
     protected void onArduinoStartScan() {
 
     }
 
+    /**
+     *  @brief onArduinoStartScan, called when a new Arduino scanning is finished
+     */
     protected void onArduinoEndScan() {
 
     }
 
+    /**
+     * @brief isBluetoothSupport
+     * @return true if bluetooth is supported
+     */
     public boolean isBluetoothSupport()  {
         return mBluetoothAdapter!=null;
     }
 
+    /**
+     * @brief isConnected
+     * @return true if bluetooth is connected
+     */
     public boolean isConnected() {
         return mConnected ;
     }
 
+    /**
+     * @brief canExecuteCommand
+     * @return true if you can execute a command
+     */
     public boolean canExecuteCommand() {
         return isConnected() && mCharacteristicTx!=null && mBluetoothLeService != null;
     }
 
+    /**
+     * @brief disconnectArduino
+     */
     public void disconnectArduino()
     {
         if( isConnected() && mBluetoothLeService != null )
@@ -227,6 +270,10 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
         }
     }
 
+    /**
+     * @brief onCreate
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,7 +291,9 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
     }
 
 
-
+    /**
+     * @brief onResume
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -255,6 +304,9 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
         registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
     }
 
+    /**
+     * @brief onStop
+     */
     @Override
     protected void onStop() {
         super.onStop();
@@ -263,12 +315,21 @@ public class BLEArduinoAppCompatActivity extends AppCompatActivity{
         onArduinoDisconnected();
     }
 
+    /**
+     * @brief onDestroy
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mServiceConnection != null) unbindService(mServiceConnection);
     }
 
+    /**
+     * @brief onActivityResult
+     * @param requestCode
+     * @param resultCode  
+     * @param data        
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // User chose not to enable Bluetooth.

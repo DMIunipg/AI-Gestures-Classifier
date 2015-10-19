@@ -25,21 +25,44 @@ import eu.darken.myolib.msgs.MyoMsg;
 import eu.darken.myolib.processor.emg.EmgProcessor;
 import eu.darken.myolib.processor.imu.ImuProcessor;
 
+/**
+ * Created by Gabriele on 12/10/15.
+ */
 public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoAppCompatActivity {
 
     static {
         System.loadLibrary("GesturesClassifier");
-    }
-    //return code when select a file
+    };
+
+    /**
+     * constant, it used when view list myo is shown
+     */
     private final int REQUEST_CODE_MYO_LIST = 1;
+
+    /**
+     * constant, it used when file manager is shown
+     */
     private final int REQUEST_CODE_PICK_FILE = 2;
-    //native classifier
+
+    /**
+     * Pointer to classifier manager
+     */
     private MyoNativeClassifierManager mNClassifierManager;
+
+    /**
+     * Set this variable to true before to call finish method when you wanna kill all the process
+     */
     private boolean mKillApp = false;
-    //last myo connected
+
+    /**
+     * Pointer to last myo connected
+     */
     Myo mMyo = null;
 
-    //Classifier / Arduino Actions
+    /**
+     * @brief executeArduinoAction, called when when was classified a new gesture
+     * @param className, class name of the last gesture classified
+     */
     protected void executeArduinoAction(String className) {
         if(isConnected())  {
             if(className.equals("normal"))
@@ -53,6 +76,9 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         }
     }
 
+    /**
+     * @brief bluetoothUnsupportedDialog, show a dialog to notify the user about the bluetooth connection support 
+     */
     protected void bluetoothUnsupportedDialog()
     {
         final AlertDialog.Builder closeApplicationDialog = new AlertDialog.Builder(MainMyoClassifier.this);
@@ -75,6 +101,10 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         });
     }
 
+    /**
+     * @brief onCreate
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +178,9 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
     }
 
 
+    /**
+     * @brief onStart
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -165,6 +198,9 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
     private Thread mUIRLMainMyoAnimationThread = null;
     private boolean mUIRLMainMyoAnimationThreadLoop = false;
 
+    /**
+     * @brief onArduinoStartScan
+     */
     @Override
     protected void onArduinoStartScan() {
         //get main relative layout
@@ -214,6 +250,9 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         mUIRLMainMyoAnimationThread.start();
     }
 
+    /**
+     * @brief onArduinoEndScan
+     */
     @Override
     protected void onArduinoEndScan() {
         if(mUIRLMainMyoAnimationThreadLoop && mUIRLMainMyoAnimationThread!=null) {
@@ -228,6 +267,10 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         }
     }
 
+    /**
+     * @brief onArduinoConnected
+     * @param device
+     */
     @Override
     protected  void onArduinoConnected(BluetoothDevice device){
         ((Button)findViewById(R.id.btConnect)).post(new Runnable() {
@@ -238,6 +281,9 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         });
     }
 
+    /**
+     * @brief  onArduinoDisconnected
+     */
     @Override
     protected  void onArduinoDisconnected(){
         ((Button)findViewById(R.id.btConnect)).post(new Runnable() {
@@ -248,6 +294,9 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         });
     }
 
+    /**
+     * @brief onDestroy, called when application was destroyed
+     */
     @Override
     protected void  onDestroy()
     {
@@ -264,6 +313,12 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         super.onDestroy();
     }
 
+    /**
+     * @brief onActivityResult, called when a child activity was closed
+     * @param requestCode 
+     * @param resultCode  
+     * @param data        
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //load file
@@ -318,6 +373,10 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         }
     }
 
+    /**
+     * @brief onConnectedToMyo
+     * @param myo, connection object
+     */
     private void onConnectedToMyo(Myo myo){
         //save last myo
         mMyo = myo;
@@ -354,6 +413,9 @@ public class MainMyoClassifier extends com.unipg.blearduinoandroid.BLEArduinoApp
         });
     }
 
+    /**
+     * @brief disconnectMyo, call this when you want disconnet from Myo
+     */
     public void disconnectMyo() {
         if (mMyo != null &&
                 (  mMyo.getConnectionState() == BaseMyo.ConnectionState.CONNECTED||
