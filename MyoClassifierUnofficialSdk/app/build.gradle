@@ -7,7 +7,7 @@ model {
 
         defaultConfig.with {
             applicationId = "com.unipg.myoclassifier"
-            minSdkVersion.apiLevel = 18
+            minSdkVersion.apiLevel = 19
             targetSdkVersion.apiLevel = 22
             versionCode = 1
             versionName = "1.0"
@@ -39,9 +39,11 @@ model {
         //  CFlags    += ["-fopenmp"]
         //  ldFlags   += ["-fopenmp"]
         //  cppFlags  += "-fopenmp"
-        cppFlags  += ["-lbar", "-pedantic", "-pthread", "-pedantic"]
+        toolchain = "gcc"
+        toolchainVersion = "4.9"
+        cppFlags  += ["-pedantic", "-pthread", "-pedantic", "-ldl", "-lz", "-llog"]
         cppFlags  += ["-std=c++14"]
-        cppFlags  += ["-O3"]
+        cppFlags  += ["-O2"]
         cppFlags  += "-I${file("src/main/jni").absolutePath}".toString()
         cppFlags  += "-I${file("src/main/jni/cxx").absolutePath}".toString()
         cppFlags  += "-I${file("src/main/jni/GesturesClassifier").absolutePath}".toString()
@@ -49,6 +51,7 @@ model {
         cppFlags  += "-I${file("src/main/jni/GesturesClassifier/SVM").absolutePath}".toString()
         cppFlags  += "-I${file("src/main/jni/GesturesClassifier/RBFNetwork").absolutePath}".toString()
         stl        = "gnustl_static"
+        platformVersion = 19
     }
 
     android.productFlavors {
