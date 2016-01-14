@@ -59,6 +59,12 @@ public:
      */
     void setVideoToShow(const MyoListener::TypeRows& rows);
 
+    /*!
+     * \brief setIsConnected
+     * \param is connected
+     */
+    void setIsConnected(bool isConnected);
+
 public slots:
 
     /*!
@@ -77,6 +83,12 @@ public slots:
      * \param value
      */
     void onSlaiderChange(int value);
+
+    /*!
+     * \brief onTryToConnect
+     * \param value
+     */
+    void onTryToConnect(bool event);
 
 private:
 

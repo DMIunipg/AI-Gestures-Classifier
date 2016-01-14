@@ -51,6 +51,16 @@ public:
     MyoListener::TypeRaw getCurrentRow();
 
     /*!
+     * \return true if a myo is connected
+     */
+    bool isConnected() const;
+
+    /*!
+     * \return true if myo thread is running
+     */
+    bool isRunning() const;
+
+    /*!
      * \brief run
      */
     void run();

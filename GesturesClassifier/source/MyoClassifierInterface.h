@@ -32,10 +32,18 @@ public:
     
     /*!
      * \brief createModel
-     * \param ds
+     * \param dataset
      * \return Myo Model built
      */
     virtual MyoModelInterface* createModel(const DataSetReader& ds) = 0;
+    
+    /*!
+     * \brief createModel
+     * \param dataset
+     * \param arguments
+     * \return Myo Model built
+     */
+    virtual MyoModelInterface* createModel(const DataSetReader& ds,const std::string& args) = 0;
     
     /*!
      * \brief modelFromfile

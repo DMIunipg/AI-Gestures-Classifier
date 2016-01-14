@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:GesturesClassifierApplication/GesturesClassifierApplication.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "container:GesturesClassifierExemple/GesturesClassifierExemple.xcodeproj">
    </FileRef>
    <FileRef

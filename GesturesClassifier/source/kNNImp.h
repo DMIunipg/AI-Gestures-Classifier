@@ -45,6 +45,14 @@ public:
     virtual MyoModelInterface* createModel(const DataSetReader& ds);
     
     /*!
+     * \brief createModel
+     * \param dataset
+     * \param arguments
+     * \return Myo Model built
+     */
+    virtual MyoModelInterface* createModel(const DataSetReader& ds,const std::string& args);
+    
+    /*!
      * \brief modelFromfile
      * \param path
      * \return model

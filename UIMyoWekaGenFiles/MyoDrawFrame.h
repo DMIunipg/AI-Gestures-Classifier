@@ -37,6 +37,12 @@ public:
     void setMyoManager(MyoManager* manager);
 
     /*!
+     * \brief getMyoManager
+     * \param manager
+     */
+    MyoManager* getMyoManager() const;
+
+    /*!
      * \brief setDefaultRotation
      * \param rotation
      */

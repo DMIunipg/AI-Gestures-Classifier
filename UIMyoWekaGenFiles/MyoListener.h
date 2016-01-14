@@ -165,6 +165,27 @@ public:
     }
 
     /*!
+     * \brief onConnect
+     * \param myo
+     * \param timestamp
+     * \param firmwareVersion
+     */
+    virtual void onConnect(myo::Myo* myo, uint64_t timestamp, myo::FirmwareVersion firmwareVersion)
+    {
+        mConnected = true;
+    }
+
+    /*!
+     * \brief onDisconnect
+     * \param myo
+     * \param timestamp
+     */
+    virtual void onDisconnect(myo::Myo* myo, uint64_t timestamp)
+    {
+        mConnected = false;
+    }
+
+    /*!
      * \brief onPose
      * \param myo
      * \param timestamp
@@ -188,9 +209,10 @@ public:
         return out;
     }
 
-    myo::Pose      mPose;  //! last myo gesture
-    myo::ArmStatus mArm;   //! last myo status
-    TypeRaw        mRaw;   //! last myo raw inputs
+    bool           mConnected{ false };//! last connection status
+    myo::Pose      mPose;              //! last myo gesture
+    myo::ArmStatus mArm;               //! last myo status
+    TypeRaw        mRaw;               //! last myo raw inputs
 };
 
 #endif // MYOLISTENER_H

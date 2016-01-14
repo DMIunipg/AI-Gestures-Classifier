@@ -480,6 +480,13 @@
       </layout>
      </item>
      <item>
+      <widget class="QPushButton" name="mPBTTConnect">
+       <property name="text">
+        <string>Try to connect</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QGroupBox" name="mGBVideo">
        <layout class="QHBoxLayout" name="mHLVideo">
         <item>
@@ -584,10 +591,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mPBTTConnect</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MyoDialog</receiver>
+   <slot>onTryToConnect(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>223</x>
+     <y>555</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAbs()</slot>
   <slot>onPlayPause(bool)</slot>
   <slot>onSlaiderChange(int)</slot>
+  <slot>onTryToConnect(bool)</slot>
  </slots>
 </ui>

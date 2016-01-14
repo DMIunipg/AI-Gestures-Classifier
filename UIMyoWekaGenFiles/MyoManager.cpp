@@ -8,6 +8,19 @@ MyoManager::~MyoManager()
 {
 }
 
+
+//return true if a myo is connected
+bool MyoManager::isConnected() const
+{
+    return mMyoHub && mMyo && mListener.mConnected;
+}
+
+//return true if myo thread is running
+bool MyoManager::isRunning() const
+{
+    return mLoop;
+}
+
 //start recording
 void MyoManager::startRecording()
 {
@@ -17,6 +30,7 @@ void MyoManager::startRecording()
     mTime      = myo::GetTime();
     mMutex.unlock();
 }
+
 void MyoManager::startRecording(size_t n,
                                 std::function<void( QMutex& , MyoListener::TypeRows& )> fun)
 {
@@ -52,10 +66,21 @@ MyoListener::TypeRaw MyoManager::getCurrentRow()
 //loop
 void MyoManager::run()
 {
-    //alloc
-    mMyoHub = new myo::Hub("com.weka.genfiles");
+    try
+    {
+        //alloc
+        mMyoHub = new myo::Hub("com.weka.genfiles");
+    }
+    catch ( const std::runtime_error&  error )
+    {
+        mMyoHub = nullptr;
+    }
+    //max try count
+    const ushort mac_count_try = 5;
     //wait connection
-    while(mLoop && !mMyo)
+    for(ushort count_try = 0;
+               count_try != mac_count_try && (mLoop && mMyoHub && !mMyo);
+             ++count_try)
     {
         mMyo    = mMyoHub->waitForMyo(1000);
     }
@@ -68,7 +93,10 @@ void MyoManager::run()
 
         while(mLoop)
         {
+            //send all message
             mMyoHub->run(MyoData::msupadate);
+            //if not connected stop.
+            if(mListener.mConnected) mLoop = false;
             //rec
             if(mRecording)
             {
@@ -90,9 +118,14 @@ void MyoManager::run()
                 //unlock
                 mMutex.unlock();
             }
-
         }
     }
+    //loop is stopped
+    mLoop = false;
+    //is disconected
+    mListener.mConnected = false;
+    //myo last
+    mMyo = nullptr;
     //dealloc
-    delete mMyoHub;
+    if(mMyoHub) delete mMyoHub;
 }

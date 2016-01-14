@@ -19,6 +19,11 @@ void MyoDrawFrame::setMyoManager(MyoManager* myoManager)
     mMyoManager = myoManager;
 }
 
+MyoManager* MyoDrawFrame::getMyoManager() const
+{
+    return mMyoManager;
+}
+
 void MyoDrawFrame::setDefaultRotation(const myo::Quaternion< float >& rotation)
 {
     mDefaultRot = myo::Quaternion< double >(rotation.x(),

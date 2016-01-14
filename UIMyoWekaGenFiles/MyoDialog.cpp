@@ -89,6 +89,10 @@ MyoDialog::MyoDialog(QWidget *parent,
         delete ui->mLTimeInfo;
         delete ui->mGBVideo;
     }
+    else
+    {
+        delete ui->mPBTTConnect;
+    }
     //init plotters
     UiPlotDefault(ui->mCPTop);
     UiPlotDefault(ui->mCPTopLeft);
@@ -252,6 +256,33 @@ void MyoDialog::setVideoToShow(const MyoListener::TypeRows& rows)
     mVideoRows  = rows;
     //set range
     ui->mSTime->setRange(0,rows.size());
+}
+
+//set connection status
+void MyoDialog::setIsConnected(bool isConnected)
+{
+    if(isConnected)
+    {
+        ui->mPBTTConnect->setText("Connected");
+        ui->mPBTTConnect->setDisabled(true);
+    }
+    else
+    {
+        ui->mPBTTConnect->setText("Try to connect");
+        ui->mPBTTConnect->setDisabled(false);
+    }
+}
+
+//connect event
+void MyoDialog::onTryToConnect(bool event)
+{
+    //manager
+    MyoManager* mmanager = ui->mMyoDrawFrame->getMyoManager();
+    //try to connect
+    if(mmanager && !mmanager->isConnected() && !mmanager->isRunning())
+    {
+        mmanager->start();
+    }
 }
 
 //play/pause event

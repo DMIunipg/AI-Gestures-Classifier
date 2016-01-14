@@ -17,13 +17,191 @@ public:
     ClassesNames mClasses;
     unsigned int mUpdate { 20 };
     svm_model* mModel { nullptr };
-
+    
+    bool compare(const char* ptr, const char* command)
+    {
+        return compare(ptr, command, strlen(command));
+    }
+    
+    bool compare(const char* ptr, const char* command,size_t len)
+    {
+        return std::strncmp(ptr, command, len) == 0;
+    }
+    
+    bool compareAndSkip(const char*& ptr, const char* command)
+    {
+        //string len
+        size_t len = strlen(command);
+        //compare..
+        if( compare(ptr,command,len) )
+        {
+            ptr+=len;
+            return true;
+        }
+        return  false;
+    }
+    
+    void skipSpace(const char*& ptr)
+    {
+        while(std::isspace(*ptr)) ++ptr;
+    }
+    
+    int parseIntAndSkip(const char*& ptr)
+    {
+        //compute end
+        const char* ptr_end   = ptr;
+        //get all digits
+        while(isdigit(*ptr_end)) ++ptr_end;
+        //isn't int number?
+        if(ptr == ptr_end) return 0;
+        //parse
+        int output = std::atoi(ptr);
+        //skip
+        ptr = ptr_end;
+        //return value
+        return output;
+    }
+    
+    double parseDoubleAndSkip(const char*& ptr)
+    {
+        char* end_ptr = nullptr;
+        //parsing double
+        double output = std::strtod (ptr, &end_ptr);
+        //go tu next ptr
+        ptr = end_ptr;
+        //return value
+        return  output;
+    }
+    
+    bool parseBoolAndSkip(const char*& ptr)
+    {
+        //is false?
+        if( compareAndSkip(ptr,"false") ) return false;
+        //skip true
+        compareAndSkip(ptr,"true");
+        //return true
+        return true;
+    }
+    
+    svm_parameter parseArguments(const std::string& args)
+    {
+        //kernel params
+        svm_parameter param = {0};
+        //default
+        param.svm_type    = NU_SVC;
+        param.kernel_type = RBF;
+        param.cache_size  = 100.0f;
+        param.coef0       = 0.1f;
+        param.degree      = 3;
+        param.eps         = 0.1f;
+        param.gamma       = 0.2f;
+        param.nu          = 0.03f;
+        param.probability = true;
+        param.shrinking   = true;
+        //get ptr
+        const char* ptr = args.c_str();
+        //parse
+        while(ptr && *ptr != EOF && *ptr != '\0')
+        {
+            //skip start space
+            skipSpace(ptr);
+            //type...
+            if(compareAndSkip(ptr, "type"))
+            {
+                skipSpace(ptr);
+                //types
+                //enum { C_SVC, NU_SVC, ONE_CLASS, EPSILON_SVR, NU_SVR };	/* svm_type */
+                     if(compareAndSkip(ptr,"C_SVC")) param.svm_type  = C_SVC;
+                else if(compareAndSkip(ptr,"NU_SVC")) param.svm_type = NU_SVC;
+                else if(compareAndSkip(ptr,"ONE_CLASS")) param.svm_type  = ONE_CLASS;
+                else if(compareAndSkip(ptr,"EPSILON_SVR")) param.svm_type  = EPSILON_SVR;
+                else if(compareAndSkip(ptr,"NU_SVR")) param.svm_type  = NU_SVR;
+                else break;
+            }
+            else if(compareAndSkip(ptr, "kernel"))
+            {
+                skipSpace(ptr);
+                //kernels
+                //enum { LINEAR, POLY, RBF, SIGMOID, PRECOMPUTED }; /* kernel_type */
+                     if(compareAndSkip(ptr,"LINEAR")) param.svm_type  = LINEAR;
+                else if(compareAndSkip(ptr,"POLY")) param.svm_type = POLY;
+                else if(compareAndSkip(ptr,"RBF")) param.svm_type  = RBF;
+                else if(compareAndSkip(ptr,"SIGMOID")) param.svm_type  = SIGMOID;
+                else if(compareAndSkip(ptr,"PRECOMPUTED")) param.svm_type  = PRECOMPUTED;
+                else break;
+            }
+            else if(compareAndSkip(ptr, "cache"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.cache_size = parseDoubleAndSkip(ptr);
+            }
+            else if(compareAndSkip(ptr, "coef0"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.coef0 = parseDoubleAndSkip(ptr);
+                
+            }
+            else if(compareAndSkip(ptr, "degree"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.degree = parseIntAndSkip(ptr);
+            }
+            else if(compareAndSkip(ptr, "eps"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.eps = parseDoubleAndSkip(ptr);
+            }
+            else if(compareAndSkip(ptr, "nu"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.nu = parseDoubleAndSkip(ptr);
+            }
+            else if(compareAndSkip(ptr, "probability"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.probability = parseBoolAndSkip(ptr);
+            }
+            else if(compareAndSkip(ptr, "shrinking"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.shrinking = parseBoolAndSkip(ptr);
+            }
+            else if(compareAndSkip(ptr, "p"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.p = parseDoubleAndSkip(ptr);
+            }
+            else
+            {
+                break;
+            }
+        }
+        
+        return param;
+    }
+    
     MyoModelSVM(svm_model* model = nullptr)
     :mModel(model)
     {
     }
     
-    MyoModelSVM(const DataSetReader& data)
+    MyoModelSVM(const DataSetReader& data,const std::string& args)
     {
         //alloc
         svm_problem* problem = new svm_problem();
@@ -56,18 +234,7 @@ public:
             
         }
         //kernel params
-        svm_parameter param = {0};
-        //traning
-        param.svm_type    = NU_SVC;
-        param.kernel_type = RBF;
-        param.cache_size  = 100.0f;
-        param.coef0       = 0.1f;
-        param.degree      = 3;
-        param.eps         = 0.1f;
-        param.gamma       = 0.2f;
-        param.nu          = 0.03f;
-        param.probability = true;
-        param.shrinking   = true;
+        svm_parameter param = parseArguments(args);
         //do cross validation
 #if  0
         svm_do_cross_validation(param,*problem,100);
@@ -128,7 +295,13 @@ MyoClassifierSVM::~MyoClassifierSVM()
 
 MyoModelInterface* MyoClassifierSVM::createModel(const DataSetReader& ds)
 {
-    mModel = std::make_shared<MyoModelSVM>(ds);
+    mModel = std::make_shared<MyoModelSVM>(ds,"");
+    return mModel.get();
+}
+
+MyoModelInterface* MyoClassifierSVM::createModel(const DataSetReader& ds,const std::string& args)
+{
+    mModel = std::make_shared<MyoModelSVM>(ds,args);
     return mModel.get();
 }
 

@@ -25,7 +25,7 @@ enum Classifier
 
 class MyoThread;
 class MyoClassifierInterface;
-
+class MyoBuildModelArgs;
 /*!
  * \brief Myo Classifier Manager, class to manage the classification
  */
@@ -42,7 +42,7 @@ public:
      * \brief MyoClassifierManager
      * \param type, type of classification method
      */
-    MyoClassifierManager(Classifier type);
+    MyoClassifierManager(Classifier type,bool myoThread = true);
     
     /*!
      * \brief ~MyoClassifierManager
@@ -55,6 +55,14 @@ public:
      * \return Myo Model built
      */
     MyoModelInterface* buildModel(const std::string& dataset);
+    
+    /*!
+     * \brief buildModel
+     * \param dataset
+     * \param traning arguments
+     * \return Myo Model built
+     */
+    MyoModelInterface* buildModel(const std::string& dataset,const std::string& args);
     
     /*!
      * \brief loadModel

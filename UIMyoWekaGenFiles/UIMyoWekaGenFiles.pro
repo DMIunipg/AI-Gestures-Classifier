@@ -42,6 +42,9 @@ macx {
     LIBS += -F$$PWD/../myo.mac/framework/ -framework myo
     #framework path
     QMAKE_RPATHDIR += @executable_path/../Frameworks
+    #C++11 Lib Clang
+    QMAKE_CXXFLAGS += -std=c++11 -stdlib=libc++
+    QMAKE_CXXFLAGS += -Wunused-parameter
     #static libs
     #LIBS += -L$$PWD/../myo.mac/lib/ -l<lib>
     #dynamic
@@ -60,6 +63,18 @@ macx {
     DEPENDPATH  += $$PWD/../myo.win/include
     INCLUDEPATH += $$PWD/../myo.win/include/myo/
     INCLUDEPATH += $$PWD/../myo.win/include/myo/
+    #make bundle
+    #framework
+    APP_FM_FILES.files = $$PWD/../myo.mac/framework/myo.framework
+    APP_FM_FILES.path  = Contents/Frameworks/
+    QMAKE_BUNDLE_DATA += APP_FM_FILES
+    #compile external tools
+    system(xcodebuild -workspace ../GesturesClassifier.xcworkspace -scheme GesturesClassifier -configuration Release)
+    system(xcodebuild -workspace ../GesturesClassifier.xcworkspace -scheme GesturesClassifierApplication -configuration Release)
+    #resource
+    APP_CL_FILES.files = $$PWD/../GesturesClassifierApplication/Build/Release/GesturesClassifierApplication
+    APP_CL_FILES.path = Contents/Resources/
+    QMAKE_BUNDLE_DATA += APP_CL_FILES
 }
 
 SOURCES += main.cpp\
