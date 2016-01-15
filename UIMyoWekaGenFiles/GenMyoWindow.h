@@ -78,6 +78,11 @@ private slots:
      */
     void onShowInputs(bool show);
 
+    /*!
+     * \brief onCreateModel
+     */
+    void onCreateModel();
+
 private:
 
     /*!

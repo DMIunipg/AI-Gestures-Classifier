@@ -5,6 +5,7 @@
 #include "MyoDataInput.h"
 #include "GesturesBuilder.h"
 #include "SamplingList.h"
+#include "ModelForm.h"
 #include "ui_GenMyoWindow.h"
 #include <QDebug>
 #include <QFileDialog>
@@ -237,6 +238,19 @@ void GenMyoWindow::onExportAs()
             else if(mPath.endsWith(".fann")) saveFANN();
         }
     }
+}
+
+void GenMyoWindow::onCreateModel()
+{
+    //path
+    QString sPath=QFileDialog::getOpenFileName(this,
+                                               "Open",
+                                               mPath,
+                                               "DataSet Files *.ds");
+    //model form
+    ModelForm mform(this);
+    //execute
+    mform.execute(sPath);
 }
 
 

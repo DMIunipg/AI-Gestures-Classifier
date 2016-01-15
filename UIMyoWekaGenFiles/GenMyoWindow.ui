@@ -56,6 +56,7 @@
      <string>Window</string>
     </property>
     <addaction name="mAShowInputs"/>
+    <addaction name="mACreateModel"/>
    </widget>
    <addaction name="mMenuFile"/>
    <addaction name="mMenuWindow"/>
@@ -101,6 +102,11 @@
    </property>
    <property name="text">
     <string>Show Inputs</string>
+   </property>
+  </action>
+  <action name="mACreateModel">
+   <property name="text">
+    <string>Create model</string>
    </property>
   </action>
  </widget>
@@ -251,6 +257,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mACreateModel</sender>
+   <signal>triggered()</signal>
+   <receiver>GenMyoWindow</receiver>
+   <slot>onCreateModel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>244</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAddClass()</slot>
@@ -262,5 +284,6 @@
   <slot>onOpen()</slot>
   <slot>onNew()</slot>
   <slot>onShowInputs(bool)</slot>
+  <slot>onCreateModel()</slot>
  </slots>
 </ui>

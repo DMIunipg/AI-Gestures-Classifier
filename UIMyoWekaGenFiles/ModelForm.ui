@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ModelForm</class>
+ <widget class="QDialog" name="ModelForm">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>622</width>
+    <height>677</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>677</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="0" colspan="2">
+    <widget class="QPushButton" name="mPBApplay">
+     <property name="text">
+      <string>Applay</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
+      <string>Output path</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="mPBDir">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="mLEDir">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Type Model</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QRadioButton" name="mRBkNN">
+        <property name="text">
+         <string>kNN</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="mRBSVM">
+        <property name="text">
+         <string>SVM</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="mRBRBFNetwork">
+        <property name="text">
+         <string>RBF Network</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="title">
+      <string>Console</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QTextBrowser" name="mTBConsole">
+        <property name="styleSheet">
+         <string notr="true">QTextBrowser
+{
+	color: rgb(255,255,255);
+	background: rgb(0,0,0);
+}</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>RBF Network</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Iterations</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Learning rate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Accuracy Mse</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>Print</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="mSBNumIterations">
+        <property name="maximum">
+         <number>999999999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="mDSBLearningRate">
+        <property name="minimum">
+         <double>-99999999999999997748809823456034029568.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="mCBAccuracyMse">
+        <item>
+         <property name="text">
+          <string>TRUE</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>FALSE</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="mCBPrint">
+        <item>
+         <property name="text">
+          <string>TRUE</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>FALSE</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>SVM</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="mCBType">
+        <item>
+         <property name="text">
+          <string>C_SVC</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>NU_SVC</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ONE_CLASS</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>EPSILON_SVR</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>NU_SVR</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Kernel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="mCBKernel">
+        <item>
+         <property name="text">
+          <string>LINEAR</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>POLY</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>RBF</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>SIGMOID</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>PRECOMPUTED</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Cache size</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="mDSBCacheSize">
+        <property name="minimum">
+         <double>-99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Coef0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QDoubleSpinBox" name="mDSBCoef0">
+        <property name="minimum">
+         <double>-99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Degree</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="mSBDegree">
+        <property name="maximum">
+         <number>999999999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Eps</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QDoubleSpinBox" name="mDSBEps">
+        <property name="minimum">
+         <double>-99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Nu</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QDoubleSpinBox" name="mDSBNu">
+        <property name="minimum">
+         <double>-99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Probability</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Shrinking</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QComboBox" name="mCBProbability">
+        <item>
+         <property name="text">
+          <string>TRUE</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>FALSE</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QComboBox" name="mCBShrinking">
+        <item>
+         <property name="text">
+          <string>TRUE</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>FALSE</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>P</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QDoubleSpinBox" name="mDSBP">
+        <property name="minimum">
+         <double>-9999999999999999538762658202121142272.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QDoubleSpinBox" name="mDSBGamma">
+        <property name="minimum">
+         <double>-99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>99999999999999991433150857216.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_15">
+        <property name="text">
+         <string>Gamma</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mPBApplay</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>ModelForm</receiver>
+   <slot>onApplay(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>305</x>
+     <y>621</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>320</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mPBDir</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>ModelForm</receiver>
+   <slot>onSearchDir(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>320</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onApplay(bool)</slot>
+  <slot>onSearchDir(bool)</slot>
+ </slots>
+</ui>

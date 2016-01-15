@@ -68,13 +68,27 @@ macx {
     APP_FM_FILES.files = $$PWD/../myo.mac/framework/myo.framework
     APP_FM_FILES.path  = Contents/Frameworks/
     QMAKE_BUNDLE_DATA += APP_FM_FILES
-    #compile external tools
-    system(xcodebuild -workspace ../GesturesClassifier.xcworkspace -scheme GesturesClassifier -configuration Release)
-    system(xcodebuild -workspace ../GesturesClassifier.xcworkspace -scheme GesturesClassifierApplication -configuration Release)
+    #path GesturesClassifierApplication
+    GCAppPath = $$PWD/../GesturesClassifierApplication/Build/Release/GesturesClassifierApplication
+    #if not exists... compile...
+    !exists($$GCAppPath) {
+        #output
+        message(compile $$GCAppPath)
+        #compile external tools
+        system(xcodebuild \
+               -project ../GesturesClassifier/GesturesClassifier.xcodeproj \
+               -scheme GesturesClassifier \
+               -configuration Release)
+        system(xcodebuild \
+               -project ../GesturesClassifierApplication/GesturesClassifierApplication.xcodeproj \
+               -scheme GesturesClassifierApplication \
+               -configuration Release)
+    }
     #resource
-    APP_CL_FILES.files = $$PWD/../GesturesClassifierApplication/Build/Release/GesturesClassifierApplication
+    APP_CL_FILES.files = $$GCAppPath
     APP_CL_FILES.path = Contents/Resources/
     QMAKE_BUNDLE_DATA += APP_CL_FILES
+
 }
 
 SOURCES += main.cpp\
@@ -89,7 +103,8 @@ SOURCES += main.cpp\
     qcustomplot/qcustomplot.cpp \
     SamplingList.cpp \
     ClassForm.cpp \
-    SampleForm.cpp
+    SampleForm.cpp \
+    ModelForm.cpp
 
 HEADERS  += GenMyoWindow.h \
     Utilities.h \
@@ -113,7 +128,8 @@ HEADERS  += GenMyoWindow.h \
     ClassForm.h \
     SampleForm.h \
     MyoData.h \
-    DataSetOutput.h
+    DataSetOutput.h \
+    ModelForm.h
 
 FORMS    += GenMyoWindow.ui \
     RecordingDialog.ui \
@@ -121,7 +137,8 @@ FORMS    += GenMyoWindow.ui \
     MyoDialog.ui \
     SamplingList.ui \
     ClassForm.ui \
-    SampleForm.ui
+    SampleForm.ui \
+    ModelForm.ui
 
 #redources
 RESOURCES += \

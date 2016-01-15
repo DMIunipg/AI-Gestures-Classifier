@@ -94,7 +94,11 @@ int main(int argc, const char * args[])
     //build model
     auto* model = mcmanager.buildModel(pathInput,sArguments);
     //serialize
-    if(model) model->serialize(pathOuput);
+    if(model)
+    {
+        MESSAGE("Execute successful");
+        model->serialize(pathOuput);
+    }
     //fail to build model
     else
     {

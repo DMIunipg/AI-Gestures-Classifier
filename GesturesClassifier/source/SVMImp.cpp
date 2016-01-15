@@ -159,6 +159,13 @@ public:
                 //parse
                 param.eps = parseDoubleAndSkip(ptr);
             }
+            else if(compareAndSkip(ptr, "gamma"))
+            {
+                //parse
+                skipSpace(ptr);
+                //parse
+                param.gamma = parseDoubleAndSkip(ptr);
+            }
             else if(compareAndSkip(ptr, "nu"))
             {
                 //parse
