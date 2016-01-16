@@ -116,7 +116,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QGroupBox" name="groupBox_3">
+    <widget class="QGroupBox" name="mGBRBFNetwork">
      <property name="title">
       <string>RBF Network</string>
      </property>
@@ -201,7 +201,7 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="mGBSVM">
      <property name="title">
       <string>SVM</string>
      </property>
@@ -493,9 +493,60 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mRBkNN</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ModelForm</receiver>
+   <slot>onKNN(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mRBSVM</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ModelForm</receiver>
+   <slot>onSVM(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>59</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mRBRBFNetwork</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ModelForm</receiver>
+   <slot>onRBFNetwork(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onApplay(bool)</slot>
   <slot>onSearchDir(bool)</slot>
+  <slot>onKNN(bool)</slot>
+  <slot>onSVM(bool)</slot>
+  <slot>onRBFNetwork(bool)</slot>
  </slots>
 </ui>

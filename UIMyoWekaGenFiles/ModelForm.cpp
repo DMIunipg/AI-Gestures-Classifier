@@ -123,6 +123,33 @@ void ModelForm::onApplay(bool event)
     );
 }
 
+void ModelForm::onKNN(bool event)
+{
+    if(event)
+    {
+        ui->mGBSVM->setEnabled(false);
+        ui->mGBRBFNetwork->setEnabled(false);
+    }
+}
+
+void ModelForm::onSVM(bool event)
+{
+    if(event)
+    {
+        ui->mGBSVM->setEnabled(true);
+        ui->mGBRBFNetwork->setEnabled(false);
+    }
+}
+
+void ModelForm::onRBFNetwork(bool event)
+{
+    if(event)
+    {
+        ui->mGBSVM->setEnabled(false);
+        ui->mGBRBFNetwork->setEnabled(true);
+    }
+}
+
 //execute
 bool ModelForm::execute(const QString& path)
 {
