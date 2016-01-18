@@ -12,7 +12,7 @@ MyoManager::~MyoManager()
 //return true if a myo is connected
 bool MyoManager::isConnected() const
 {
-    return mMyoHub && mMyo && mListener.mConnected;
+    return mMyoHub && mMyo  && mListener.mConnected ;
 }
 
 //return true if myo thread is running
@@ -90,13 +90,14 @@ void MyoManager::run()
         mMyo->setStreamEmg(myo::Myo::streamEmgEnabled);
         mMyoHub->addListener(&mListener);
         mMyoHub->setLockingPolicy(myo::Hub::lockingPolicyNone);
+        if(mCBConnection) mCBConnection(true);
 
         while(mLoop)
         {
             //send all message
             mMyoHub->run(MyoData::msupadate);
             //if not connected stop.
-            if(mListener.mConnected) mLoop = false;
+            if(!mListener.mConnected) mLoop = false;
             //rec
             if(mRecording)
             {
@@ -128,4 +129,6 @@ void MyoManager::run()
     mMyo = nullptr;
     //dealloc
     if(mMyoHub) delete mMyoHub;
+    //callback
+    if(mCBConnection) mCBConnection(false);
 }

@@ -84,14 +84,21 @@ MyoDialog::MyoDialog(QWidget *parent,
     //disable video form
     if(disable)
     {
+        //disable video form
         delete ui->mSTime;
         delete ui->mLTime;
         delete ui->mLTimeInfo;
         delete ui->mGBVideo;
+        ui->mSTime = nullptr;
+        ui->mLTime = nullptr;
+        ui->mLTimeInfo = nullptr;
+        ui->mGBVideo   = nullptr;
     }
     else
     {
+        //disable button
         delete ui->mPBTTConnect;
+        ui->mPBTTConnect = nullptr;
     }
     //init plotters
     UiPlotDefault(ui->mCPTop);
@@ -129,6 +136,14 @@ MyoDialog::MyoDialog(QWidget *parent,
 void MyoDialog::setMyoManager(MyoManager* myoManager)
 {
     ui->mMyoDrawFrame->setMyoManager(myoManager);
+    //get connection status
+    if(ui->mPBTTConnect)
+    {
+        myoManager->setConnectionStatusCallback([this](bool status)
+        {
+            setIsConnected(status);
+        });
+    }
 }
 
 static void UiTextColor(QLabel* label,

@@ -525,6 +525,7 @@ QLinkedList < MyoListener::TypeRows >& GenMyoWindow::getList(QListWidgetItem* it
 void GenMyoWindow::onShowInputs(bool show)
 {
     mMyoDialog.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Dialog);
+    mMyoDialog.setMyoManager(&mMyoManager);
     mMyoDialog.show();
     mMyoDialog.setFocus();
     mMyoDialog.activateWindow();

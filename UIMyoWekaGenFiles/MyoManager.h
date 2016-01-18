@@ -102,13 +102,23 @@ public:
         QThread::quit();
     }
 
+    /*!
+     * \brief setConnectionStatusCallback
+     * \param callback
+     */
+    void setConnectionStatusCallback(std::function<void(bool)> callback)
+    {
+        mCBConnection = callback;
+    }
+
 protected:
 
-     myo::Hub*             mMyoHub   { nullptr }; //! myo hub pointer
-     myo::Myo*             mMyo      { nullptr }; //! myo device pointer
-     MyoListener           mListener;             //! myo listener instance
-     bool                  mLoop{ false };        //! loop flag
-     QMutex                mMutex;                //! mutex
+     myo::Hub*                  mMyoHub   { nullptr };   //! myo hub pointer
+     myo::Myo*                  mMyo      { nullptr };   //! myo device pointer
+     MyoListener                mListener;               //! myo listener instance
+     bool                       mLoop{ false };          //! loop flag
+     QMutex                     mMutex;                  //! mutex
+     std::function<void(bool)>  mCBConnection{ nullptr };//! callback to pass the raw data
 
      /*!
       * \brief The State enum
