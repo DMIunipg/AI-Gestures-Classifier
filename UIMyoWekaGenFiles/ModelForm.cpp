@@ -69,7 +69,8 @@ void ModelForm::onSearchDir(bool)
     //path
     mModelPath=QFileDialog::getSaveFileName(this,
                                             "Save",
-                                            QDir(mDatasetPath).absolutePath(),
+                                            mModelPath.size() ? QDir(mModelPath).absolutePath() :
+                                                                QDir(mDatasetPath).absolutePath(),
                                             "Model File");
     ui->mLEDir->setText(mModelPath);
 
