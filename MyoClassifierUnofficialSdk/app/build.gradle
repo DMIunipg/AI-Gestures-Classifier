@@ -2,13 +2,14 @@ apply plugin: 'com.android.model.application'
 
 model {
     android {
-        compileSdkVersion = 22
-        buildToolsVersion = "22.0.1"
+        compileSdkVersion = 23
+        buildToolsVersion = '23.0.3'
+
 
         defaultConfig.with {
             applicationId = "com.unipg.myoclassifier"
             minSdkVersion.apiLevel = 19
-            targetSdkVersion.apiLevel = 22
+            targetSdkVersion.apiLevel = 23
             versionCode = 1
             versionName = "1.0"
 
@@ -22,62 +23,70 @@ model {
 
         }
 
-    }
-
-    android.buildTypes {
-        release {
-            minifyEnabled = false
-            proguardFiles += file('proguard-rules.pro')
-            ndk.with {
-                debuggable = true
+        buildTypes {
+            release {
+                minifyEnabled = false
+                proguardFiles.add( file('proguard-rules.pro') )
+                ndk.with {
+                    debuggable = true
+                }
             }
         }
-    }
 
-    android.ndk {
-        moduleName = "GesturesClassifier"
-        //  CFlags    += ["-fopenmp"]
-        //  ldFlags   += ["-fopenmp"]
-        //  cppFlags  += "-fopenmp"
-        toolchain = "gcc"
-        toolchainVersion = "4.9"
-        cppFlags  += ["-pedantic", "-pthread", "-pedantic", "-ldl", "-lz", "-llog"]
-        cppFlags  += ["-std=c++14"]
-        cppFlags  += ["-O2"]
-        cppFlags  += "-I${file("src/main/jni").absolutePath}".toString()
-        cppFlags  += "-I${file("src/main/jni/cxx").absolutePath}".toString()
-        cppFlags  += "-I${file("src/main/jni/GesturesClassifier").absolutePath}".toString()
-        cppFlags  += "-I${file("src/main/jni/GesturesClassifier/kNN").absolutePath}".toString()
-        cppFlags  += "-I${file("src/main/jni/GesturesClassifier/SVM").absolutePath}".toString()
-        cppFlags  += "-I${file("src/main/jni/GesturesClassifier/RBFNetwork").absolutePath}".toString()
-        stl        = "gnustl_static"
-        platformVersion = 19
-    }
+        ndk {
+            moduleName = "GesturesClassifier"
+            toolchain = "gcc"
+            toolchainVersion = "4.9"
+            cppFlags.addAll( ["-pedantic", "-pthread", "-pedantic", "-ldl", "-lz", "-llog"] )
+            cppFlags.addAll( ["-std=c++14"] )
+            cppFlags.addAll( ["-O2"] )
+            cppFlags.add("-I${file("src/main/jni").absolutePath}".toString())
+            cppFlags.add("-I${file("src/main/jni/cxx").absolutePath}".toString())
+            cppFlags.add("-I${file("src/main/jni/GesturesClassifier").absolutePath}".toString())
+            cppFlags.add("-I${file("src/main/jni/GesturesClassifier/kNN").absolutePath}".toString())
+            cppFlags.add("-I${file("src/main/jni/GesturesClassifier/SVM").absolutePath}".toString())
+            cppFlags.add("-I${file("src/main/jni/GesturesClassifier/RBFNetwork").absolutePath}".toString())
+            stl        = "gnustl_static"
+            platformVersion = 19
+        }
 
-    android.productFlavors {
+        productFlavors {
+            // for detailed abiFilter descriptions, refer to "Supported ABIs" @
+            // https://developer.android.com/ndk/guides/abis.html#sa
+            create("arm") {
+                ndk {
+                    abiFilters.add("armeabi")
+                }
+            }
+            create("arm7") {
+                ndk {
+                    ldLibs.add('opus')
+                }
+            }
+            create("arm8") {
+                ndk {
+                    abiFilters.add("arm64-v8a")
+                }
+            }
+            create("x86") {
+                ndk {
+                    abiFilters.add("x86")
+                }
+            }
+            create("x86-64") {
+                ndk {
+                    abiFilters.add("x86_64")
+                }
+            }
+            // To include all cpu architectures, leaves abiFilters empty
+            create("all")
+        }
 
-        create("arm") {
-            ndk.abiFilters += "armeabi"
-        }
-        create("arm7") {
-            ndk.abiFilters += "armeabi-v7a"
-        }
-        create("arm8") {
-            ndk.abiFilters += "arm64-v8a"
-        }
-        create("x86") {
-            ndk.abiFilters += "x86"
-        }
-        create("x86-64") {
-            ndk.abiFilters += "x86_64"
-        }
-        // To include all cpu architectures, leaves abiFilters empty
-        create("all")
     }
 }
 
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
 }
