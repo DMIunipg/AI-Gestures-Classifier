@@ -25,6 +25,8 @@ win32 {
         #static libs
         #LIBS += -L$$PWD/../myo.mac/lib/ -l<lib>
     }
+    #OpenGL
+    LIBS += OpenGL32.lib
     #include
     INCLUDEPATH += $$PWD/
 

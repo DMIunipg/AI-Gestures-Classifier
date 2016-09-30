@@ -4,6 +4,7 @@
 
 #include <cstdio>
 #include <vector>
+#include <functional>
 #include <algorithm>
 #include <QMap>
 #include <QLinkedList>
@@ -86,8 +87,9 @@ public:
                 //callback
                 callback(className,list);
             }
+            return true;
         }
-
+        return false;
     }
 
     /*!

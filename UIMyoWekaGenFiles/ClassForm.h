@@ -1,6 +1,7 @@
 #ifndef CLASSFORM_H
 #define CLASSFORM_H
 
+#include <functional>
 #include <QWidget>
 
 namespace Ui {
