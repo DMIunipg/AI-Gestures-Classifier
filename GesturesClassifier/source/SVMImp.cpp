@@ -85,7 +85,7 @@ public:
         return true;
     }
     
-    svm_parameter parseArguments(const std::string& args)
+    svm_parameter parseArguments(const std::string& args,size_t num_of_features)
     {
         //kernel params
         svm_parameter param = {0};
@@ -95,11 +95,13 @@ public:
         param.cache_size  = 100.0f;
         param.coef0       = 0.1f;
         param.degree      = 3;
-        param.eps         = 0.1f;
-        param.gamma       = 0.2f;
-        param.nu          = 0.03f;
+        param.eps         = 0.001f;
+        param.gamma       = 1.0/(double)num_of_features;
+        param.nu          = 0.5f;
+        param.p           = 0.1f;
         param.probability = true;
         param.shrinking   = true;
+        param.C           = 1.0;
         //get ptr
         const char* ptr = args.c_str();
         //parse
@@ -125,11 +127,11 @@ public:
                 skipSpace(ptr);
                 //kernels
                 //enum { LINEAR, POLY, RBF, SIGMOID, PRECOMPUTED }; /* kernel_type */
-                     if(compareAndSkip(ptr,"LINEAR")) param.svm_type  = LINEAR;
-                else if(compareAndSkip(ptr,"POLY")) param.svm_type = POLY;
-                else if(compareAndSkip(ptr,"RBF")) param.svm_type  = RBF;
-                else if(compareAndSkip(ptr,"SIGMOID")) param.svm_type  = SIGMOID;
-                else if(compareAndSkip(ptr,"PRECOMPUTED")) param.svm_type  = PRECOMPUTED;
+                     if(compareAndSkip(ptr,"LINEAR")) param.kernel_type  = LINEAR;
+                else if(compareAndSkip(ptr,"POLY")) param.kernel_type = POLY;
+                else if(compareAndSkip(ptr,"RBF")) param.kernel_type  = RBF;
+                else if(compareAndSkip(ptr,"SIGMOID")) param.kernel_type  = SIGMOID;
+                else if(compareAndSkip(ptr,"PRECOMPUTED")) param.kernel_type  = PRECOMPUTED;
                 else break;
             }
             else if(compareAndSkip(ptr, "cache"))
@@ -243,7 +245,7 @@ public:
             
         }
         //kernel params
-        svm_parameter param = parseArguments(args);
+        svm_parameter param = parseArguments(args,data.sizeLine());
         //do cross validation
 #if  0
         svm_do_cross_validation(param,*problem,100);
