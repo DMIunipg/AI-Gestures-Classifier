@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GesturesClassifier", "..\GesturesClassifier\GesturesClassifier.vcxproj", "{EB071E61-4B77-48C4-8870-C353044DC4F3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GesturesClassifierApplication", "..\GesturesClassifierApplication\GesturesClassifierApplication.vcxproj", "{F9936656-569E-477B-A7DE-3451258C6A4F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EB071E61-4B77-48C4-8870-C353044DC4F3} = {EB071E61-4B77-48C4-8870-C353044DC4F3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
