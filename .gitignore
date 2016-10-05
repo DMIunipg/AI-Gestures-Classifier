@@ -97,7 +97,7 @@ Makefile*
 #QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
-
+*.qmake.stash
 
 ### Xcode ###
 # Xcode
