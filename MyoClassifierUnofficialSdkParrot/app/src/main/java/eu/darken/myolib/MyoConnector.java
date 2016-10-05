@@ -5,10 +5,17 @@
  */
 package eu.darken.myolib;
 
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanFilter;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -27,16 +34,19 @@ import eu.darken.myolib.tools.Logy;
 public class MyoConnector implements BluetoothAdapter.LeScanCallback {
     private static final String TAG = "MyoLib:RawMyoConnector";
     private final Context mContext;
+    private final BluetoothLeScanner mBluetoothLeScanner;
     private final BluetoothAdapter mBluetoothAdapter;
     private final Map<String, Myo> mDeviceMap = new HashMap<>();
     private final Map<String, Myo> mScanMap = new HashMap<>();
     private ScannerCallback mCallback;
     private Runnable mScanRunnable;
+    private Thread mScanThread;
 
     public MyoConnector(Context context) {
         mContext = context.getApplicationContext();
         BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
+        mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
     }
 
     public Context getContext() {
@@ -51,6 +61,7 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
      * @param callback optional callback with results, also available via {@link #getMyos()}
      * @return true if a scan was started, false if a scan was already running.
      */
+    /*
     public boolean scan(final long timeout, @Nullable final ScannerCallback callback) {
         //scannable?
         if (mScanRunnable != null)
@@ -75,11 +86,102 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
         new Thread(mScanRunnable).start();
         return true;
     }
+    */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public boolean scan(final long timeout, @Nullable final ScannerCallback callback) {
+        //scannable?
+        if (mScanRunnable != null)
+            return false;
+        //restart
+        mScanMap.clear();
+        //save callback
+        mCallback = callback;
+        //new api
+        if ( android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            // callback
+
+            final ScanCallback scanCallback = new ScanCallback() {
+                @Override
+                public void onScanResult(int callbackType, ScanResult result) {
+                    super.onScanResult(callbackType, result);
+                    MyoConnector.this.onLeScan(
+                            result.getDevice(),
+                            result.getRssi(),
+                            result.getScanRecord().getBytes()
+                    );
+                }
+
+                @Override
+                public void onBatchScanResults(List<ScanResult> results) {
+                    super.onBatchScanResults(results);
+                }
+
+                @Override
+                public void onScanFailed(int errorCode) {
+                    super.onScanFailed(errorCode);
+                }
+            };
+            /*
+            final ScanCallback scanCallback = new ScanCallback() {
+                @Override
+                public void onScanResult(int callbackType, ScanResult result) {
+                    MyoConnector.this.onLeScan(
+                            result.getDevice(),
+                            result.getRssi(),
+                            result.getScanRecord().getBytes());
+                }
+            };
+            */
+            //find devices
+            mScanRunnable = new Runnable() {
+                public void run() {
+                    //wait
+                    try {
+                        Thread.sleep(timeout);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Logy.d(TAG, "Scan stopped (timeout:" + timeout + ")");
+                    //stop
+                    mBluetoothLeScanner.stopScan(scanCallback);
+                    stopScan();
+                }
+            };
+            // scan for devices
+            mBluetoothLeScanner.startScan(scanCallback);
+            //
+        } else {
+            //find devices
+            mScanRunnable = new Runnable() {
+                public void run() {
+                    mBluetoothAdapter.startLeScan(MyoConnector.this);
+                    try {
+                        Thread.sleep(timeout);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Logy.d(TAG, "Scan stopped (timeout:" + timeout + ")");
+                    //stop
+                    mBluetoothAdapter.stopLeScan(MyoConnector.this);
+                    //Stop
+                    stopScan();
+                }
+            };
+        }
+        //
+        mScanThread = new Thread(mScanRunnable);
+        mScanThread.start();
+        //
+        return true;
+    }
 
     public void stopScan() {
-        if(mScanRunnable != null) {
-            mBluetoothAdapter.stopLeScan(MyoConnector.this);
+        //stop
+        if(mScanRunnable != null && mScanThread!=null) {
+            //to null
             mScanRunnable = null;
+            mScanThread = null;
+            //call
             if (mCallback != null)
                 mCallback.onScanFinished(new ArrayList<>(mDeviceMap.values()));
         }

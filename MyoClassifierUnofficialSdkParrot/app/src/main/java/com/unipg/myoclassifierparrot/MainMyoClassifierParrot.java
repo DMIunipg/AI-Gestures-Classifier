@@ -1,7 +1,10 @@
 package com.unipg.myoclassifierparrot;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,12 +12,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -53,12 +61,127 @@ import static com.parrot.arsdk.arcontroller.ARCONTROLLER_DEVICE_STATE_ENUM.ARCON
 /**
  * Created by Gabriele on 12/10/15.
  */
-public class MainMyoClassifierParrot extends AppCompatActivity {
+public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMyo.ConnectionListener {
 
     static {
         System.loadLibrary("GesturesClassifier");
         ARSDK.loadSDKLibs();
     };
+
+
+    /**
+     * Runtime permission request id
+     */
+    private static final int  REQUEST_READ_EXTERNAL_STORAGE_AND_ACCESS_CORE_LOCATION = 200;
+    private static final int  SETTING_ENABLE_LOCATION = 201;
+    /**
+     * Bluetooth
+     */
+    private BluetoothManager mBluetoothManager = null;
+    private BluetoothAdapter mBluetoothAdapter = null;
+
+    /**
+     * Runtime permission
+     */
+    void getRuntimePermission(){
+        //test permission storage
+        boolean acceptSTORAGE_LOCATION =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)  == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        //show message
+        if(!acceptSTORAGE_LOCATION)
+        {
+            requestRuntimePermission();
+        }
+    }
+
+    /**
+     * Location permission
+     */
+    public void getLocationPermission()
+    {
+        if(!testLocationPermission()) {
+            this.startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), SETTING_ENABLE_LOCATION);
+        }
+    }
+
+    /**
+     * Test Location permission
+     */
+    public boolean testLocationPermission(){
+        LocationManager lm = (LocationManager)getBaseContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+
+        return gps_enabled || network_enabled;
+
+    }
+
+
+    /**
+     * Runtime permission request
+     */
+    public void requestRuntimePermission()
+    {
+        ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.BLUETOOTH,
+                        Manifest.permission.BLUETOOTH_ADMIN,
+                        Manifest.permission.INTERNET},
+                REQUEST_READ_EXTERNAL_STORAGE_AND_ACCESS_CORE_LOCATION);
+    }
+
+    /**
+     * Callback after user accept (or not) the permission request
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        switch (requestCode)
+        {
+            case REQUEST_READ_EXTERNAL_STORAGE_AND_ACCESS_CORE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    //success
+                }
+                else
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainMyoClassifierParrot.this);
+                    alert.setTitle("Error");
+                    alert.setMessage("Grant phone permission before using application!");
+                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            requestRuntimePermission();
+                        }
+                    });
+                    alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            MainMyoClassifierParrot.this.finish();
+
+                        }
+                    });
+                    AlertDialog dialog = alert.create();
+                    dialog.show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     /**
      * constant, it used when view list myo is shown
@@ -323,14 +446,14 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
      * @brief isBluetoothSupport
      * @return true if bluetooth is supported
      */
+
     boolean isBluetoothSupport(){
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter != null) {
-            if (!mBluetoothAdapter.isEnabled()) {
+            if (mBluetoothAdapter.isEnabled()) {
                 return true;
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -339,14 +462,25 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
      */
     protected void executeJumpingSumoAction(String className) {
         if(mJumpingSumo != null)  {
-            if(className.equals("normal"))
-                mJumpingSumo.setSpeed((byte)0);
-            else if(className.equals("fist"))
-                mJumpingSumo.setSpeed((byte)100);
-            else if(className.equals("right"))
-                mJumpingSumo.setTurn((byte)10);
-            else if(className.equals("left"))
-                mJumpingSumo.setTurn((byte)-10);
+            if(className.equals("normal")) {
+                mJumpingSumo.setSpeed((byte) 0);
+                mJumpingSumo.setFlag((byte) 0);
+            }
+            else if(className.equals("fist")) {
+                mJumpingSumo.setSpeed((byte) 75);
+                mJumpingSumo.setTurn((byte) 0);
+                mJumpingSumo.setFlag((byte) 1);
+            }
+            else if(className.equals("right")) {
+                mJumpingSumo.setSpeed((byte) 20);
+                mJumpingSumo.setTurn((byte) 10);
+                mJumpingSumo.setFlag((byte) 1);
+            }
+            else if(className.equals("left")) {
+                mJumpingSumo.setSpeed((byte) 20);
+                mJumpingSumo.setTurn((byte) -10);
+                mJumpingSumo.setFlag((byte) 1);
+            }
         }
     }
 
@@ -384,13 +518,20 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //set orientation
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        //alloc Bluetooth manager
+        mBluetoothManager =  (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = mBluetoothManager.getAdapter();
+        //request runtime permission
+        getRuntimePermission();
+        //get Location active
+        getLocationPermission();
         //create scanner
         mFindJumpingSumo = new FindJumpingSumo(new FindJumpingSumoListener(){
             public void onFindJumpingSumo(ARDiscoveryDeviceService drone){
                 mJumpingSumo = new JumpingSumo(MainMyoClassifierParrot.this.getBaseContext(),drone);
                 mJumpingSumo.addListener(mJumpingSumoListner);
                 if(!mJumpingSumo.connect()) {
-                    onEndScanJumpingSumo();
+                    disconnectJumpingSumo();
                 }
                 else if(isJumpingSumoConnected()){
                     onJumpingSumoConnected();
@@ -480,6 +621,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
         {
             bluetoothUnsupportedDialog();
         }
+
     }
 
     /**
@@ -511,11 +653,8 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
     protected void disconnectJumpingSumo(){
         onEndScanJumpingSumo();
         if(mJumpingSumo != null){
-            if(!mJumpingSumo.disconnect())
-            {
-                mJumpingSumo.dispose();
-            }
-            mJumpingSumo = null;
+            // disconnect
+            mJumpingSumo.disconnect();
             onJumpingSumoDisconnected();
         }
     }
@@ -662,8 +801,29 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //..
+        if(requestCode == SETTING_ENABLE_LOCATION) {
+            if(!testLocationPermission()) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainMyoClassifierParrot.this);
+                alert.setTitle("Error");
+                alert.setMessage("Please enable location service");
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getLocationPermission();
+                    }
+                });
+                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MainMyoClassifierParrot.this.finish();
+
+                    }
+                });
+                AlertDialog dialog = alert.create();
+                dialog.show();
+            }
+        }
         //load file
-        if(requestCode == REQUEST_CODE_PICK_FILE)  {
+        else if(requestCode == REQUEST_CODE_PICK_FILE)  {
 
             if(resultCode == this.RESULT_OK) {
                 String path =  data.getStringExtra(FileBrowserActivity.returnFileParameter);
@@ -679,7 +839,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
                 //fail to load
                 if(typeClassifier == -1) return;
                 //alloc native classifier
-                mNClassifierManager = new MyoNativeClassifierManager(MyoNativeClassifierManager.kNN);
+                mNClassifierManager = new MyoNativeClassifierManager(typeClassifier);
                 //load
                 mNClassifierManager.loadModel(path);
                 //to do... check success to load
@@ -722,29 +882,23 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
         //save last myo
         mMyo = myo;
         //connect to myo
+        myo.addConnectionListener(this);
         myo.connect();
+        myo.setTimeoutSendQueue(1000);
         myo.setConnectionSpeed(BaseMyo.ConnectionSpeed.HIGH);
         myo.writeSleepMode(MyoCmds.SleepMode.NEVER, null);
         myo.writeMode(MyoCmds.EmgMode.FILTERED,
                       MyoCmds.ImuMode.RAW,
                       MyoCmds.ClassifierMode.DISABLED,
                       null);
+        //...
         myo.writeUnlock(MyoCmds.UnlockType.HOLD, new Myo.MyoCommandCallback() {
             @Override
             public void onCommandDone(Myo myo, MyoMsg msg) {
+                //send command
                 myo.writeVibrate(MyoCmds.VibrateType.LONG, null);
             }
         });
-        //create processors
-        EmgProcessor      emgProcessor = new EmgProcessor();
-        ImuProcessor      imuProcessor = new ImuProcessor();
-        MyoNativeListener myoNListener = new MyoNativeListener();
-        //attach all to myo
-        myo.addProcessor(emgProcessor);
-        myo.addProcessor(imuProcessor);
-        //add listeners
-        emgProcessor.addListener(myoNListener);
-        imuProcessor.addListener(myoNListener);
         //change button
         ((Button)findViewById(R.id.btSearchMyo)).post(new Runnable() {
             @Override
@@ -754,6 +908,31 @@ public class MainMyoClassifierParrot extends AppCompatActivity {
         });
     }
 
+    public void onConnectionStateChanged(final BaseMyo myo, BaseMyo.ConnectionState state)
+    {
+        if (state == BaseMyo.ConnectionState.CONNECTED) {
+            //create processors
+            EmgProcessor      emgProcessor = new EmgProcessor();
+            ImuProcessor      imuProcessor = new ImuProcessor();
+            MyoNativeListener myoNListener = new MyoNativeListener();
+            //attach all to myo
+            myo.addProcessor(emgProcessor);
+            myo.addProcessor(imuProcessor);
+            //add listeners
+            emgProcessor.addListener(myoNListener);
+            imuProcessor.addListener(myoNListener);
+        }
+        else if (state == BaseMyo.ConnectionState.DISCONNECTED) {
+            //event
+            ((Button)findViewById(R.id.btSearchMyo)).post(new Runnable() {
+                @Override
+                public void run() {
+                    disconnectMyo();
+                    ((Button)findViewById(R.id.btSearchMyo)).setText("Search Myo");
+                }
+            });
+        }
+    }
     /**
      * @brief disconnectMyo, call this when you want disconnet from Myo
      */
