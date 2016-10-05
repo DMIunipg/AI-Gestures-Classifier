@@ -18,9 +18,9 @@
 #include <string>
 #include <functional>
 #include <time.h>
-#include <DataFlags.h>
-#include <Utilities.h>
-#include <cxx/DeviceListener.hpp>
+#include "DataFlags.h"
+#include "Utilities.h"
+#include <myo/cxx/DeviceListener.hpp>
 
 /*!
  * \brief MyoDataCollector

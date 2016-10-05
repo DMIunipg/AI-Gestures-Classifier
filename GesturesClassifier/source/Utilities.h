@@ -10,9 +10,9 @@
 #pragma once
 
 #include <assert.h>
-#include <cxx/Quaternion.hpp>
-#include <cxx/Vector3.hpp>
-#include <cxx/DeviceListener.hpp>
+#include <myo/cxx/Quaternion.hpp>
+#include <myo/cxx/Vector3.hpp>
+#include <myo/cxx/DeviceListener.hpp>
 #include <cstring>
 #include <cstdio>
 #include <string>

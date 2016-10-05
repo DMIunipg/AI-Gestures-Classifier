@@ -11,9 +11,9 @@
 
 #include <string>
 #include <memory>
-#include <MyoThread.h>
-#include <DataFlags.h>
-#include <MyoClassifierInterface.h>
+#include "MyoThread.h"
+#include "DataFlags.h"
+#include "MyoClassifierInterface.h"
 
 
 /*!

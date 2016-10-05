@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="File di origine">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="File di intestazione">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="File di risorse">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="File di intestazione\RBFNetwork">
+      <UniqueIdentifier>{146ea893-0f40-4a55-8935-ecf65af790bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di intestazione\kNN">
+      <UniqueIdentifier>{13542e15-5efe-45f5-a2a3-47c1a1e72357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di intestazione\SVM">
+      <UniqueIdentifier>{55cba08e-e63f-4e89-ac07-e59f57d38a22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di origine\SVM">
+      <UniqueIdentifier>{5f49dd98-a45f-4676-88cf-9948d31e0a31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di origine\kNN">
+      <UniqueIdentifier>{adff8324-0e87-4f73-bf16-529115975189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di origine\RBFNetwork">
+      <UniqueIdentifier>{1fad94fe-bcd7-4b49-861f-1fe91cf445f7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\DataFlags.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DataSetReader.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\kNNImp.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MyoClassifierInterface.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MyoClassifierManager.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MyoData.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MyoModelInterface.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MyoThread.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MyoTime.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RBFImp.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SVMImp.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Utilities.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RBFNetwork\Datapoint.h">
+      <Filter>File di intestazione\RBFNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RBFNetwork\KmeansPP.h">
+      <Filter>File di intestazione\RBFNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RBFNetwork\RBFNetwork.h">
+      <Filter>File di intestazione\RBFNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RBFNetwork\RBFUtil.h">
+      <Filter>File di intestazione\RBFNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="source\kNN\kNN.h">
+      <Filter>File di intestazione\kNN</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SVM\svm.h">
+      <Filter>File di intestazione\SVM</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SVM\SVMUtilities.h">
+      <Filter>File di intestazione\SVM</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\DataSetReader.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\kNNImp.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MyoClassifierManager.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MyoThread.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MyoTime.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RBFImp.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SVMImp.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RBFNetwork\KmeansPP.cpp">
+      <Filter>File di origine\RBFNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RBFNetwork\RBFNetwork.cpp">
+      <Filter>File di origine\RBFNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="source\kNN\kNN.cpp">
+      <Filter>File di origine\kNN</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SVM\svm.cpp">
+      <Filter>File di origine\SVM</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SVM\SVMUtilities.cpp">
+      <Filter>File di origine\SVM</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

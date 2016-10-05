@@ -11,7 +11,7 @@
 
 #include <vector>
 #include <string>
-#include <DataSetReader.h>
+#include "../DataSetReader.h"
 
 /*!
  * \brief kNN implementation

@@ -12,6 +12,12 @@ TEMPLATE = app
 #c++11 flags
 CONFIG += c++11
 
+#dest
+CONFIG(debug, debug|release) {
+    DESTDIR = $${OUT_PWD}/debug
+} else {
+    DESTDIR = $${OUT_PWD}/release
+}
 #windows lib
 win32 {
     !contains(QMAKE_TARGET.arch, x86_64) {
@@ -35,6 +41,21 @@ win32 {
 
     INCLUDEPATH += $$PWD/../myo.win/include/myo/
     DEPENDPATH  += $$PWD/../myo.win/include/myo/
+    #path GesturesClassifierApplication
+    GCAppPath = $$PWD/../GesturesClassifierWorkSpace/x64/Release
+    #if not exists... compile...
+    !exists($$GCAppPath) {
+        #output
+        message(compile $$GCAppPath)
+        #compile external tools
+        system(msbuild \
+               ../GesturesClassifierWorkSpace/GesturesClassifierWorkSpace.sln \
+               /p:Configuration=Release /p:Platform=x64)
+
+    }
+    #output
+    message(copy $$shell_path($$GCAppPath/GesturesClassifierApplication.exe) to $$shell_path($${DESTDIR}))
+    system(cmd /c xcopy $$shell_path($$GCAppPath/GesturesClassifierApplication.exe) $$shell_path($${DESTDIR}) /y)
 }
 #mac os x libs
 macx {

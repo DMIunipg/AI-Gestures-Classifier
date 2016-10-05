@@ -7,10 +7,10 @@
 //
 
 #include <stdio.h>
-#include <SVMImp.h>
-#include <kNNImp.h>
-#include <RBFImp.h>
-#include <MyoClassifierManager.h>
+#include "SVMImp.h"
+#include "kNNImp.h"
+#include "RBFImp.h"
+#include "MyoClassifierManager.h"
 
 
 MyoClassifierManager::MyoClassifierManager(Classifier type,bool myoThread)

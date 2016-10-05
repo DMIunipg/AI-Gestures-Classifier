@@ -139,10 +139,8 @@ void MyoDialog::setMyoManager(MyoManager* myoManager)
     //get connection status
     if(ui->mPBTTConnect)
     {
-        myoManager->setConnectionStatusCallback([this](bool status)
-        {
-            setIsConnected(status);
-        });
+        connect(myoManager,SIGNAL(connectionStatusChange(bool)),
+                this,      SLOT(setIsConnected(bool)));
     }
 }
 

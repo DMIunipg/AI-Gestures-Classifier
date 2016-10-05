@@ -6,9 +6,9 @@
 //  Copyright © 2015 Gabriele Di Bari. All rights reserved.
 //
 
-#include <kNNImp.h>
-#include <kNN/kNN.h>
 #include <climits>
+#include "kNNImp.h"
+#include "kNN/kNN.h"
 
 class MyoModelkNN : public MyoModelInterface
 {

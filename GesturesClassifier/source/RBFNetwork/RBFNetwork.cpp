@@ -1,5 +1,5 @@
 #include "RBFNetwork.h"
-
+#include <algorithm>
 using namespace std;
 
 RBFNetwork::RBFNetwork(const vector<datapoint> &training_data, const vector<int> &training_labels, int num_of_labels)

@@ -8,6 +8,8 @@
 
 #include "SVMImp.h"
 #include "SVM/SVMUtilities.h"
+#include <cstring>
+#include <cctype>
 
 class MyoModelSVM : public MyoModelInterface
 {

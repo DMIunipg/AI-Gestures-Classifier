@@ -11,7 +11,7 @@
 
 #include <string>
 #include <functional>
-#include <MyoModelInterface.h>
+#include "MyoModelInterface.h"
 
 /*!
  * \brief Classifier enum, type of classification method

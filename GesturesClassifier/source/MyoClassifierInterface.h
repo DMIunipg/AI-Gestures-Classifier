@@ -12,9 +12,9 @@
 #include <string>
 #include <cstdio>
 #include <functional>
-#include <MyoThread.h>
-#include <DataSetReader.h>
-#include <MyoModelInterface.h>
+#include "MyoThread.h"
+#include "DataSetReader.h"
+#include "MyoModelInterface.h"
 
 
 /*!

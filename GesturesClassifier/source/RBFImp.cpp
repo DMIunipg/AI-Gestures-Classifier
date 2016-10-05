@@ -6,9 +6,10 @@
 //  Copyright © 2015 Gabriele Di Bari. All rights reserved.
 //
 
-#include <RBFImp.h>
-#include <RBFNetwork/RBFNetwork.h>
 #include <iostream>
+#include <cctype>
+#include "RBFImp.h"
+#include "RBFNetwork/RBFNetwork.h"
 
 class MyoModelRBFNetwork : public MyoModelInterface
 {

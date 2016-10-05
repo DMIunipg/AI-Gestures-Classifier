@@ -67,11 +67,7 @@ void MyoDrawFrame::initializeGL()
       varying   float z_position;
       void main()
       {
-         #if 1
          float  factor = (z_position+1.0) * 0.5;
-         #else
-         float  factor = z_position<= 0.5 ? 1.0 : 0.0 ;
-         #endif
          float ifactor = 1.0 - factor;
          vec3 color   = vec3(factor,0.25,ifactor);
          gl_FragColor = vec4(color ,1.0);

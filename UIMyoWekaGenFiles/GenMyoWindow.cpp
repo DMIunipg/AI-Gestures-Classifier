@@ -21,10 +21,10 @@ GenMyoWindow::GenMyoWindow(QWidget *parent)
     mPath = QDir::currentPath();
     //start path
     mPathExport = QDir::currentPath();
-    //start
-    mMyoManager.start();
     //set manager to myo dialog
     mMyoDialog.setMyoManager(&mMyoManager);
+    //start
+    mMyoManager.start();
 }
 
 GenMyoWindow::~GenMyoWindow()

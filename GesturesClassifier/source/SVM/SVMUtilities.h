@@ -11,7 +11,7 @@
 #pragma once
 #include <string>
 #include <cstdio>
-#include <svm.h>
+#include "svm.h"
 
 void svm_do_cross_validation(const svm_parameter& param, const svm_problem& prob,int nr_fold);
 

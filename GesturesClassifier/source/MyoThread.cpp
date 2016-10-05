@@ -5,11 +5,12 @@
 //  Created by Gabriele Di Bari on 28/09/15.
 //  Copyright © 2015 Gabriele Di Bari. All rights reserved.
 //
-
-#include <MyoThread.h>
-#include <MyoTime.h>
-#include <MyoData.h>
-#include <myo.hpp>
+#define _USE_MATH_DEFINES
+#include "MyoThread.h"
+#include "MyoTime.h"
+#include "MyoData.h"
+#include <cmath>
+#include <myo/myo.hpp>
 
 void MyoThread::start(MyoThread::Callback callback,const DataFlags& flags,unsigned int update)
 {

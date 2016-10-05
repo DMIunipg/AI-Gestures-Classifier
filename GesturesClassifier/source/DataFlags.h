@@ -2,10 +2,10 @@
 #define DATAFLAGS_H
 #pragma once
 
-#include <Utilities.h>
 #include <cstdio>
 #include <string>
 #include <map>
+#include "Utilities.h"
 
 /*!
  * \brief The DataFlags struct
