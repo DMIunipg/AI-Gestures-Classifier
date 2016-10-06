@@ -7,13 +7,13 @@
 //
 
 #include <stdio.h>
-#include <SVMImp.h>
-#include <kNNImp.h>
-#include <RBFImp.h>
-#include <MyoClassifierManager.h>
+#include "SVMImp.h"
+#include "kNNImp.h"
+#include "RBFImp.h"
+#include "MyoClassifierManager.h"
 
 
-MyoClassifierManager::MyoClassifierManager(Classifier type)
+MyoClassifierManager::MyoClassifierManager(Classifier type,bool myoThread)
 {
     mClassifier = type;
     //select classifier
@@ -25,13 +25,13 @@ MyoClassifierManager::MyoClassifierManager(Classifier type)
         case CLA_RBFNETWORK: mInterface = new MyoClassifierRBFNetwork; break;
     }
     //alloc myo thread
-    mMyoThread = new MyoThread;
+    mMyoThread = myoThread ? new MyoThread : nullptr;
 }
 
 MyoClassifierManager::~MyoClassifierManager()
 {
-    delete mMyoThread;
-    delete mInterface;
+    if(mMyoThread) delete mMyoThread; mMyoThread = nullptr;
+    if(mInterface) delete mInterface; mInterface = nullptr;
 }
 
 MyoModelInterface* MyoClassifierManager::buildModel(const std::string& path)
@@ -40,6 +40,14 @@ MyoModelInterface* MyoClassifierManager::buildModel(const std::string& path)
     dsReader.read(path);
     return mInterface->createModel(dsReader);
 }
+
+MyoModelInterface* MyoClassifierManager::buildModel(const std::string& path, const std::string& args)
+{
+    DataSetReader dsReader;
+    dsReader.read(path);
+    return mInterface->createModel(dsReader,args);
+}
+
 
 MyoModelInterface* MyoClassifierManager::loadModel(const std::string& path)
 {
@@ -53,6 +61,7 @@ void MyoClassifierManager::setProbabilityFilter(double probability)
 
 void MyoClassifierManager::classification(const std::function< void (const std::string& className) > callback)
 {
+    assert(mMyoThread);
     mInterface->classification(*mMyoThread, callback);
 }
 

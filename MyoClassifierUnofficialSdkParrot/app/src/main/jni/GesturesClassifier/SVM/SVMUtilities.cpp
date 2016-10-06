@@ -6,8 +6,8 @@
 //  Copyright © 2015 Gabriele Di Bari. All rights reserved.
 //
 
-#include <SVMUtilities.h>
-#include <svm.h>
+#include "SVMUtilities.h"
+#include "svm.h"
 
 void svm_do_cross_validation(const svm_parameter& param, const svm_problem& prob,int nr_fold)
 {

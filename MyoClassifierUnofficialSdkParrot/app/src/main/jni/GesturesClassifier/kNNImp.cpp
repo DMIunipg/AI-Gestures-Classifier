@@ -6,9 +6,9 @@
 //  Copyright © 2015 Gabriele Di Bari. All rights reserved.
 //
 
-#include <kNNImp.h>
-#include <kNN/kNN.h>
 #include <climits>
+#include "kNNImp.h"
+#include "kNN/kNN.h"
 
 class MyoModelkNN : public MyoModelInterface
 {
@@ -82,7 +82,14 @@ MyoClassifierkNN::~MyoClassifierkNN()
 {
 }
 
+
 MyoModelInterface* MyoClassifierkNN::createModel(const DataSetReader& ds)
+{
+    mModel = std::make_shared<MyoModelkNN>(ds);
+    return mModel.get();
+}
+
+MyoModelInterface* MyoClassifierkNN::createModel(const DataSetReader& ds,const std::string& args)
 {
     mModel = std::make_shared<MyoModelkNN>(ds);
     return mModel.get();

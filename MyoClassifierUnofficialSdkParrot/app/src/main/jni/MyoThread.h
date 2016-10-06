@@ -20,7 +20,7 @@
 #include <time.h>
 #include <DataFlags.h>
 #include <Utilities.h>
-#include <cxx/DeviceListener.hpp>
+#include <myo/cxx/DeviceListener.hpp>
 
 class MyoDataCollector : public myo::DeviceListener
 {

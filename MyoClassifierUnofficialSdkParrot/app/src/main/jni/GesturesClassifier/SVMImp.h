@@ -12,9 +12,9 @@
 
 #include <string>
 #include <memory>
-#include <MyoThread.h>
-#include <DataFlags.h>
-#include <MyoClassifierInterface.h>
+#include "MyoThread.h"
+#include "DataFlags.h"
+#include "MyoClassifierInterface.h"
 
 
 /*!
@@ -45,6 +45,14 @@ public:
      * \return model
      */
     virtual MyoModelInterface* createModel(const DataSetReader& ds);
+    
+    /*!
+     * \brief createModel
+     * \param dataset
+     * \param arguments
+     * \return Myo Model built
+     */
+    virtual MyoModelInterface* createModel(const DataSetReader& ds,const std::string& args);
     
     /*!
      * \brief modelFromfile
