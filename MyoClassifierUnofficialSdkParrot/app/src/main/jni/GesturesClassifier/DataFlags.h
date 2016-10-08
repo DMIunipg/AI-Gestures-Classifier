@@ -177,9 +177,9 @@ struct DataFlags
     /*!
      * \brief lineSize
      * \return size of row
-     * \tparam N size of emg inputs
+     * \tparam N size of emg inputs [default 8]
      */
-    template < const size_t N >
+    template < const size_t N = 8 >
     size_t lineSize() const
     {
         size_t size=0;
@@ -197,6 +197,48 @@ struct DataFlags
         //size
         return size;
     }
+
+	/*!
+	* \brief sampleLineSize
+	* \return size of a sample in row
+	* \tparam N size of emg inputs [default 8]
+	*/
+	template < const size_t N = 8 >
+	size_t sampleLineSize() const
+	{
+		size_t size = 0;
+		//add all
+		size += mTime ? 1 : 0;
+		size += mGyroscope ? 3 : 0;
+		size += mAccelerometer ? 3 : 0;
+		size += mQuaternion ? 4 : 0;
+		size += mPitch ? 1 : 0;
+		size += mYaw ? 1 : 0;
+		size += mRoll ? 1 : 0;
+		size += mEmg ? N : 0;
+		//size
+		return size;
+	}
+
+	/*!
+	* \brief getEmgSampleSubPosition
+	* \return position of emgs data in a sample in row
+	* \tparam N size of emg inputs [default 8]
+	*/
+	size_t getEmgSampleEmgPosition() const
+	{
+		size_t size = 0;
+		//add all
+		size += mTime ? 1 : 0;
+		size += mGyroscope ? 3 : 0;
+		size += mAccelerometer ? 3 : 0;
+		size += mQuaternion ? 4 : 0;
+		size += mPitch ? 1 : 0;
+		size += mYaw ? 1 : 0;
+		size += mRoll ? 1 : 0;
+		//size
+		return size;
+	}
     
     /*!
      * \brief serialize

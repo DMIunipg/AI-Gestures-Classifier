@@ -57,6 +57,12 @@ public:
      * \param model
      */
     virtual void setModel(MyoModelInterface* model) = 0;
+
+	/*!
+	* \brief getModel
+	* \return model current
+	*/
+	virtual MyoModelInterface* getModel() const = 0;
     
     /*!
      * \brief setProbabilityFilter, set the minimum probability required to call the callback

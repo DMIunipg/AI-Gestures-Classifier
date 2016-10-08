@@ -90,6 +90,12 @@
     <ClInclude Include="source\SVM\SVMUtilities.h">
       <Filter>File di intestazione\SVM</Filter>
     </ClInclude>
+    <ClInclude Include="source\KissFFT.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DataSetFFT.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\DataSetReader.cpp">

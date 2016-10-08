@@ -31,6 +31,10 @@ kNN::Result kNN::classify(const kNN::DataRaw& row,
     std::vector< SelectField > selected;
     //resize the buffer K's list buffer
     selected.resize(nNN);
+	//count of row added
+	int rowAdded = 0;
+	//ref to most distance field
+	SelectField* mostDistanceField = nullptr;
     //serach in data set
     for(auto& field:mDataSet)
     {
@@ -44,14 +48,45 @@ kNN::Result kNN::classify(const kNN::DataRaw& row,
             case MANHATTAN_DISTANCE: rfdistance = manhattan(field.mRaw, row);  break;
             case HAMMING_DISTANCE:   rfdistance = hamming(field.mRaw, row);  break;
         }
-        //compare with already selected
-        for(auto& select : selected)
-            if(!select.mField || select.mDistance > rfdistance)
-            {
-                select.mDistance = rfdistance;
-                select.mField    = &field;
-                break;
-            }
+		//not all selected
+		if (rowAdded < selected.size())
+		{
+			for (auto& selectRow : selected)
+			{
+				if (!selectRow.mField)
+				{
+					selectRow.mDistance = rfdistance;
+					selectRow.mField = &field;
+					//get max
+					if (!mostDistanceField || mostDistanceField->mDistance < rfdistance)
+					{
+						mostDistanceField = &selectRow;
+					}
+					//inc 
+					++rowAdded;
+					//next
+					break;
+				}
+			}
+		}
+		//all selected rows are occupied
+		else 
+		{
+			if (mostDistanceField->mDistance > rfdistance)
+			{
+				mostDistanceField->mDistance = rfdistance;
+				mostDistanceField->mField = &field;
+				//search most distance field
+				for (auto& selectRow : selected)
+				{
+					//get max
+					if (mostDistanceField->mDistance < rfdistance)
+					{
+						mostDistanceField = &selectRow;
+					}
+				}
+			}
+		}
     }
     //democratic selection
     struct WightAndCount

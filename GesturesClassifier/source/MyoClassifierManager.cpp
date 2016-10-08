@@ -48,6 +48,10 @@ MyoModelInterface* MyoClassifierManager::buildModel(const std::string& path, con
     return mInterface->createModel(dsReader,args);
 }
 
+MyoModelInterface* MyoClassifierManager::getModel() const
+{
+	return mInterface->getModel();
+}
 
 MyoModelInterface* MyoClassifierManager::loadModel(const std::string& path)
 {

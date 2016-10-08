@@ -5,6 +5,20 @@
 #include <QDebug>
 #include <QDir>
 /*
+    QString mType;       //! type regression
+    QString mWeight;     //! weight
+    bool    mFFN;        //! Use FFN for EMGs values
+    int     mRtoc;       //! k Near to classify
+*/
+static ModelForm::kNNParams defaultkNNParams =
+{
+    "EUCLIDE_DISTANCE",   //type
+    "ONE_ON_DISTANCE",    //weight
+    true,                 //FFT
+    5,                    //records_to_classify
+};
+
+/*
     QString mType;
     QString mKernel;
     double  mCacheSize;
@@ -17,6 +31,7 @@
     bool    mProbability;
     bool    mShrinking;
 */
+#if 0
 static ModelForm::SVMParams defaultSVMParams =
 {
     "NU_SVC",   //type
@@ -28,9 +43,29 @@ static ModelForm::SVMParams defaultSVMParams =
     0.2f,       //gamma
     0.3f,       //nu
     0.0f,       //p
+    1.0f,       //const
+    true,       //FFN
     true,       //probability
     true        //shrinking
 };
+#else
+static ModelForm::SVMParams defaultSVMParams =
+{
+    "C_SVC",    //type
+    "LINEAR",   //kernel
+    2000.0f,    //cache
+    0.01f,      //coef0
+    3,          //degree
+    0.01f,      //eps
+    0.1f,       //gamma
+    0.1f,       //nu
+    0.1f,       //p
+    2.0f,       //const
+    true,       //FFN
+    true,       //probability
+    true        //shrinking
+};
+#endif
 
 /*
     int     mNumIterations;
@@ -53,6 +88,8 @@ ModelForm::ModelForm(QWidget *parent) :
     ui->setupUi(this);
     //default is kNN
     applay(ModelType::M_kNN);
+    //applay default kNN
+    applay(defaultkNNParams);
     //applay default svm
     applay(defaultSVMParams);
     //applay default rbf network params
@@ -103,6 +140,7 @@ void ModelForm::onApplay(bool event)
     //cases
     switch(type)
     {
+        case ModelType::M_kNN:         params << toStrListParams(getkNNParams()); break;
         case ModelType::M_SVM:         params << toStrListParams(getSVMParams()); break;
         case ModelType::M_RBF_Network: params << toStrListParams(getRBFParams()); break;
         default: break;
@@ -128,6 +166,7 @@ void ModelForm::onKNN(bool event)
 {
     if(event)
     {
+        ui->mGBKnn->setEnabled(true);
         ui->mGBSVM->setEnabled(false);
         ui->mGBRBFNetwork->setEnabled(false);
     }
@@ -137,6 +176,7 @@ void ModelForm::onSVM(bool event)
 {
     if(event)
     {
+        ui->mGBKnn->setEnabled(false);
         ui->mGBSVM->setEnabled(true);
         ui->mGBRBFNetwork->setEnabled(false);
     }
@@ -146,6 +186,7 @@ void ModelForm::onRBFNetwork(bool event)
 {
     if(event)
     {
+        ui->mGBKnn->setEnabled(false);
         ui->mGBSVM->setEnabled(false);
         ui->mGBRBFNetwork->setEnabled(true);
     }
@@ -178,6 +219,14 @@ void ModelForm::applay(ModelForm::ModelType type)
     }
 }
 
+void ModelForm::applay(const ModelForm::kNNParams& params)
+{
+    ui->mCBkNNType->setCurrentText(params.mType);
+    ui->mCBkNNWeight->setCurrentText(params.mWeight);
+    ui->mCBkNNFFT->setCurrentText(params.mFFN ? "TRUE" : "FALSE");
+    ui->mSBkNNRtoc->setValue(params.mRtoc);
+}
+
 void ModelForm::applay(const ModelForm::SVMParams& params)
 {
     ui->mCBType->setCurrentText(params.mType);
@@ -189,6 +238,8 @@ void ModelForm::applay(const ModelForm::SVMParams& params)
     ui->mDSBGamma->setValue(params.mGamma);
     ui->mDSBNu->setValue(params.mNu);
     ui->mDSBP->setValue(params.mP);
+    ui->mDSBConst->setValue(params.mConst);
+    ui->mCBFTT->setCurrentText(params.mFFN ? "TRUE" : "FALSE");
     ui->mCBProbability->setCurrentText(params.mProbability ? "TRUE" : "FALSE");
     ui->mCBShrinking->setCurrentText(params.mShrinking ? "TRUE" : "FALSE");
 }
@@ -210,6 +261,19 @@ ModelForm::ModelType ModelForm::getType() const
     //default
     return ModelType::M_kNN;
 }
+
+ModelForm::kNNParams ModelForm::getkNNParams() const
+{
+    ModelForm::kNNParams output;
+
+    output.mType = ui->mCBkNNType->currentText();
+    output.mWeight = ui->mCBkNNWeight->currentText();
+    output.mRtoc = ui->mSBkNNRtoc->value();
+    output.mFFN = (ui->mCBkNNFFT->currentText() == "FALSE" ? false : true);
+
+    return output;
+}
+
 ModelForm::SVMParams ModelForm::getSVMParams() const
 {
     ModelForm::SVMParams output;
@@ -222,6 +286,8 @@ ModelForm::SVMParams ModelForm::getSVMParams() const
     output.mGamma = ui->mDSBGamma->value();
     output.mNu = ui->mDSBNu->value();
     output.mP = ui->mDSBP->value();
+    output.mConst = ui->mDSBConst->value();
+    output.mFFN = (ui->mCBFTT->currentText() == "FALSE" ? false : true);
     output.mProbability = (ui->mCBProbability->currentText() == "FALSE" ? false : true);
     output.mShrinking = (ui->mCBShrinking->currentText() == "FALSE" ? false : true);
 
@@ -253,6 +319,15 @@ QStringList ModelForm::toStrListParams(ModelForm::ModelType& type)
 
     return list;
 }
+QStringList ModelForm::toStrListParams(const ModelForm::kNNParams& params)
+{
+    QStringList list;
+    list << "type" << params.mType;
+    list << "weight" << params.mWeight;
+    list << "rtoc" << QString::number(params.mRtoc);
+    list << "fft" << QString(params.mFFN ? "true" : "false");
+    return list;
+}
 QStringList ModelForm::toStrListParams(const ModelForm::SVMParams& params)
 {
     QStringList list;
@@ -265,6 +340,8 @@ QStringList ModelForm::toStrListParams(const ModelForm::SVMParams& params)
     list << "gamma" << QString::number(params.mGamma);
     list << "nu" << QString::number(params.mNu);
     list << "p" << QString::number(params.mP);
+    list << "const" << QString::number(params.mConst);
+    list << "fft" << QString(params.mFFN ? "true" : "false");
     list << "probability" << QString(params.mProbability ? "true" : "false");
     list << "shrinking" << QString(params.mShrinking ? "true" : "false");
 

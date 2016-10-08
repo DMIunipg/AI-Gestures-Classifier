@@ -297,6 +297,11 @@ void MyoClassifierRBFNetwork::setModel(MyoModelInterface* model)
     mModel = std::shared_ptr<MyoModelRBFNetwork>((MyoModelRBFNetwork*)model);
 }
 
+MyoModelInterface* MyoClassifierRBFNetwork::getModel() const
+{
+	return mModel.get();
+}
+
 void MyoClassifierRBFNetwork::setProbabilityFilter(double probability)
 {
     mProbabilityFilter = probability;

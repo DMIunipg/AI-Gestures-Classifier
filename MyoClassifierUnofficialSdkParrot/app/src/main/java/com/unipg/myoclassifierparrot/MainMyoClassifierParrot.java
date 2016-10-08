@@ -467,18 +467,18 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                 mJumpingSumo.setFlag((byte) 0);
             }
             else if(className.equals("fist")) {
-                mJumpingSumo.setSpeed((byte) 75);
+                mJumpingSumo.setSpeed((byte) 40);
                 mJumpingSumo.setTurn((byte) 0);
                 mJumpingSumo.setFlag((byte) 1);
             }
             else if(className.equals("right")) {
-                mJumpingSumo.setSpeed((byte) 20);
-                mJumpingSumo.setTurn((byte) 10);
+                mJumpingSumo.setSpeed((byte) 10);
+                mJumpingSumo.setTurn((byte) 20);
                 mJumpingSumo.setFlag((byte) 1);
             }
             else if(className.equals("left")) {
-                mJumpingSumo.setSpeed((byte) 20);
-                mJumpingSumo.setTurn((byte) -10);
+                mJumpingSumo.setSpeed((byte) 10);
+                mJumpingSumo.setTurn((byte) -20);
                 mJumpingSumo.setFlag((byte) 1);
             }
         }
@@ -891,14 +891,6 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                       MyoCmds.ImuMode.RAW,
                       MyoCmds.ClassifierMode.DISABLED,
                       null);
-        //...
-        myo.writeUnlock(MyoCmds.UnlockType.HOLD, new Myo.MyoCommandCallback() {
-            @Override
-            public void onCommandDone(Myo myo, MyoMsg msg) {
-                //send command
-                myo.writeVibrate(MyoCmds.VibrateType.LONG, null);
-            }
-        });
         //change button
         ((Button)findViewById(R.id.btSearchMyo)).post(new Runnable() {
             @Override
@@ -911,6 +903,14 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
     public void onConnectionStateChanged(final BaseMyo myo, BaseMyo.ConnectionState state)
     {
         if (state == BaseMyo.ConnectionState.CONNECTED) {
+            //...
+            mMyo.writeUnlock(MyoCmds.UnlockType.HOLD, new Myo.MyoCommandCallback() {
+                @Override
+                public void onCommandDone(Myo myo, MyoMsg msg) {
+                    //send command
+                    myo.writeVibrate(MyoCmds.VibrateType.LONG, null);
+                }
+            });
             //create processors
             EmgProcessor      emgProcessor = new EmgProcessor();
             ImuProcessor      imuProcessor = new ImuProcessor();
@@ -940,6 +940,10 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
         if (mMyo != null &&
                 (  mMyo.getConnectionState() == BaseMyo.ConnectionState.CONNECTED||
                    mMyo.getConnectionState() == BaseMyo.ConnectionState.CONNECTING  )) {
+            mMyo.removeConnectionListener(this);
+            mMyo.setConnectionSpeed(BaseMyo.ConnectionSpeed.BALANCED);
+            mMyo.writeSleepMode(MyoCmds.SleepMode.NORMAL, null);
+            mMyo.writeMode(MyoCmds.EmgMode.NONE, MyoCmds.ImuMode.NONE, MyoCmds.ClassifierMode.DISABLED, null);
             mMyo.disconnect();
         }
         mMyo = null;

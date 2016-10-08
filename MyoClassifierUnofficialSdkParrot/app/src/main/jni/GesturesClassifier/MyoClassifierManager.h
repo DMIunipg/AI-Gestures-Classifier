@@ -70,6 +70,12 @@ public:
      * \return Myo Model loaded
      */
     MyoModelInterface* loadModel(const std::string& model);
+
+	/*!
+	* \brief getModel,
+	* \return Myo Model current
+	*/
+	MyoModelInterface* getModel() const;
     
     /*!
      * \brief setProbabilityFilter, set the minimum probability required to call the callback
@@ -82,6 +88,7 @@ public:
      * \param callback
      */
     void classification(const std::function< void (const std::string& className) >);
+
 
 };
 
