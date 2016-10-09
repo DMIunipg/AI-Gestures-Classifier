@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QDir>
+#include <QTemporaryFile>
 /*
     QString mType;       //! type regression
     QString mWeight;     //! weight
@@ -184,15 +185,37 @@ void ModelForm::onTestModel(bool event)
     if(!QFileInfo(mModelPath).exists()) return;
     //this app dir
     QString  thizdir = QCoreApplication::applicationDirPath();
+    QString  name   = "GesturesClassifierExemple";
 #if __APPLE__
     QString  dir = thizdir+"/../Resources";
+    QString  apppath= dir + "/" + name;
+
+    QString base_pathsh = QDir::tempPath()+"/do_test_model.sh";
+    QTemporaryFile dosh(base_pathsh);
+    dosh.setAutoRemove(false);
+    dosh.open();
+    //real path
+    {
+        QTextStream stream(&dosh);
+        stream << QString("#!/bin/bash\n");
+        stream << QString("cd "+QDir(dir).canonicalPath()+"\n");
+        stream << QString("./"+name+" "+mModelPath);
+    }
+    dosh.close();
+    //executable
+    QFile(dosh.fileName()).setPermissions(QFile::ReadUser|QFile::ExeUser);
+    //args
+    QStringList args;
+    args << "-b";
+    args << "com.apple.terminal";
+    args << QFileInfo(dosh.fileName()).canonicalFilePath();
+    QProcess::startDetached("open",args);
 #else
     const QString&  dir = thizdir;
-#endif
-    QString  name   = "GesturesClassifierExemple";
-    QString  apppath= dir + "/" + name;
-//execute
+    QString apppath= dir + "/" + name;
+    //execute
     QProcess::startDetached(apppath,QStringList(mModelPath));
+#endif
 }
 
 void ModelForm::onKNN(bool event)

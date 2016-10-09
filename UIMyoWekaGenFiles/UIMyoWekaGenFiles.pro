@@ -94,9 +94,11 @@ macx {
     APP_FM_FILES.path  = Contents/Frameworks/
     QMAKE_BUNDLE_DATA += APP_FM_FILES
     #path GesturesClassifierApplication
-    GCAppPath = $$PWD/../GesturesClassifierApplication/Build/Release/GesturesClassifierApplication
+    GCAppPathApp = $$PWD/../GesturesClassifierApplication/Build/Release/GesturesClassifierApplication
+    #path GesturesClassifierExemple
+    GCAppPathExp = $$PWD/../GesturesClassifierExemple/Build/Release/GesturesClassifierExemple
     #if not exists... compile...
-    !exists($$GCAppPath) {
+    !exists($$GCAppPathApp) {
         #output
         message(compile $$GCAppPath)
         #compile external tools
@@ -109,10 +111,27 @@ macx {
                -scheme GesturesClassifierApplication \
                -configuration Release)
     }
+    !exists($$GCAppPathExp) {
+        #output
+        message(compile $$GCAppPathExp)
+        #compile external tools
+        system(xcodebuild \
+               -project ../GesturesClassifier/GesturesClassifier.xcodeproj \
+               -scheme GesturesClassifier \
+               -configuration Release)
+        system(xcodebuild \
+               -project ../GesturesClassifierExemple/GesturesClassifierExemple.xcodeproj \
+               -scheme GesturesClassifierExemple \
+               -configuration Release)
+    }
     #resource
-    APP_CL_FILES.files = $$GCAppPath
+    APP_CL_FILES.files = $$GCAppPathApp
     APP_CL_FILES.path = Contents/Resources/
     QMAKE_BUNDLE_DATA += APP_CL_FILES
+    #resource
+    EXP_CL_FILES.files = $$GCAppPathExp
+    EXP_CL_FILES.path = Contents/Resources/
+    QMAKE_BUNDLE_DATA += EXP_CL_FILES
 
 }
 

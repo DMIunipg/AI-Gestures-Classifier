@@ -121,9 +121,11 @@ public:
 				fscanf(file, "UseFFT: %d\n", &mUseFFT);
 				//string types
 				char bufferDistanceType[255];
-				fscanf_s(file, "DistanceType: %s\n", bufferDistanceType, 255);
-				char bufferDistanceWeight[255];
-				fscanf_s(file, "DistanceWeight: %s\n", bufferDistanceWeight, 255);
+                fscanf(file, "DistanceType: %s\n", bufferDistanceType);
+				//fscanf_s(file, "DistanceType: %s\n", bufferDistanceType, 255);
+                char bufferDistanceWeight[255];
+                fscanf(file, "DistanceWeight: %s\n", bufferDistanceWeight);
+				//fscanf_s(file, "DistanceWeight: %s\n", bufferDistanceWeight, 255);
 				//get values
 				setDistanceTypeFromString(bufferDistanceType);
 				setDistanceWeightFromString(bufferDistanceType);
