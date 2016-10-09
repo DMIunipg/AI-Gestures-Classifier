@@ -23,11 +23,261 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <widget class="QGroupBox" name="mGBKnn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>kNN</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_16">
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="mCBkNNType">
+          <item>
+           <property name="text">
+            <string>EUCLIDE_DISTANCE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>MANHATTAN_DISTANCE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>HAMMING_DISTANCE</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_17">
+          <property name="text">
+           <string>Weight</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="mCBkNNWeight">
+          <item>
+           <property name="text">
+            <string>ONE_ON_DISTANCE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>DEMOCRATIC</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ONE_MINUS_DISTANCE</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_18">
+          <property name="text">
+           <string>FFT</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="mCBkNNFFT">
+          <item>
+           <property name="text">
+            <string>TRUE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FALSE</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_21">
+          <property name="text">
+           <string>Classification records</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSpinBox" name="mSBkNNRtoc">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>999999999</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="mGBRBFNetwork">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>RBF Network</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Iterations</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="mSBNumIterations">
+          <property name="maximum">
+           <number>999999999</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>Learning rate</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QDoubleSpinBox" name="mDSBLearningRate">
+          <property name="minimum">
+           <double>-99999999999999997748809823456034029568.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>99999999999999991433150857216.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_12">
+          <property name="text">
+           <string>Accuracy Mse</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="mCBAccuracyMse">
+          <item>
+           <property name="text">
+            <string>TRUE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FALSE</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Print</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="mCBPrint">
+          <item>
+           <property name="text">
+            <string>TRUE</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FALSE</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="3" column="0" colspan="2">
     <widget class="QPushButton" name="mPBApplay">
      <property name="text">
       <string>Applay</string>
      </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Type Model</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QRadioButton" name="mRBkNN">
+        <property name="text">
+         <string>kNN</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="mRBSVM">
+        <property name="text">
+         <string>SVM</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="mRBRBFNetwork">
+        <property name="text">
+         <string>RBF Network</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="title">
+      <string>Console</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QTextBrowser" name="mTBConsole">
+        <property name="styleSheet">
+         <string notr="true">QTextBrowser
+{
+	color: rgb(255,255,255);
+	background: rgb(0,0,0);
+}</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="0" column="1">
@@ -372,255 +622,12 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox_5">
-     <property name="title">
-      <string>Console</string>
+   <item row="4" column="0" colspan="2">
+    <widget class="QPushButton" name="mPBTestModel">
+     <property name="text">
+      <string>Test Model</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QTextBrowser" name="mTBConsole">
-        <property name="styleSheet">
-         <string notr="true">QTextBrowser
-{
-	color: rgb(255,255,255);
-	background: rgb(0,0,0);
-}</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Type Model</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QRadioButton" name="mRBkNN">
-        <property name="text">
-         <string>kNN</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="mRBSVM">
-        <property name="text">
-         <string>SVM</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="mRBRBFNetwork">
-        <property name="text">
-         <string>RBF Network</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <layout class="QVBoxLayout" name="verticalLayout_4">
-     <item>
-      <widget class="QGroupBox" name="mGBKnn">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="title">
-        <string>kNN</string>
-       </property>
-       <layout class="QFormLayout" name="formLayout_3">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_16">
-          <property name="text">
-           <string>Type</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="mCBkNNType">
-          <item>
-           <property name="text">
-            <string>EUCLIDE_DISTANCE</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>MANHATTAN_DISTANCE</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>HAMMING_DISTANCE</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_17">
-          <property name="text">
-           <string>Weight</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="mCBkNNWeight">
-          <item>
-           <property name="text">
-            <string>ONE_ON_DISTANCE</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>DEMOCRATIC</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>ONE_MINUS_DISTANCE</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_18">
-          <property name="text">
-           <string>FFT</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="mCBkNNFFT">
-          <item>
-           <property name="text">
-            <string>TRUE</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>FALSE</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_21">
-          <property name="text">
-           <string>Classification records</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="mSBkNNRtoc">
-          <property name="minimum">
-           <number>1</number>
-          </property>
-          <property name="maximum">
-           <number>999999999</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="mGBRBFNetwork">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="title">
-        <string>RBF Network</string>
-       </property>
-       <layout class="QFormLayout" name="formLayout_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>Iterations</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QSpinBox" name="mSBNumIterations">
-          <property name="maximum">
-           <number>999999999</number>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>Learning rate</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="mDSBLearningRate">
-          <property name="minimum">
-           <double>-99999999999999997748809823456034029568.000000000000000</double>
-          </property>
-          <property name="maximum">
-           <double>99999999999999991433150857216.000000000000000</double>
-          </property>
-          <property name="value">
-           <double>0.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_12">
-          <property name="text">
-           <string>Accuracy Mse</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="mCBAccuracyMse">
-          <item>
-           <property name="text">
-            <string>TRUE</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>FALSE</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_13">
-          <property name="text">
-           <string>Print</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QComboBox" name="mCBPrint">
-          <item>
-           <property name="text">
-            <string>TRUE</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>FALSE</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
@@ -706,6 +713,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mPBTestModel</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>ModelForm</receiver>
+   <slot>onTestModel(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>317</x>
+     <y>725</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>317</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onApplay(bool)</slot>
@@ -713,5 +736,6 @@
   <slot>onKNN(bool)</slot>
   <slot>onSVM(bool)</slot>
   <slot>onRBFNetwork(bool)</slot>
+  <slot>onTestModel(bool)</slot>
  </slots>
 </ui>

@@ -165,6 +165,12 @@ public slots:
     void onApplay(bool event);
 
     /*!
+     * \brief onTestModel
+     * \param event
+     */
+    void onTestModel(bool event);
+
+    /*!
      * \brief onSearchDir
      * \param event
      */

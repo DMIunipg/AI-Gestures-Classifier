@@ -103,12 +103,27 @@ ModelForm::~ModelForm()
 //set directory
 void ModelForm::onSearchDir(bool)
 {
+    //model type
+    QString  strtype   = "GesturesClassifierApplication";
+    //select
+    switch(getType())
+    {
+        case ModelType::M_kNN:         strtype = "kNN (*.knn)"; break;
+        case ModelType::M_SVM:         strtype = "SVM (*.svm)"; break;
+        case ModelType::M_RBF_Network: strtype = "RBF_Network (*.net)"; break;
+        default: return; break;
+    };
+    //path
+    QString path =
+    mModelPath.size() ? QDir(mModelPath).absolutePath() :
+                        QDir(mDatasetPath).absolutePath();
+    //remove extension
+    path = path.section(".",0,0);
     //path
     mModelPath=QFileDialog::getSaveFileName(this,
                                             "Save",
-                                            mModelPath.size() ? QDir(mModelPath).absolutePath() :
-                                                                QDir(mDatasetPath).absolutePath(),
-                                            "Model File");
+                                            path,
+                                            strtype);
     ui->mLEDir->setText(mModelPath);
 
 }
@@ -160,6 +175,24 @@ void ModelForm::onApplay(bool event)
                 + "Output:\n"
                 + gcapp.readAllStandardOutput()
     );
+}
+
+
+void ModelForm::onTestModel(bool event)
+{
+    //test file
+    if(!QFileInfo(mModelPath).exists()) return;
+    //this app dir
+    QString  thizdir = QCoreApplication::applicationDirPath();
+#if __APPLE__
+    QString  dir = thizdir+"/../Resources";
+#else
+    const QString&  dir = thizdir;
+#endif
+    QString  name   = "GesturesClassifierExemple";
+    QString  apppath= dir + "/" + name;
+//execute
+    QProcess::startDetached(apppath,QStringList(mModelPath));
 }
 
 void ModelForm::onKNN(bool event)
@@ -293,6 +326,7 @@ ModelForm::SVMParams ModelForm::getSVMParams() const
 
     return output;
 }
+
 ModelForm::RBFNetworkParams ModelForm::getRBFParams() const
 {
     ModelForm::RBFNetworkParams output;
@@ -304,6 +338,7 @@ ModelForm::RBFNetworkParams ModelForm::getRBFParams() const
 
     return output;
 }
+
 //create cmd params
 QStringList ModelForm::toStrListParams(ModelForm::ModelType& type)
 {
@@ -319,6 +354,7 @@ QStringList ModelForm::toStrListParams(ModelForm::ModelType& type)
 
     return list;
 }
+
 QStringList ModelForm::toStrListParams(const ModelForm::kNNParams& params)
 {
     QStringList list;
@@ -328,6 +364,7 @@ QStringList ModelForm::toStrListParams(const ModelForm::kNNParams& params)
     list << "fft" << QString(params.mFFN ? "true" : "false");
     return list;
 }
+
 QStringList ModelForm::toStrListParams(const ModelForm::SVMParams& params)
 {
     QStringList list;
@@ -347,6 +384,7 @@ QStringList ModelForm::toStrListParams(const ModelForm::SVMParams& params)
 
     return list;
 }
+
 QStringList ModelForm::toStrListParams(const ModelForm::RBFNetworkParams& params)
 {
     QStringList list;

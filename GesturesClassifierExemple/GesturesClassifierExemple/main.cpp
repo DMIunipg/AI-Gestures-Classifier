@@ -13,49 +13,34 @@
 
 int main(int argc, const char * argv[])
 {
-#if 0
-	//"fft true type MANHATTAN_DISTANCE weight DEMOCRATIC"
-    MyoClassifierManager mcmanager(Classifier::CLA_kNN);
-	//mcmanager.buildModel("C:\\Users\\gabri\\Desktop\\campioni_braccio\\ds2\\gab02.ds", "fft true type MANHATTAN_DISTANCE");
-	mcmanager.buildModel("C:\\Users\\gabri\\Desktop\\campioni_braccio\\ds2\\gab02.ds", "fft false");
-	//mcmanager.buildModel("C:\\Users\\gabri\\Desktop\\campioni_braccio\\dataset_2\\gab01.ds", "fft true type MANHATTAN_DISTANCE");
-	//mcmanager.buildModel("C:\\Users\\gabri\\Desktop\\campioni_braccio\\dataset_2\\gab01.ds", "fft false rtoc 1");
-	//mcmanager.getModel()->serialize("C:\\Users\\gabri\\Desktop\\campioni_braccio\\dataset_2\\gab01@3.knn");
-	//mcmanager.loadModel("C:\\Users\\gabri\\Desktop\\campioni_braccio\\tave\\tave3.knn");
-    mcmanager.setProbabilityFilter(0.0);
-    mcmanager.classification([](const std::string& cname)
-                             {
-                                 std::cout << "Current gesture: " << cname << "\n";
-                             });
-#else 
-	MyoClassifierManager mcmanager(Classifier::CLA_SVM);
-#if 0
-	mcmanager.buildModel("C:\\Users\\gabri\\Desktop\\campioni_braccio\\ds3\\gab03_norm.ds",
-					     "type C_SVC " 
-						 "kernel LINEAR "
-						 "cache 2000 "
-						 "coef0 0.01 "
-						 "degree 3 "
-						 "eps 0.01 "
-						 "gamma 0.1 "
-						 "nu 0.1 "
-						 "p 0.1 "
-						 "const 2 "
-						 "probability true "
-						 "shrinking true "
-						 "fft true"
-	);
-#else
-	mcmanager.loadModel("C:\\Users\\gabri\\Desktop\\campioni_braccio\\ds3\\gab03_norm.svm");
-
-#endif
-
-	mcmanager.setProbabilityFilter(0.5);
-	mcmanager.classification([](const std::string& cname)
+	if (argc <= 1)
+	{
+		std::cout << "Wrong arguments" << std::endl;
+		return -1;
+	}
+	std::string this_path(argv[0]);
+	std::string path(argv[1]);
+	//get ext
+	std::string ext = path.substr(path.rfind('.'));
+	//ref to manager
+	MyoClassifierManager* mcmanager{ nullptr };
+	//alloc
+		 if (ext == ".knn") mcmanager = new MyoClassifierManager(Classifier::CLA_kNN);
+	else if (ext == ".svm") mcmanager = new MyoClassifierManager(Classifier::CLA_SVM);
+	else if (ext == ".net") mcmanager = new MyoClassifierManager(Classifier::CLA_RBFNETWORK);
+	//alloc?
+	if (!mcmanager)
+	{
+		std::cout << "Wrong extention" << std::endl;
+		return -1;
+	}
+	//models
+	mcmanager->loadModel(path);
+	mcmanager->setProbabilityFilter(0.5);
+	mcmanager->classification([](const std::string& cname)
 	{
 		std::cout << "Current gesture: " << cname << "\n";
 	});
-#endif 
     //wait
     for(;;)
     {

@@ -56,6 +56,8 @@ win32 {
     #output
     message(copy $$shell_path($$GCAppPath/GesturesClassifierApplication.exe) to $$shell_path($${DESTDIR}))
     system(cmd /c xcopy $$shell_path($$GCAppPath/GesturesClassifierApplication.exe) $$shell_path($${DESTDIR}) /y)
+    message(copy $$shell_path($$GCAppPath/GesturesClassifierExemple.exe) to $$shell_path($${DESTDIR}))
+    system(cmd /c xcopy $$shell_path($$GCAppPath/GesturesClassifierExemple.exe) $$shell_path($${DESTDIR}) /y)
 }
 #mac os x libs
 macx {
