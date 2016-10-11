@@ -108,9 +108,9 @@ public:
 protected:
     
     //distance
-    double distance(const DataRaw& left,const DataRaw& right) const;
-    double manhattan(const DataRaw& left,const DataRaw& right) const;
-    double hamming(const DataRaw& left,const DataRaw& right) const;
+    static double distance(const DataRaw& left,const DataRaw& right);
+    static double manhattan(const DataRaw& left, const DataRaw& right);
+    static double hamming(const DataRaw& left, const DataRaw& right);
     //dataset
     DataSet mDataSet;
     

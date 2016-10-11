@@ -9,6 +9,7 @@
 #define MYO_UTILITIES_H
 #pragma once
 
+#include <array>
 #include <assert.h>
 #include <myo/cxx/Quaternion.hpp>
 #include <myo/cxx/Vector3.hpp>

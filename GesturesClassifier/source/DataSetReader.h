@@ -243,14 +243,14 @@ public:
      * \brief begin
      * \return the first constant iterator object
      */
-    RowsCIt begin() const { return mRows.begin(); }
+    RowsCIt begin() const { return mRows.cbegin(); }
     
     
     /*!
      * \brief end
      * \return the last constant iterator object
      */
-    RowsCIt end() const   { return mRows.end();   }
+    RowsCIt end() const   { return mRows.cend();   }
 
 	/*!
 	* \brief getEmgFromRow

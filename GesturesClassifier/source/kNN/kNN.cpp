@@ -5,7 +5,7 @@
 //  Created by Gabriele Di Bari on 04/10/15.
 //  Copyright © 2015 Gabriele Di Bari. All rights reserved.
 //
-
+#include "../DataSetReader.h"
 #include "kNN.h"
 #include <assert.h>
 #include <cmath>
@@ -36,8 +36,19 @@ kNN::Result kNN::classify(const kNN::DataRaw& row,
 	//ref to most distance field
 	SelectField* mostDistanceField = nullptr;
     //serach in data set
-    for(auto& field:mDataSet)
+    //for(auto& field:mDataSet
+#if defined(_MSC_VER) && (_MSC_VER <= 1800)
+    for (DataSetReader::Rows::const_iterator 
+         itField  = this->mDataSet.cbegin(); 
+         itField != this->mDataSet.cend();
+         ++itField)
     {
+        auto& field = *itField;
+#else
+    for (auto& field : mDataSet)
+    {
+#endif
+
         //compute distance
         double rfdistance = 0.0;
         //select distance type
@@ -159,7 +170,7 @@ kNN::Result kNN::classify(const kNN::DataRaw& row,
     return Result( true,  classes,  error);
 }
 
-double kNN::distance(const kNN::DataRaw& left,const kNN::DataRaw& right) const
+double kNN::distance(const kNN::DataRaw& left,const kNN::DataRaw& right)
 {
     assert(left.size() == right.size());
     double distance = 0.0;
@@ -183,7 +194,7 @@ double kNN::distance(const kNN::DataRaw& left,const kNN::DataRaw& right) const
     return std::sqrt(distance);
 }
 
-double kNN::manhattan(const DataRaw& left,const DataRaw& right) const
+double kNN::manhattan(const DataRaw& left,const DataRaw& right)
 {
     assert(left.size() == right.size());
     double distance = 0.0;
@@ -205,7 +216,7 @@ double kNN::manhattan(const DataRaw& left,const DataRaw& right) const
     return distance;
 }
 
-double kNN::hamming(const DataRaw& left,const DataRaw& right) const
+double kNN::hamming(const DataRaw& left,const DataRaw& right)
 {
     assert(left.size() == right.size());
     double distance = 0.0;
