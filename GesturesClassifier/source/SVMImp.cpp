@@ -8,6 +8,9 @@
 
 #include "SVMImp.h"
 #include "SVM/SVMUtilities.h"
+#include "DataSetFFT.h"
+#include <cstring>
+#include <cctype>
 
 class MyoModelSVM : public MyoModelInterface
 {
@@ -15,7 +18,10 @@ public:
 
     DataFlags  mFlags;
     ClassesNames mClasses;
-    unsigned int mUpdate { 20 };
+
+	int mUseFFT{ false };  //< use FFT
+    unsigned int mUpdate { 20 };  //< thread update 
+
     svm_model* mModel { nullptr };
     
     bool compare(const char* ptr, const char* command)
@@ -83,7 +89,7 @@ public:
         return true;
     }
     
-    svm_parameter parseArguments(const std::string& args)
+    svm_parameter parseArguments(const std::string& args,size_t num_of_features)
     {
         //kernel params
         svm_parameter param = {0};
@@ -93,11 +99,13 @@ public:
         param.cache_size  = 100.0f;
         param.coef0       = 0.1f;
         param.degree      = 3;
-        param.eps         = 0.1f;
-        param.gamma       = 0.2f;
-        param.nu          = 0.03f;
+        param.eps         = 0.001f;
+        param.gamma       = 1.0/(double)num_of_features;
+        param.nu          = 0.5f;
+        param.p           = 0.1f;
         param.probability = true;
         param.shrinking   = true;
+        param.C           = 1.0;
         //get ptr
         const char* ptr = args.c_str();
         //parse
@@ -123,11 +131,11 @@ public:
                 skipSpace(ptr);
                 //kernels
                 //enum { LINEAR, POLY, RBF, SIGMOID, PRECOMPUTED }; /* kernel_type */
-                     if(compareAndSkip(ptr,"LINEAR")) param.svm_type  = LINEAR;
-                else if(compareAndSkip(ptr,"POLY")) param.svm_type = POLY;
-                else if(compareAndSkip(ptr,"RBF")) param.svm_type  = RBF;
-                else if(compareAndSkip(ptr,"SIGMOID")) param.svm_type  = SIGMOID;
-                else if(compareAndSkip(ptr,"PRECOMPUTED")) param.svm_type  = PRECOMPUTED;
+                     if(compareAndSkip(ptr,"LINEAR")) param.kernel_type  = LINEAR;
+                else if(compareAndSkip(ptr,"POLY")) param.kernel_type = POLY;
+                else if(compareAndSkip(ptr,"RBF")) param.kernel_type  = RBF;
+                else if(compareAndSkip(ptr,"SIGMOID")) param.kernel_type  = SIGMOID;
+                else if(compareAndSkip(ptr,"PRECOMPUTED")) param.kernel_type  = PRECOMPUTED;
                 else break;
             }
             else if(compareAndSkip(ptr, "cache"))
@@ -194,6 +202,19 @@ public:
                 //parse
                 param.p = parseDoubleAndSkip(ptr);
             }
+			else if (compareAndSkip(ptr, "const"))
+			{
+				//parse
+				skipSpace(ptr);
+				//parse
+				param.C = parseDoubleAndSkip(ptr);
+			}
+			else if (compareAndSkip(ptr, "fft") || compareAndSkip(ptr, "dft"))
+			{
+				skipSpace(ptr);
+				//types
+				mUseFFT = parseBoolAndSkip(ptr);
+			}
             else
             {
                 break;
@@ -208,20 +229,30 @@ public:
     {
     }
     
-    MyoModelSVM(const DataSetReader& data,const std::string& args)
+    MyoModelSVM(const DataSetReader& inData,const std::string& args)
     {
         //alloc
         svm_problem* problem = new svm_problem();
+		//parse args
+		svm_parameter param = parseArguments(args, inData.sizeLine());
+		//copy data
+		DataSetReader data = inData;
+		//do FFT
+		if (mUseFFT)
+		{
+			DataSetFTT::applay(data);
+		}
         //count of fiels
         problem->l = (int)data.size();
         //alloc of labels
-        problem->y = new double[data.size()];
+        problem->y = (double*)malloc(sizeof(double)*data.size());
         //alloc
         const size_t ptrsSize   = sizeof(svm_node*) *   data.size();
         const size_t lineSize   = sizeof(svm_node)  *  (data.sizeLine()+1);
         const size_t matrixSize = lineSize          *   data.size();
-        const char* ptrs   = new char[ptrsSize+matrixSize];
-        const char* buffer = ptrs + ptrsSize;
+		const char* buffer = (char*)malloc(ptrsSize + matrixSize);
+		//ptrs at the end
+        const char* ptrs = buffer + matrixSize;
         problem->x = (svm_node**)ptrs;
         //init array
         for(size_t n=0;n!=data.size();++n)
@@ -240,8 +271,6 @@ public:
             problem->y[r] = data[r].mClass;
             
         }
-        //kernel params
-        svm_parameter param = parseArguments(args);
         //do cross validation
 #if  0
         svm_do_cross_validation(param,*problem,100);
@@ -250,11 +279,12 @@ public:
         mModel   = svm_train(problem,&param);
         mFlags   = data.getFlags();
         mClasses = data.getClassNames();
+		mUpdate  = data.getUpdate();
+		//delete space x
+		mModel->free_sv = 1;
         //delete problem
-        delete [] problem->y;
-        delete [] ((char*)(problem->x));
+		free( problem->y );
         delete problem;
-
     }
     
     virtual ~MyoModelSVM()
@@ -273,7 +303,8 @@ public:
         {
             mFlags.textSerialize(file);
             mClasses.serialize(file);
-            fprintf(file, "update: %u\n",mUpdate);
+			fprintf(file, "fft: %d\n", mUseFFT);
+			fprintf(file, "update: %u\n", mUpdate);
             svm_save_model_to_file(file,mModel);
             fclose(file);
         }
@@ -285,9 +316,12 @@ public:
         
         if(file)
         {
+			mUseFFT = 0;
+			mUpdate = 20;
             mFlags.textDeserialize(file);
             mClasses.deserialize(file);
-            fscanf(file, "update: %u\n",&mUpdate);
+			fscanf(file, "fft: %d\n", &mUseFFT);
+			fscanf(file, "update: %u\n", &mUpdate);
             mModel=svm_load_model_from_file(file);
             fclose(file);
         }
@@ -324,6 +358,11 @@ void MyoClassifierSVM::setModel(MyoModelInterface* model)
     mModel = std::shared_ptr<MyoModelSVM>((MyoModelSVM*)model);
 }
 
+MyoModelInterface* MyoClassifierSVM::getModel() const
+{
+	return mModel.get();
+}
+
 void MyoClassifierSVM::setProbabilityFilter(double probability)
 {
     mProbabilityFilter = probability;
@@ -340,20 +379,34 @@ void MyoClassifierSVM::classification(MyoThread& myo,
                   //loop constants
                   size_t rowSize = flags.lineSize<8>() / flags.mReps;
                   size_t allSize = rowSize*inputs.size();
-                  std::unique_ptr<svm_node> ubuffer(new svm_node[allSize+1]);
-                  //ptr to buffer
-                  svm_node* buffer = &(*ubuffer);
-                  //set last id
-                  buffer[allSize].index = -1;
-                  //put values
-                  MyoThread::applay(inputs,
-                                    flags,
-                                    [&](size_t i,size_t ri, double value)
-                                    {
-                                        buffer[i].value = value;
-                                    });
-                  //set index
-                  for(int i=0;i!=allSize;++i) buffer[i].index = i+1;
+
+				  //alloc row
+				  DataSetReader::Row dataRow(allSize);
+				  //put values
+				  MyoThread::applay(inputs,
+									flags,
+								    [&](size_t i, size_t ri, double value)
+								    {
+										dataRow[i] = value;
+								    });
+				  //do FFT?
+				  if (mModel->mUseFFT)
+				  {
+					  DataSetFTT::applay(dataRow, mModel->mFlags);
+				  }
+				  //to LIBSVM
+				  std::unique_ptr<svm_node> ubuffer(new svm_node[allSize + 1]);
+				  //ptr to buffer
+				  svm_node* buffer = &(*ubuffer);
+				  //set last id
+				  buffer[allSize].index = -1;
+				  //set index
+				  for (int i = 0; i != allSize; ++i) 
+				  {
+					  buffer[i].value = dataRow[i];
+					  buffer[i].index = i + 1;
+				  }
+
                   //classification
                   std::unique_ptr<double[]> classProb(new double[mModel->mModel->nr_class]);
                   double idclass = svm_predict_probability(mModel->mModel, buffer,&classProb[0]);

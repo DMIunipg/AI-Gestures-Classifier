@@ -2,7 +2,7 @@
 #define MYOMANAGER_H
 #pragma once
 
-
+#define USE_SIGNALS
 #include <ctime>
 #include <QMutex>
 #include <QThread>
@@ -12,8 +12,10 @@
 /*!
  * \brief The MyoManager class
  */
-class MyoManager : protected QThread
+class MyoManager : public QThread
 {
+    Q_OBJECT
+
 public:
 
     /*!
@@ -102,6 +104,7 @@ public:
         QThread::quit();
     }
 
+#ifndef USE_SIGNALS
     /*!
      * \brief setConnectionStatusCallback
      * \param callback
@@ -110,6 +113,14 @@ public:
     {
         mCBConnection = callback;
     }
+#else
+signals:
+     /*!
+     * \brief connectionStatusChange
+     * \param is connected
+     */
+    void connectionStatusChange(bool);
+#endif
 
 protected:
 
@@ -118,7 +129,10 @@ protected:
      MyoListener                mListener;               //! myo listener instance
      bool                       mLoop{ false };          //! loop flag
      QMutex                     mMutex;                  //! mutex
+
+#ifndef USE_SIGNALS
      std::function<void(bool)>  mCBConnection{ nullptr };//! callback to pass the raw data
+#endif
 
      /*!
       * \brief The State enum

@@ -90,7 +90,12 @@ void MyoManager::run()
         mMyo->setStreamEmg(myo::Myo::streamEmgEnabled);
         mMyoHub->addListener(&mListener);
         mMyoHub->setLockingPolicy(myo::Hub::lockingPolicyNone);
+
+#ifndef USE_SIGNALS
         if(mCBConnection) mCBConnection(true);
+#else
+        emit connectionStatusChange(true);
+#endif
 
         while(mLoop)
         {
@@ -130,5 +135,9 @@ void MyoManager::run()
     //dealloc
     if(mMyoHub) delete mMyoHub;
     //callback
+#ifndef USE_SIGNALS
     if(mCBConnection) mCBConnection(false);
+#else
+    emit connectionStatusChange(false);
+#endif
 }

@@ -59,13 +59,14 @@ public:
      */
     void setVideoToShow(const MyoListener::TypeRows& rows);
 
+
+public slots:
+
     /*!
      * \brief setIsConnected
      * \param is connected
      */
     void setIsConnected(bool isConnected);
-
-public slots:
 
     /*!
      * \brief onAbs

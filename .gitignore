@@ -97,7 +97,7 @@ Makefile*
 #QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
-
+*.qmake.stash
 
 ### Xcode ###
 # Xcode
@@ -196,6 +196,8 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
+*.VC.db
+*.VC.VC.opendb
 
 # Chutzpah Test files
 _Chutzpah*

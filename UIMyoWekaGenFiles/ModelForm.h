@@ -25,6 +25,17 @@ public:
     };
 
     /*!
+     * \brief The kNNParams struct
+     */
+    struct kNNParams
+    {
+        QString mType;       //! type regression
+        QString mWeight;     //! weight
+        bool    mFFN;        //! Use FFN for EMGs values
+        int     mRtoc;       //! k Near to classify
+    };
+
+    /*!
      * \brief The SVMParams struct
      */
     struct SVMParams
@@ -38,6 +49,8 @@ public:
         double  mGamma;      //! for poly/rbf/sigmoid
         double  mNu;         //! for NU_SVC, ONE_CLASS, and NU_SVR
         double  mP;          //! for EPSILON_SVR
+        double  mConst;      //! for C_SVC
+        bool    mFFN;        //! Use FFN for EMGs values
         bool    mProbability;//! do probability estimates
         bool    mShrinking;  //! use the shrinking heuristics
     };
@@ -53,6 +66,8 @@ public:
         bool mPrint;            //! print model build info
     };
 
+
+
     explicit ModelForm(QWidget *parent = 0);
 
     ~ModelForm();
@@ -62,6 +77,13 @@ public:
      * \param method type
      */
     void applay(ModelType type);
+
+    /*!
+     * \brief applay
+     * \param knn params
+     */
+    void applay(const kNNParams& params);
+
 
     /*!
      * \brief applay
@@ -82,6 +104,12 @@ public:
     ModelType getType() const;
 
     /*!
+     * \brief getkNNParams
+     * \return knn params
+     */
+    kNNParams getkNNParams() const;
+
+    /*!
      * \brief getSVMParams
      * \return svm params
      */
@@ -99,6 +127,13 @@ public:
      * \return params list
      */
     static QStringList toStrListParams(ModelType& type);
+
+    /*!
+     * \brief toStrListParams
+     * \param knn params
+     * \return knn params list
+     */
+    static QStringList toStrListParams(const kNNParams& params);
 
     /*!
      * \brief toStrListParams
@@ -128,6 +163,12 @@ public slots:
      * \param event
      */
     void onApplay(bool event);
+
+    /*!
+     * \brief onTestModel
+     * \param event
+     */
+    void onTestModel(bool event);
 
     /*!
      * \brief onSearchDir
