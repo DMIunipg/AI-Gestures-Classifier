@@ -27,15 +27,6 @@
         android:layout_alignTop="@+id/btConnect"
         android:layout_toStartOf="@+id/btConnect" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="..."
-        android:id="@+id/tvClassifier"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,4 +36,20 @@
         android:background="@drawable/buttom_center"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="..."
+        android:id="@+id/tvClassifier"
+        android:layout_below="@+id/videoView"
+        android:layout_centerHorizontal="true"/>
+    <com.unipg.parrot.JumpingSumoVideoView
+        android:id="@+id/videoView"
+        android:layout_width="640dp"
+        android:layout_height="480dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

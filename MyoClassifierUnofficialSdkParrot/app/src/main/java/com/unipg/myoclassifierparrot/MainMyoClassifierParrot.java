@@ -38,6 +38,7 @@ import com.parrot.arsdk.arcontroller.ARControllerCodec;
 import com.parrot.arsdk.arcontroller.ARFrame;
 import com.parrot.arsdk.ardiscovery.ARDISCOVERY_PRODUCT_ENUM;
 import com.unipg.parrot.JumpingSumo;
+import com.unipg.parrot.JumpingSumoVideoView;
 import com.vassiliev.androidfilebrowser.FileBrowserActivity;
 
 import eu.darken.myolib.BaseMyo;
@@ -416,7 +417,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
 
         @Override
         public void onFrameReceived(ARFrame frame) {
-
+            ((JumpingSumoVideoView)findViewById(R.id.videoView)).displayFrame(frame);
         }
 
         @Override
@@ -456,7 +457,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                 return true;
             }
         }
-        return true;
+        return false;
     }
 
 
@@ -533,6 +534,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
         //set arm state
         public void setArmState(int state){
             switch (state){
+                case ARM_TOP:
                 case ARM_BOTTOM:
                     mJumpingSumo.setSpeed((byte) 0);
                     mJumpingSumo.setTurn((byte)  0);
@@ -753,6 +755,8 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
         ((Button)findViewById(R.id.btSearchMyo)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //enable Bluetooth
+                if(!isBluetoothSupport()) return;
                 //disconnect from myo
                 if(mMyo!=null) {
                     disconnectMyo();

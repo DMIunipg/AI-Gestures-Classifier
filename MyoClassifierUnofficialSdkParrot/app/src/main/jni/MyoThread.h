@@ -16,6 +16,7 @@
 #include <array>
 #include <vector>
 #include <string>
+#include <atomic>
 #include <functional>
 #include <time.h>
 #include <DataFlags.h>
@@ -83,7 +84,7 @@ public:
 private:
     //thread data
     unsigned int mUpdate { 20 };
-    bool mLoop;
+    std::atomic<bool> mLoop;
     Callback mCallback;
     std::mutex  mMutex;
     std::unique_ptr< std::thread > mThread;

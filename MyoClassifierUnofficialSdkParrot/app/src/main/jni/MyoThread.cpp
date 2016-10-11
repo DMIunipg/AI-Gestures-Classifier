@@ -28,13 +28,17 @@ void MyoThread::run()
     double timePush  = myo::GetTime();
     //alloc for ptrs for smooth
     auto emgPtrArray = new std::array< int8_t , 8UL >*[mFlags.mReps] ;
+    //1 second in microsecond
+    unsigned int oneSecondInMicrosecond = (1000 * 1000);
     //update usleap
-    unsigned int usfactor = 1000/std::max((unsigned int)mUpdate,(unsigned int)2);
+    unsigned int usfactor = oneSecondInMicrosecond/std::max((unsigned int)mUpdate,(unsigned int)2);
     //thread loop
     while(mLoop)
     {
         //wait
-        usleep(usfactor * 1000);
+        usleep(usfactor);
+        //stop after wait?
+        if(!mLoop) break;
         //modes
         switch (mFlags.mMode)
         {

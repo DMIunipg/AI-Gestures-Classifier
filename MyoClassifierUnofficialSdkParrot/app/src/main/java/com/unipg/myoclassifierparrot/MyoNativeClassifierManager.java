@@ -72,7 +72,7 @@ public class MyoNativeClassifierManager {
      * @param path [description]
      */
     void loadModel(String path){
-        this.myoClassifierManagerLoadModel(path,mPtrManager);
+        if(mPtrManager!=0) this.myoClassifierManagerLoadModel(path,mPtrManager);
     }
 
     /**
@@ -80,14 +80,14 @@ public class MyoNativeClassifierManager {
      * @param callback 
      */
     void setListener(ClassifierListener callback){
-        this.myoClassifierManagerCallback(callback, mPtrManager);
+        if(mPtrManager!=0) this.myoClassifierManagerCallback(callback, mPtrManager);
     }
     /**
      * @brief setProbability
      * @param probability
      */
     void setProbabilityFilter(double probability){
-        this.myoClassifierManagerProbabilityFilter(probability, mPtrManager);
+        if(mPtrManager!=0) this.myoClassifierManagerProbabilityFilter(probability, mPtrManager);
     }
 
     /**
@@ -96,7 +96,16 @@ public class MyoNativeClassifierManager {
      */
     @Override
     protected void finalize() throws Throwable {
-        super.finalize();
-        this.myoClassifierManagerFree(mPtrManager);
+        try
+        {
+            //delete
+            if(mPtrManager!=0) this.myoClassifierManagerFree(mPtrManager);
+            //null
+            mPtrManager = 0;
+        }
+        finally
+        {
+            super.finalize();
+        }
     }
 }

@@ -99,6 +99,9 @@ Java_com_unipg_myoclassifierparrot_MyoNativeClassifierManager_myoClassifierManag
                                                                                        jobject thiz,
                                                                                        jlong pointer)
 {
+    //remove reference to Java listener, before (safe?)
+    ((MyoClassifierManager*)pointer)->classification(nullptr);
+    //delete pointer
     delete ((MyoClassifierManager*)pointer);
 }
 
