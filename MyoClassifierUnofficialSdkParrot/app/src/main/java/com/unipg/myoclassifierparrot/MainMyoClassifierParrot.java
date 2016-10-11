@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parrot.arsdk.arcommands.ARCOMMANDS_JUMPINGSUMO_ANIMATIONS_JUMP_TYPE_ENUM;
 import com.parrot.arsdk.arcommands.ARCOMMANDS_JUMPINGSUMO_MEDIARECORDEVENT_PICTUREEVENTCHANGED_ERROR_ENUM;
 import com.parrot.arsdk.arcontroller.ARCONTROLLER_DEVICE_STATE_ENUM;
 import com.parrot.arsdk.arcontroller.ARControllerCodec;
@@ -44,6 +45,7 @@ import eu.darken.myolib.Myo;
 import eu.darken.myolib.MyoCmds;
 import eu.darken.myolib.msgs.MyoMsg;
 import eu.darken.myolib.processor.emg.EmgProcessor;
+import eu.darken.myolib.processor.imu.ImuData;
 import eu.darken.myolib.processor.imu.ImuProcessor;
 
 import com.parrot.arsdk.ARSDK;
@@ -55,6 +57,7 @@ import com.parrot.arsdk.ardiscovery.receivers.ARDiscoveryServicesDevicesListUpda
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.parrot.arsdk.arcommands.ARCOMMANDS_JUMPINGSUMO_ANIMATIONS_JUMP_TYPE_ENUM.ARCOMMANDS_JUMPINGSUMO_ANIMATIONS_JUMP_TYPE_HIGH;
 import static com.parrot.arsdk.arcontroller.ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING;
 import static com.parrot.arsdk.arcontroller.ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_STOPPED;
 
@@ -456,39 +459,222 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
         return true;
     }
 
+
     /**
-     * @brief executeArduinoAction, called when when was classified a new gesture
-     * @param className, class name of the last gesture classified
+     * Euler
      */
-    protected void executeJumpingSumoAction(String className) {
-        if(mJumpingSumo != null)  {
-            if(className.equals("normal")) {
-                mJumpingSumo.setSpeed((byte) 0);
-                mJumpingSumo.setFlag((byte) 0);
+    class Euler {
+        public double mRoll = 0;
+        public double mYaw  = 0;
+        public double mPitch= 0;
+
+        Euler(){
+
+        }
+
+        Euler(double roll,double yaw, double pitch) {
+            mRoll = roll;
+            mYaw = yaw;
+            mPitch = pitch;
+        }
+
+        Euler(double[] quat) {
+            fromQuaternion(quat);
+        }
+        /**
+         * Init quaternion
+         * @param quat
+         */
+        void fromQuaternion(double[] quat){
+            //standard
+            //final int x=0, y=1, z=2, w=3;
+            //myo quat data layout
+            final int w=0, x=1, y=2, z=3;
+            //Roll
+            mRoll = Math.atan2(2.0f * (quat[w] * quat[x] + quat[y] * quat[z]),
+                               1.0f - 2.0f * (quat[x]*quat[x] + quat[y]*quat[y]));
+            //Pitch
+            mPitch = Math.asin(Math.max(-1.0f,
+                               Math.min(1.0f, 2.0f * (quat[w] * quat[y] - quat[z] * quat[x]))));
+            //Yaw
+            mYaw = Math.atan2(2.0f * (quat[w] * quat[z] + quat[x] * quat[y]),
+                              1.0f - 2.0f * (quat[y] * quat[y] + quat[z] * quat[z]));
+        }
+
+        public Euler copy(){
+            return new Euler(mRoll,mYaw,mPitch);
+        }
+    }
+
+    /**
+     * Jumping Sumo action
+     */
+    class JumpingSumoActionManager implements ImuProcessor.ImuDataListener {
+
+        //Action
+        public final int ACT_STOP     = 0;
+        public final int ACT_LEFT_90  = 1;
+        public final int ACT_RIGHT_90 = 2;
+        public final int ACT_GO       = 3;
+        public final int ACT_JUMP     = 4;
+
+        //State Arm
+        public final int ARM_TOP    = 0;
+        public final int ARM_CENTER = 1;
+        public final int ARM_BOTTOM = 2;
+
+        //state
+        private ImuData mLastImuData = null;
+        private Euler   mStartAngle  = new Euler();
+        private Euler   mLastAngle   = new Euler();
+        private int     mActionState = ACT_STOP;
+        private int     mArmState    = ARM_CENTER;
+
+        //set arm state
+        public void setArmState(int state){
+            switch (state){
+                case ARM_BOTTOM:
+                    mJumpingSumo.setSpeed((byte) 0);
+                    mJumpingSumo.setTurn((byte)  0);
+                    mJumpingSumo.setFlag((byte)  0);
+                    mActionState = ACT_STOP;
+                default:
+                    mArmState=state;
             }
-            else if(className.equals("fist")) {
-                mJumpingSumo.setSpeed((byte) 40);
-                mJumpingSumo.setTurn((byte) 0);
-                mJumpingSumo.setFlag((byte) 1);
+        }
+        //action
+        public void doAction(int action,ImuData imu) {
+
+            switch (mArmState)
+            {
+                case ARM_TOP:
+                    if(action == ACT_JUMP)
+                    {
+                        mJumpingSumo.setSpeed((byte) 0);
+                        mJumpingSumo.setTurn((byte)  0);
+                        mJumpingSumo.setFlag((byte)  0);
+                        mJumpingSumo.sendJump(ARCOMMANDS_JUMPINGSUMO_ANIMATIONS_JUMP_TYPE_HIGH);
+                        mActionState = ACT_JUMP;
+                    }
+                    break;
+                case ARM_CENTER:
+                    switch (action)
+                    {
+                        case ACT_STOP:
+                            mJumpingSumo.setSpeed((byte) 0);
+                            mJumpingSumo.setTurn((byte)  0);
+                            mJumpingSumo.setFlag((byte)  0);
+                            mActionState = ACT_STOP;
+                            break;
+                        case ACT_LEFT_90:
+                            if(mActionState!=ACT_LEFT_90) {
+                                mJumpingSumo.setSpeed((byte) 0);
+                                mJumpingSumo.setTurn((byte) -20);
+                                mJumpingSumo.setFlag((byte) 1);
+                                mActionState = ACT_LEFT_90;
+                            }
+                            break;
+                        case ACT_RIGHT_90:
+                            if(mActionState!=ACT_RIGHT_90) {
+                                mJumpingSumo.setSpeed((byte) 0);
+                                mJumpingSumo.setTurn((byte) 20);
+                                mJumpingSumo.setFlag((byte) 1);
+                                mActionState = ACT_RIGHT_90;
+                            }
+                            break;
+                        case ACT_GO:
+                            if(mActionState != ACT_GO)
+                            {
+                                mStartAngle.fromQuaternion(imu.getOrientationData());
+                                mJumpingSumo.setSpeed((byte)10);
+                                mJumpingSumo.setTurn((byte)  0);
+                                mJumpingSumo.setFlag((byte)  1);
+                                mActionState = ACT_GO;
+                            }
+                            else
+                            {
+                                //
+                                mLastAngle.fromQuaternion(imu.getOrientationData());
+                                //
+                                double delta   = -(mLastAngle.mYaw-mStartAngle.mYaw) / Math.PI;
+                                short  rotation= 0;
+                                //angles
+                                if(delta>1)       rotation = (short)( 100.0*(2.0-delta));
+                                else if(delta<-1) rotation = (short)(-100.0*(2.0+delta));
+                                else              rotation = (short)(100.0*delta);
+                                //do rotation
+                                mJumpingSumo.setSpeed((byte) 15);
+                                mJumpingSumo.setTurn((byte)  (rotation / 2));
+                                mJumpingSumo.setFlag((byte)  1);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case ARM_BOTTOM:
+                    break;
+                default:
+                    break;
+
             }
-            else if(className.equals("right")) {
-                mJumpingSumo.setSpeed((byte) 10);
-                mJumpingSumo.setTurn((byte) 20);
-                mJumpingSumo.setFlag((byte) 1);
+        }
+
+        /**
+         * @brief executeArduinoAction, called when when was classified a new gesture
+         * @param className, class name of the last gesture classified
+         */
+        public void executeJumpingSumoAction(String className) {
+            if(mJumpingSumo != null)
+            {
+                switch (mArmState)
+                {
+                    case ARM_TOP:
+                        if(className.equals("fist"))     doAction(ACT_JUMP,null);
+                        break;
+
+                    case ARM_CENTER:
+                        if(className.equals("normal"))     doAction(ACT_STOP,null);
+                        else if(className.equals("fist"))  doAction(ACT_GO,mLastImuData);
+                        else if(className.equals("right")) doAction(ACT_RIGHT_90,null);
+                        else if(className.equals("left"))  doAction(ACT_LEFT_90,null);
+                        break;
+
+                    default:
+                        break;
+                }
             }
-            else if(className.equals("left")) {
-                mJumpingSumo.setSpeed((byte) 10);
-                mJumpingSumo.setTurn((byte) -20);
-                mJumpingSumo.setFlag((byte) 1);
+        }
+
+        /**
+         * Listener Imu data
+         * @param imuData
+         */
+        public void onNewImuData(ImuData imuData) {
+            //save last
+            mLastImuData = imuData;
+            //get arm angle
+            double pitch =Math.toDegrees( new Euler(imuData.getOrientationData()).mPitch );
+            //cases
+                 if(pitch < -30.0) setArmState(ARM_TOP);
+            else if(pitch >  50.0) setArmState(ARM_BOTTOM);
+            else                   setArmState(ARM_CENTER);
+            //do action
+            if(mActionState == ACT_GO) {
+                doAction(ACT_GO,imuData);
             }
         }
     }
 
     /**
+     * Pointer to Jumping action manager
+     */
+    JumpingSumoActionManager mJumpingSumoActionManager = null;
+
+    /**
      * @brief bluetoothUnsupportedDialog, show a dialog to notify the user about the bluetooth connection support 
      */
-    protected void bluetoothUnsupportedDialog()
-    {
+    protected void bluetoothUnsupportedDialog() {
         final AlertDialog.Builder closeApplicationDialog = new AlertDialog.Builder(MainMyoClassifierParrot.this);
         closeApplicationDialog.setMessage("Bluetooth unsupported");
         closeApplicationDialog.setCancelable(false);
@@ -509,6 +695,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
         });
     }
 
+
     /**
      * @brief onCreate
      * @param savedInstanceState
@@ -525,6 +712,8 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
         getRuntimePermission();
         //get Location active
         getLocationPermission();
+        //Action manager
+        mJumpingSumoActionManager = new JumpingSumoActionManager();
         //create scanner
         mFindJumpingSumo = new FindJumpingSumo(new FindJumpingSumoListener(){
             public void onFindJumpingSumo(ARDiscoveryDeviceService drone){
@@ -857,7 +1046,8 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                             }
                         });
                         //execute an Arduino action
-                        executeJumpingSumoAction(className);
+                        if(mJumpingSumoActionManager != null)
+                            mJumpingSumoActionManager.executeJumpingSumoAction(className);
                     }
                 });
             }
@@ -911,6 +1101,8 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                     myo.writeVibrate(MyoCmds.VibrateType.LONG, null);
                 }
             });
+            //remove all processors
+            myo.removeAllProcessor();
             //create processors
             EmgProcessor      emgProcessor = new EmgProcessor();
             ImuProcessor      imuProcessor = new ImuProcessor();
@@ -921,6 +1113,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
             //add listeners
             emgProcessor.addListener(myoNListener);
             imuProcessor.addListener(myoNListener);
+            imuProcessor.addListener(mJumpingSumoActionManager);
         }
         else if (state == BaseMyo.ConnectionState.DISCONNECTED) {
             //event

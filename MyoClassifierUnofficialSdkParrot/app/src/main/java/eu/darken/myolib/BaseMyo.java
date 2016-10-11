@@ -563,6 +563,15 @@ public class BaseMyo extends BluetoothGattCallback {
         }
     }
 
+    public void removeAllProcessor() {
+        for(Map.Entry<UUID, List<Processor>>  listProcessor : mSubscriptionMap.entrySet()){
+            for(Processor processor : listProcessor.getValue()){
+                processor.onRemoved();
+            }
+        }
+        mSubscriptionMap.clear();
+    }
+
     @Override
     public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
         BaseDataPacket packet = new BaseDataPacket(gatt, characteristic);
