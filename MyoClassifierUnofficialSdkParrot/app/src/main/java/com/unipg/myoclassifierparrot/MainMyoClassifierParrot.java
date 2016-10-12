@@ -226,7 +226,6 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
     class FindJumpingSumo {
 
         private ARDiscoveryService mArdiscoveryService = null;
-        private boolean mArdiscoveryServiceConnectionIsBind = false;
         private ServiceConnection mArdiscoveryServiceConnection = null;
         private ARDiscoveryServicesDevicesListUpdatedReceiver mArdiscoveryServicesDevicesListUpdatedReceiver = null;
         private final List<ARDiscoveryDeviceService> mMatchingDrones = new ArrayList<>();
@@ -268,33 +267,44 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                     mArdiscoveryServicesDevicesListUpdatedReceiver,
                     new IntentFilter(ARDiscoveryService.kARDiscoveryServiceNotificationServicesDevicesListUpdated)
             );
+        }
 
-            // create the service connection
-            if (mArdiscoveryServiceConnection == null) {
-                mArdiscoveryServiceConnection = new ServiceConnection() {
-                    @Override
-                    public void onServiceConnected(ComponentName name, IBinder service) {
-                        mArdiscoveryService = ((ARDiscoveryService.LocalBinder) service).getService();
+        /**
+         * Service utility
+         */
+        public void bindService(Context context) {
+            //...
+            unbindService();
+            //...
+            mArdiscoveryServiceConnection =
+            new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    mArdiscoveryService = ((ARDiscoveryService.LocalBinder) service).getService();
 
-                        if (mStartDiscoveryAfterConnection) {
-                            startDiscovering();
-                            mStartDiscoveryAfterConnection = false;
-                        }
+                    if (mStartDiscoveryAfterConnection) {
+                        startDiscovering();
+                        mStartDiscoveryAfterConnection = false;
                     }
+                }
 
-                    @Override
-                    public void onServiceDisconnected(ComponentName name) {
-                        mArdiscoveryService = null;
-                    }
-                };
-            }
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    mArdiscoveryService = null;
+                }
 
-            if (mArdiscoveryService == null && !mArdiscoveryServiceConnectionIsBind) {
-                // if the discovery service doesn't exists, bind to it
-                Intent i = new Intent(getBaseContext(), ARDiscoveryService.class);
-                getBaseContext().bindService(i, mArdiscoveryServiceConnection, Context.BIND_AUTO_CREATE);
-                mArdiscoveryServiceConnectionIsBind = true;
+                ;
+            };
+            // if the discovery service doesn't exists, bind to it
+            Intent i = new Intent(context, ARDiscoveryService.class);
+            getBaseContext().bindService(i,mArdiscoveryServiceConnection,   Context.BIND_AUTO_CREATE);
+        }
+
+        public void unbindService() {
+            if(mArdiscoveryServiceConnection!=null) {
+                getBaseContext().unbindService(mArdiscoveryServiceConnection);
             }
+            mArdiscoveryService = null;
         }
 
         /**
@@ -334,8 +344,6 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                     @Override
                     public void run() {
                         mArdiscoveryService.stop();
-                        getBaseContext().unbindService(mArdiscoveryServiceConnection);
-                        mArdiscoveryServiceConnectionIsBind = false;
                         mArdiscoveryService = null;
                     }
                 }).start();
@@ -733,6 +741,8 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                 onEndScanJumpingSumo();
             }
         });
+        //bind service
+        mFindJumpingSumo.bindService(getBaseContext());
         //set view
         setContentView(R.layout.activity_main_myo_classifier);
         //if bluetooth unsupported then not attach listeners to ui
@@ -983,6 +993,8 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
             //kill process
             android.os.Process.killProcess(android.os.Process.myPid());
         }
+        //unbind service
+        mFindJumpingSumo.unbindService();
         //call parent
         super.onDestroy();
     }
