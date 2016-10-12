@@ -46,7 +46,13 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
         mContext = context.getApplicationContext();
         BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
-        mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        //scanner
+        if ( android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        }
+        else {
+            mBluetoothLeScanner = null;
+        }
     }
 
     public Context getContext() {
@@ -62,6 +68,7 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
      * @return true if a scan was started, false if a scan was already running.
      */
     /*
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public boolean scan(final long timeout, @Nullable final ScannerCallback callback) {
         //scannable?
         if (mScanRunnable != null)
@@ -121,17 +128,6 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
                     super.onScanFailed(errorCode);
                 }
             };
-            /*
-            final ScanCallback scanCallback = new ScanCallback() {
-                @Override
-                public void onScanResult(int callbackType, ScanResult result) {
-                    MyoConnector.this.onLeScan(
-                            result.getDevice(),
-                            result.getRssi(),
-                            result.getScanRecord().getBytes());
-                }
-            };
-            */
             //find devices
             mScanRunnable = new Runnable() {
                 public void run() {

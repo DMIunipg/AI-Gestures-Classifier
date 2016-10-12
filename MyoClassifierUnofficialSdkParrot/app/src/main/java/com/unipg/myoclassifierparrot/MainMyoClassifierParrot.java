@@ -223,10 +223,10 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
     /**
      * Search JumpingSumo
      */
-    class FindJumpingSumo
-    {
+    class FindJumpingSumo {
 
         private ARDiscoveryService mArdiscoveryService = null;
+        private boolean mArdiscoveryServiceConnectionIsBind = false;
         private ServiceConnection mArdiscoveryServiceConnection = null;
         private ARDiscoveryServicesDevicesListUpdatedReceiver mArdiscoveryServicesDevicesListUpdatedReceiver = null;
         private final List<ARDiscoveryDeviceService> mMatchingDrones = new ArrayList<>();
@@ -289,10 +289,11 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                 };
             }
 
-            if (mArdiscoveryService == null) {
+            if (mArdiscoveryService == null && !mArdiscoveryServiceConnectionIsBind) {
                 // if the discovery service doesn't exists, bind to it
                 Intent i = new Intent(getBaseContext(), ARDiscoveryService.class);
                 getBaseContext().bindService(i, mArdiscoveryServiceConnection, Context.BIND_AUTO_CREATE);
+                mArdiscoveryServiceConnectionIsBind = true;
             }
         }
 
@@ -333,8 +334,8 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                     @Override
                     public void run() {
                         mArdiscoveryService.stop();
-
                         getBaseContext().unbindService(mArdiscoveryServiceConnection);
+                        mArdiscoveryServiceConnectionIsBind = false;
                         mArdiscoveryService = null;
                     }
                 }).start();
@@ -598,7 +599,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                                 //
                                 mLastAngle.fromQuaternion(imu.getOrientationData());
                                 //
-                                double delta   = -(mLastAngle.mYaw-mStartAngle.mYaw) / Math.PI;
+                                double delta   = (mLastAngle.mRoll-mStartAngle.mRoll) / Math.PI;
                                 short  rotation= 0;
                                 //angles
                                 if(delta>1)       rotation = (short)( 100.0*(2.0-delta));
@@ -606,7 +607,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                                 else              rotation = (short)(100.0*delta);
                                 //do rotation
                                 mJumpingSumo.setSpeed((byte) 15);
-                                mJumpingSumo.setTurn((byte)  (rotation / 2));
+                                mJumpingSumo.setTurn((byte)  (rotation * 2));
                                 mJumpingSumo.setFlag((byte)  1);
                             }
                             break;
@@ -1032,7 +1033,10 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                 //fail to load
                 if(typeClassifier == -1) return;
                 //alloc native classifier
-                mNClassifierManager = new MyoNativeClassifierManager(typeClassifier);
+                if(mNClassifierManager == null)
+                    mNClassifierManager = new MyoNativeClassifierManager(typeClassifier);
+                else
+                    mNClassifierManager.changeClassifierType(typeClassifier);
                 //load
                 mNClassifierManager.loadModel(path);
                 //to do... check success to load

@@ -23,6 +23,11 @@ Java_com_unipg_myoclassifierparrot_MyoNativeClassifierManager_myoClassifierManag
                                                                                  jint type);
 
 JNIEXPORT void JNICALL
+Java_com_unipg_myoclassifierparrot_MyoNativeClassifierManager_myoClassifierManagerChangeClassifierType(JNIEnv *env,
+                                                                                                      jobject thiz,
+                                                                                                      jint type,
+                                                                                                      jlong pointer);
+JNIEXPORT void JNICALL
 Java_com_unipg_myoclassifierparrot_MyoNativeClassifierManager_myoClassifierManagerLoadModel(JNIEnv *env,
                                                                                       jobject thiz,
                                                                                       jstring path,

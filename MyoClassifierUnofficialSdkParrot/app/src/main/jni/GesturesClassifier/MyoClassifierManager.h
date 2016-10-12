@@ -41,9 +41,10 @@ public:
     /*!
      * \brief MyoClassifierManager
      * \param type, type of classification method
+     * \param myoThread, create a myo thread
      */
     MyoClassifierManager(Classifier type,bool myoThread = true);
-    
+
     /*!
      * \brief ~MyoClassifierManager
      */
@@ -76,7 +77,13 @@ public:
 	* \return Myo Model current
 	*/
 	MyoModelInterface* getModel() const;
-    
+
+    /*!
+     * \brief changeClassifierType
+     * \param type, type of classification method
+     */
+    void changeClassifierType(Classifier type);
+
     /*!
      * \brief setProbabilityFilter, set the minimum probability required to call the callback
      * \param probability

@@ -13,6 +13,9 @@
 
 void MyoThread::start(MyoThread::Callback callback,const DataFlags& flags,unsigned int update)
 {
+    //stop last
+    joint();
+    //start new thread
     mLoop  = true;
     mFlags = flags;
     mUpdate = update;
@@ -165,10 +168,16 @@ void MyoThread::applay(const Inputs& inputs,const DataFlags& flags,ApplyCallback
 //terminate ...
 void MyoThread::joint()
 {
-    //break loop
-    mLoop = false;
-    //wait end....
-    if(mThread.get()) mThread->join();
+    if(mThread.get()){
+        //break loop
+        mLoop = false;
+        //wait
+        mThread->join();
+        //remove callback
+        mCallback = nullptr;
+        //remove thread
+        mThread = nullptr;
+    }
 }
 //contructor
 MyoThread::MyoThread()

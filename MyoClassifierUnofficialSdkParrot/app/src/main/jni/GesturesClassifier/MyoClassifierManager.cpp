@@ -58,6 +58,22 @@ MyoModelInterface* MyoClassifierManager::loadModel(const std::string& path)
     return mInterface->modelFromfile(path);
 }
 
+void MyoClassifierManager::changeClassifierType(Classifier type)
+{
+    //Stop last thread
+    if(mMyoThread) mMyoThread->joint();
+    //delete last interface
+    if(mInterface) delete mInterface;
+    //select classifier
+    switch (mClassifier)
+    {
+        default:
+        case CLA_SVM:        mInterface = new MyoClassifierSVM; break;
+        case CLA_kNN:        mInterface = new MyoClassifierkNN; break;
+        case CLA_RBFNETWORK: mInterface = new MyoClassifierRBFNetwork; break;
+    }
+}
+
 void MyoClassifierManager::setProbabilityFilter(double probability)
 {
     mInterface->setProbabilityFilter(probability);

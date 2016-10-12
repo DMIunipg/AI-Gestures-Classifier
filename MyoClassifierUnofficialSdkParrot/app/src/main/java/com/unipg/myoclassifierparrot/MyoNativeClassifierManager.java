@@ -33,6 +33,13 @@ public class MyoNativeClassifierManager {
     protected native long myoClassifierManagerInit(int type);
 
     /**
+     * @brief myoClassifierManagerChangeClassifierType, select a classifier
+     * @param type of classifier (SVM, kNN, RBFNetwork)
+     * @param pointer, CPP object
+     */
+    protected native void  myoClassifierManagerChangeClassifierType(int type, long pointer);
+
+    /**
      * @brief myoClassifierManagerLoadModel
      * @param path
      * @param pointer, CPP object
@@ -66,6 +73,15 @@ public class MyoNativeClassifierManager {
     MyoNativeClassifierManager(int type){
         mPtrManager = this.myoClassifierManagerInit(type);
     }
+
+    /**
+     * @brief changeClassifierType
+     * @param type, type of classifier (SVM, kNN, RBFNetwork)
+     */
+    void changeClassifierType(int type){
+        if(mPtrManager!=0) this.myoClassifierManagerChangeClassifierType(type,mPtrManager);
+    }
+
 
     /**
      * @brief loadModel, load a model from a path

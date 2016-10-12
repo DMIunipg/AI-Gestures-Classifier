@@ -250,12 +250,17 @@ public class MyoList extends Activity {
         mUIListMyo.post(new Runnable() {
             @Override
             public void run() {
-                //push into layout
-                mUIListMyo.addView(deviceButton,
-                           new ViewGroup.LayoutParams(
-                                   ViewGroup.LayoutParams.MATCH_PARENT,
-                                   ViewGroup.LayoutParams.WRAP_CONTENT)
+                //pargin ly
+                ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(
+                        ViewGroup.MarginLayoutParams.MATCH_PARENT,
+                        ViewGroup.MarginLayoutParams.WRAP_CONTENT
                 );
+                marginParams.setMargins(0, 0, 0, 400);
+                //add bottom Layout
+                ViewGroup.LayoutParams layout =  new ViewGroup.LayoutParams(marginParams);
+                //push into layout
+                mUIListMyo.addView(deviceButton,layout);
+
             }
         });
         //return ui object

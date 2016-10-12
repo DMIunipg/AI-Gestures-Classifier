@@ -5,6 +5,7 @@
 #include <MyoClassifierManager.h>
 #include <memory>
 #include "MyoNativeClassifierManager.h"
+#include <android/log.h>
 
 //safe java object listener
 class JavaListener
@@ -22,10 +23,25 @@ public:
 
     virtual ~JavaListener()
     {
-        JNIEnv *env;
-        mJvm->AttachCurrentThread(&env, NULL);
-        env->DeleteGlobalRef(mRef);
-        mJvm->DetachCurrentThread();
+        JNIEnv *env = nullptr;
+        //get evn
+        switch (mJvm->GetEnv((void**)&env, JNI_VERSION_1_6))
+        {
+            case JNI_OK:
+                //remove ref
+                env->DeleteGlobalRef(mRef);
+                break;
+            case JNI_EDETACHED:
+                //attach
+                if (mJvm->AttachCurrentThread(&env, NULL)!=0) return /* leak */;
+                //remove ref
+                env->DeleteGlobalRef(mRef);
+                //de-attach
+                mJvm->DetachCurrentThread();
+                break;
+            default:
+            case JNI_EVERSION: return /* leak */;
+        }
     }
 };
 
@@ -38,6 +54,15 @@ Java_com_unipg_myoclassifierparrot_MyoNativeClassifierManager_myoClassifierManag
                                                                                        jint type)
 {
     return (jlong) new MyoClassifierManager((Classifier) type);
+}
+
+JNIEXPORT void JNICALL
+Java_com_unipg_myoclassifierparrot_MyoNativeClassifierManager_myoClassifierManagerChangeClassifierType(JNIEnv *env,
+                                                                                                       jobject thiz,
+                                                                                                       jint type,
+                                                                                                       jlong pointer)
+{
+    ((MyoClassifierManager*)pointer)->changeClassifierType((Classifier) type);
 }
 
 JNIEXPORT void JNICALL
