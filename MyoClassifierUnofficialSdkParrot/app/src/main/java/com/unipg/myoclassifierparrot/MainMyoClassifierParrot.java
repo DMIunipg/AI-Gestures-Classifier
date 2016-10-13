@@ -303,6 +303,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
         public void unbindService() {
             if(mArdiscoveryServiceConnection!=null) {
                 getBaseContext().unbindService(mArdiscoveryServiceConnection);
+                mArdiscoveryServiceConnection = null;
             }
             mArdiscoveryService = null;
         }
