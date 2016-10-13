@@ -73,29 +73,29 @@ public:
     ~ModelForm();
 
     /*!
-     * \brief applay
+     * \brief apply
      * \param method type
      */
-    void applay(ModelType type);
+    void apply(ModelType type);
 
     /*!
-     * \brief applay
+     * \brief apply
      * \param knn params
      */
-    void applay(const kNNParams& params);
+    void apply(const kNNParams& params);
 
 
     /*!
-     * \brief applay
+     * \brief apply
      * \param svm params
      */
-    void applay(const SVMParams& params);
+    void apply(const SVMParams& params);
 
     /*!
-     * \brief applay
+     * \brief apply
      * \param rbf network params
      */
-    void applay(const RBFNetworkParams& params);
+    void apply(const RBFNetworkParams& params);
 
     /*!
      * \brief getType
@@ -159,10 +159,10 @@ public:
 public slots:
 
     /*!
-     * \brief onApplay
+     * \brief onapply
      * \param event
      */
-    void onApplay(bool event);
+    void onApply(bool event);
 
     /*!
      * \brief onTestModel

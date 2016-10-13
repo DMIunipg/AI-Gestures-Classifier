@@ -88,13 +88,13 @@ ModelForm::ModelForm(QWidget *parent) :
 {
     ui->setupUi(this);
     //default is kNN
-    applay(ModelType::M_kNN);
-    //applay default kNN
-    applay(defaultkNNParams);
-    //applay default svm
-    applay(defaultSVMParams);
-    //applay default rbf network params
-    applay(defaultRBFNetworkParams);
+    apply(ModelType::M_kNN);
+    //apply default kNN
+    apply(defaultkNNParams);
+    //apply default svm
+    apply(defaultSVMParams);
+    //apply default rbf network params
+    apply(defaultRBFNetworkParams);
 }
 
 ModelForm::~ModelForm()
@@ -128,8 +128,8 @@ void ModelForm::onSearchDir(bool)
     ui->mLEDir->setText(mModelPath);
 
 }
-//applay event
-void ModelForm::onApplay(bool event)
+//apply event
+void ModelForm::onApply(bool event)
 {
     //if have a valid paths
     if(!mModelPath.size()) return;
@@ -257,8 +257,8 @@ bool ModelForm::execute(const QString& path)
     return exec() == 0;
 }
 
-//applay to form
-void ModelForm::applay(ModelForm::ModelType type)
+//apply to form
+void ModelForm::apply(ModelForm::ModelType type)
 {
     switch (type)
     {
@@ -275,7 +275,7 @@ void ModelForm::applay(ModelForm::ModelType type)
     }
 }
 
-void ModelForm::applay(const ModelForm::kNNParams& params)
+void ModelForm::apply(const ModelForm::kNNParams& params)
 {
     ui->mCBkNNType->setCurrentText(params.mType);
     ui->mCBkNNWeight->setCurrentText(params.mWeight);
@@ -283,7 +283,7 @@ void ModelForm::applay(const ModelForm::kNNParams& params)
     ui->mSBkNNRtoc->setValue(params.mRtoc);
 }
 
-void ModelForm::applay(const ModelForm::SVMParams& params)
+void ModelForm::apply(const ModelForm::SVMParams& params)
 {
     ui->mCBType->setCurrentText(params.mType);
     ui->mCBKernel->setCurrentText(params.mKernel);
@@ -300,7 +300,7 @@ void ModelForm::applay(const ModelForm::SVMParams& params)
     ui->mCBShrinking->setCurrentText(params.mShrinking ? "TRUE" : "FALSE");
 }
 
-void ModelForm::applay(const ModelForm::RBFNetworkParams& params)
+void ModelForm::apply(const ModelForm::RBFNetworkParams& params)
 {
     ui->mSBNumIterations->setValue(params.mNumIterations);
     ui->mDSBLearningRate->setValue(params.mLearningRate);
