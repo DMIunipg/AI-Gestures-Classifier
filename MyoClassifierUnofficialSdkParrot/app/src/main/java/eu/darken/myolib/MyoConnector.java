@@ -38,6 +38,7 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
     private final BluetoothAdapter mBluetoothAdapter;
     private final Map<String, Myo> mDeviceMap = new HashMap<>();
     private final Map<String, Myo> mScanMap = new HashMap<>();
+    private boolean mBluetoothLeScannerRun = false;
     private ScannerCallback mCallback;
     private Runnable mScanRunnable;
     private Thread mScanThread;
@@ -104,7 +105,7 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
         //save callback
         mCallback = callback;
         //new api
-        if ( android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        //if ( android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             // callback
 
             final ScanCallback scanCallback = new ScanCallback() {
@@ -120,7 +121,12 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
 
                 @Override
                 public void onBatchScanResults(List<ScanResult> results) {
-                    super.onBatchScanResults(results);
+                    synchronized (MyoConnector.this) {
+                        // stop
+                        mBluetoothLeScannerRun = false;
+                        //
+                        super.onBatchScanResults(results);
+                    }
                 }
 
                 @Override
@@ -139,14 +145,23 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
                     }
                     Logy.d(TAG, "Scan stopped (timeout:" + timeout + ")");
                     //stop
-                    mBluetoothLeScanner.stopScan(scanCallback);
+                    synchronized (MyoConnector.this) {
+                        if(  mBluetoothLeScannerRun ) {
+                            mBluetoothLeScannerRun = false;
+                            mBluetoothLeScanner.stopScan(scanCallback);
+                        }
+                    }
                     stopScan();
                 }
             };
+            //start
+            mBluetoothLeScannerRun = true;
             // scan for devices
             mBluetoothLeScanner.startScan(scanCallback);
             //
-        } else {
+        /*
+        }
+        else {
             //find devices
             mScanRunnable = new Runnable() {
                 public void run() {
@@ -164,6 +179,7 @@ public class MyoConnector implements BluetoothAdapter.LeScanCallback {
                 }
             };
         }
+        */
         //
         mScanThread = new Thread(mScanRunnable);
         mScanThread.start();

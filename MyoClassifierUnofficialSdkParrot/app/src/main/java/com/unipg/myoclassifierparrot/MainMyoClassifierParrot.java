@@ -543,6 +543,9 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
 
         //set arm state
         public void setArmState(int state){
+            //
+            if(mJumpingSumo==null)  return;
+            //
             switch (state){
                 case ARM_TOP:
                 case ARM_BOTTOM:
@@ -556,7 +559,9 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
         }
         //action
         public void doAction(int action,ImuData imu) {
-
+           //
+            if(mJumpingSumo==null)  return;
+            //
             switch (mArmState)
             {
                 case ARM_TOP:
@@ -581,7 +586,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                         case ACT_LEFT_90:
                             if(mActionState!=ACT_LEFT_90) {
                                 mJumpingSumo.setSpeed((byte) 0);
-                                mJumpingSumo.setTurn((byte) -20);
+                                mJumpingSumo.setTurn((byte) -16);
                                 mJumpingSumo.setFlag((byte) 1);
                                 mActionState = ACT_LEFT_90;
                             }
@@ -589,7 +594,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                         case ACT_RIGHT_90:
                             if(mActionState!=ACT_RIGHT_90) {
                                 mJumpingSumo.setSpeed((byte) 0);
-                                mJumpingSumo.setTurn((byte) 20);
+                                mJumpingSumo.setTurn((byte) 16);
                                 mJumpingSumo.setFlag((byte) 1);
                                 mActionState = ACT_RIGHT_90;
                             }
@@ -616,7 +621,7 @@ public class MainMyoClassifierParrot extends AppCompatActivity implements BaseMy
                                 else              rotation = (short)(100.0*delta);
                                 //do rotation
                                 mJumpingSumo.setSpeed((byte) 15);
-                                mJumpingSumo.setTurn((byte)  (rotation * 2));
+                                mJumpingSumo.setTurn((byte)  (rotation * 3));
                                 mJumpingSumo.setFlag((byte)  1);
                             }
                             break;
